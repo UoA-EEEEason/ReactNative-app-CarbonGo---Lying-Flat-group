@@ -14,7 +14,7 @@ const AccountScreen = () => {
       <StatusBar backgroundColor={COLORS.blue} />
       <ScrollView>
         <View>
-          <Text>account screen</Text>
+          <Text>Yixuan Peng</Text>
         </View>
       </ScrollView>
     </SafeAreaView>
