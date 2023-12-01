@@ -1,20 +1,21 @@
 import {actionTypes} from '../actionTypes';
 
 const initialState = {
-  isAuthenticated: false,
+  number: 0,
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.LOGIN:
+    case actionTypes.INCREMENT_NUMBER:
       return {
         ...state,
-        isAuthenticated: true,
+        number: (state.number += 1),
       };
-    case actionTypes.LOGOUT:
+
+    case actionTypes.DECREMENT_NUMBER:
       return {
         ...state,
-        isAuthenticated: false,
+        number: (state.number -= 1),
       };
     default:
       return state;

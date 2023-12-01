@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import React from 'react';
 import { COLORS } from './../../constants/color/color';
+import TestComponent from './../../components/TestComponent';
 
 const LoginScreen = () => {
   return (
@@ -15,6 +16,7 @@ const LoginScreen = () => {
       <ScrollView>
         <View>
           <Text>Login screen</Text>
+          <TestComponent />
         </View>
       </ScrollView>
     </SafeAreaView>
