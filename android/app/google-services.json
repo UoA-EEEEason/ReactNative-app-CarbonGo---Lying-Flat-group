@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "306312420421",
+    "project_id": "lyingflat-f8463",
+    "storage_bucket": "lyingflat-f8463.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:306312420421:android:a93fad76569689663cd72c",
+        "android_client_info": {
+          "package_name": "com.lyingflat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAe93vn6EgtXet3CeDa7bDKds7y2j2OTr4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
