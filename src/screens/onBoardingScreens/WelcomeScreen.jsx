@@ -15,7 +15,7 @@ const WelcomeScreen = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    setTimeout(() => navigation.replace('SignUp'), 2500);
+    setTimeout(() => navigation.replace('Tests'), 2500);
   }, []);
 
   return (
@@ -65,10 +65,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     gap: 10,
-  },
-  logoContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
     marginHorizontal: '10%',
   },
   logo: {

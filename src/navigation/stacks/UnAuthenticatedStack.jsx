@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Auth, OnboardingScreen,Home } from '../../screens';
+import { Tests, Auth, OnboardingScreen, Home, Account } from '../../screens';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createNativeStackNavigator();
@@ -44,6 +44,26 @@ const UnAuthenticatedStack = () => {
       <Stack.Screen
         name="SignUp"
         component={Auth.SignUpScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Tests"
+        component={Tests.TestsScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Home"
+        component={Home.HomeScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Account"
+        component={Account.AccountScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="News"
+        component={Account.AccountScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

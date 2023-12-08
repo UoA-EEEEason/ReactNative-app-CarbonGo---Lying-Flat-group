@@ -3,7 +3,6 @@ import {useDispatch, useSelector} from 'react-redux';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {hp} from '../utils/dimensions';
 import { AntDesignIcon} from './../constants/icons/icons';
-import Entypo from 'react-native-vector-icons/Entypo';
 import {
   decreaseNumber,
   increaseNumber,
