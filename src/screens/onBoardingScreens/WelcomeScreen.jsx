@@ -15,7 +15,7 @@ const WelcomeScreen = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    setTimeout(() => navigation.replace('Login'), 2500);
+    setTimeout(() => navigation.replace('SignUp'), 2500);
   }, []);
 
   return (
