@@ -15,14 +15,14 @@ const WelcomeScreen = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    setTimeout(() => navigation.replace('Login'), 2500);
+    setTimeout(() => navigation.replace('SignUp'), 2500);
   }, []);
 
   return (
     <ImageBackground 
-      source={require('./../../assets/images/background.png')} // 更换为你的背景图片路径
+      source={require('./../../assets/images/background.png')}
       style={styles.backgroundImage}
-      resizeMode="cover" // 确保图片铺满整个屏幕
+      resizeMode="cover"
     >
       <StatusBar backgroundColor={COLORS.blue} barStyle={'light-content'} />
 
@@ -32,7 +32,7 @@ const WelcomeScreen = () => {
           {/* LOGO */}
           <Image 
             source={require('./../../assets/images/logo.png')}
-            style={styles.logo} // 应用新的样式
+            style={styles.logo}
             resizeMode="contain"
           />
 
@@ -69,11 +69,11 @@ const styles = StyleSheet.create({
   logoContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginHorizontal: '10%', // 设置左右边距为屏幕宽度的10%
+    marginHorizontal: '10%',
   },
   logo: {
-    width: '80%', // 限制图片宽度为容器宽度的80%
-    height: undefined, // 高度未定义，将根据宽度自动调整以保持图片的宽高比
-    aspectRatio: 1, // 可以设置特定的宽高比，如1表示正方形
+    width: '80%',
+    height: undefined,
+    aspectRatio: 1,
   },
 });
