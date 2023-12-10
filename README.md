@@ -49,7 +49,7 @@ or you can use github tool of VS code
 
 # About github pull requests and merge branch to master
 
-1. Create a branch for each part of the code, such as branch name -> "home pages - yixuan"
+1. Create a branch for each part of the code, such as branch name -> "yixuan - home pages"
 
 2. Edit the code in your working branch and pull and push
 
