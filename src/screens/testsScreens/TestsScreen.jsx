@@ -58,7 +58,7 @@ const TestsScreen = () => {
             resizeMode="cover"
         >
             <SafeAreaView style={styles.container}>
-                <StatusBar backgroundColor={COLORS.blue} barStyle={'light-content'} />
+                <StatusBar translucent backgroundColor="transparent" barStyle={'light-content'} />
                 <ScrollView contentContainerStyle={styles.scrollViewContent}>
                     <Image
                         source={require('./../../assets/images/logo.png')}
@@ -67,6 +67,12 @@ const TestsScreen = () => {
                     />
                     <Text style={styles.welcomeText}>Test Screen</Text>
                     {(!user) ? <Text style={styles.userText}>No user</Text> : <Text style={styles.userText}>Welcome {user.email}</Text>}
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => navigation.navigate('Demo')}
+                    >
+                        <Text style={styles.buttonText}>Component Demo</Text>
+                    </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.button}
                         onPress={() => navigation.navigate('Login')}
@@ -119,6 +125,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        paddingTop: StatusBar.currentHeight || 0,
     },
     scrollViewContent: {
         flexGrow: 1,
@@ -131,10 +138,9 @@ const styles = StyleSheet.create({
         aspectRatio: 1,
     },
     welcomeText: {
-        fontSize: 40,
+        fontSize: 30,
         color: COLORS.grew,
         textAlign: 'center',
-        marginVertical: 20,
     },
     userText: {
         fontSize: 20,

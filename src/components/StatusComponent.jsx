@@ -17,7 +17,7 @@ const StatusComponent = ({ title }) => {
 
     return (
         <View>
-            <StatusBar backgroundColor={COLORS.backgroudGreen} />
+            <StatusBar translucent backgroundColor="transparent" />
             <View
                 style={{
                     position: 'relative',

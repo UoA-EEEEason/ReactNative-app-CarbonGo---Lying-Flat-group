@@ -24,7 +24,7 @@ const WelcomeScreen = () => {
       style={styles.backgroundImage}
       resizeMode="cover"
     >
-      <StatusBar backgroundColor={COLORS.blue} barStyle={'light-content'} />
+      <StatusBar translucent backgroundColor="transparent" barStyle={'light-content'} />
 
       {/* WELCOME VIEW */}
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingTop: StatusBar.currentHeight || 0,
   },
   logoContainer: {
     justifyContent: 'center',
