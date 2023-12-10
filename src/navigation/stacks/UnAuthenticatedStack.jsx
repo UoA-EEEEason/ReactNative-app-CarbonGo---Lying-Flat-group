@@ -37,6 +37,11 @@ const UnAuthenticatedStack = () => {
         </>
       )}
       <Stack.Screen
+        name="Demo"
+        component={Tests.CommonDemo}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
         name="Login"
         component={Auth.LoginScreen}
         options={{ headerShown: false }}
