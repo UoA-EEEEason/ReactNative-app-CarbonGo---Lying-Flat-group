@@ -15,7 +15,7 @@ import {
 } from './../../components';
 import { hp, wp } from './../../utils/dimensions';
 import { Card, Text } from 'react-native-paper';
-
+import { useNavigation } from '@react-navigation/native';
 
 const cartItems = [
     {
@@ -29,40 +29,46 @@ const cartItems = [
         id: 2,
         title: 'news2',
         date: '2023-04-05T14:30:00.000Z',
-        content: 'This this news1',
-        image: require('./../../assets/images/news1.png'),
+        content: 'This this news2',
+        image: require('./../../assets/images/news2.png'),
     },
     {
         id: 3,
         title: 'news3',
         date: '2023-04-05T14:30:00.000Z',
-        content: 'This this news1',
+        content: 'This this news3',
         image: require('./../../assets/images/news1.png'),
     },
 
     // ... more items
 ];
 
-const CardComponent = (props) => (
-    <Card
-        style={{
-            width: wp(80),
-            alignSelf: 'center',
-            marginTop: 20,
-            backgroundColor: COLORS.cardBackground,
-        }}>
-        <Card.Cover source={props.image} style={{ marginBottom: 5 }} />
-        <Card.Content>
-            <Text variant="titleLarge">{props.title}</Text>
-            <Text variant="bodyMedium">{props.content}</Text>
-            <Text variant="bodyMedium" style={{ color: COLORS.grey }}>{props.date}</Text>
-        </Card.Content>
-        <Card.Actions>
-        </Card.Actions>
-    </Card>
+const CardComponent = ({ image, title, content, date, onPress }) => (
+    <TouchableOpacity onPress={onPress}>
+        <Card
+            style={{
+                width: wp(80),
+                alignSelf: 'center',
+                marginTop: 20,
+                backgroundColor: COLORS.cardBackground,
+            }}>
+            <Card.Cover source={image} style={{ marginBottom: 5 }} />
+            <Card.Content>
+                <Text variant="titleLarge">{title}</Text>
+                <Text variant="bodyMedium">{content}</Text>
+                <Text variant="bodyMedium" style={{ color: COLORS.grey }}>{date}</Text>
+            </Card.Content>
+        </Card>
+    </TouchableOpacity>
 );
 
 const NewsScreen = () => {
+    const navigation = useNavigation();
+
+    const handlePress = (item) => {
+        // Navigate to the NewsDetail screen with parameters
+        navigation.navigate('NewsDetail', { item });
+    };
 
     return (
         <ImageBackground
@@ -89,6 +95,7 @@ const NewsScreen = () => {
                                 title={item.title}
                                 date={item.date}
                                 content={item.content}
+                                onPress={() => handlePress(item)}
                             />
                         ))}
                     </View>
