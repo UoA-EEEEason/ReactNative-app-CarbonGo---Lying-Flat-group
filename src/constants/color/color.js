@@ -10,5 +10,6 @@ export const COLORS = {
     backgroudGreen: '#56AF37',
     buttonGreen: '#00B161',
     textGreen: '#23531E',
+    cardBackground: '#F2FDEA',
   };
   
