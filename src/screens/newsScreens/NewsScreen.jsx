@@ -52,7 +52,7 @@ const CardComponent = ({ image, title, content, date, onPress }) => (
                 marginTop: 20,
                 backgroundColor: COLORS.cardBackground,
             }}>
-            <Card.Cover source={image} style={{ marginBottom: 5 }} />
+            <Card.Cover source={image} style={{ marginBottom: 5, borderBottomLeftRadius: 0, borderBottomRightRadius: 0 }} />
             <Card.Content>
                 <Text variant="titleLarge">{title}</Text>
                 <Text variant="bodyMedium">{content}</Text>
