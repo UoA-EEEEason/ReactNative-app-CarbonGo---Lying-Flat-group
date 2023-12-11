@@ -74,7 +74,6 @@ const HomeScreen = () => {
           mode='elevated'
           color='green'
         />
-        <Portal>
           <FAB.Group
             open={openGroup1}
             visible
@@ -147,7 +146,6 @@ const HomeScreen = () => {
               }
             }}
           />
-        </Portal>
         <FAB
           icon="account-circle-outline"
           style={styles.fabAccount}
@@ -157,7 +155,6 @@ const HomeScreen = () => {
           label='Account'
           size='large'
         />
-        <Portal>
           <FAB.Group
             open={openGroup2}
             visible
@@ -218,7 +215,6 @@ const HomeScreen = () => {
               }
             }}
           />
-        </Portal>
       </SafeAreaView>
     </ImageBackground>
 
