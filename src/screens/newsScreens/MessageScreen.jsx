@@ -21,54 +21,42 @@ const cartItems = [
     {
         id: 1,
         title: 'news1',
-        date: '2023-04-05T14:30:00.000Z',
         content: 'This this news1',
-        image: require('./../../assets/images/news1.png'),
     },
     {
         id: 2,
         title: 'news2',
-        date: '2023-04-05T14:30:00.000Z',
         content: 'This this news2',
-        image: require('./../../assets/images/news2.png'),
     },
     {
         id: 3,
         title: 'news3',
-        date: '2023-04-05T14:30:00.000Z',
         content: 'This this news3',
-        image: require('./../../assets/images/news1.png'),
     },
 
     // ... more items
 ];
 
-const CardComponent = ({ image, title, content, date, onPress }) => (
-    <TouchableOpacity onPress={onPress}>
-        <Card
-            style={{
-                width: wp(80),
-                alignSelf: 'center',
-                marginTop: 20,
-                backgroundColor: COLORS.cardBackground,
-            }}>
-            <Card.Cover source={image} style={{ marginBottom: 5 }} />
-            <Card.Content>
-                <Text variant="titleLarge">{title}</Text>
-                <Text variant="bodyMedium">{content}</Text>
-                <Text variant="bodyMedium" style={{ color: COLORS.grey }}>{date}</Text>
-            </Card.Content>
-        </Card>
-    </TouchableOpacity>
+const CardComponent = ({ title, content }) => (
+    <Card
+        style={styles.card}>
+        <View style={styles.cardLayout}>
+            <Image source={require('./../../assets/images/logoCircle.png')} style={styles.cardImage} />
+            <View style={styles.cardText}>
+                <Text style={styles.title}>{title}</Text>
+                <Text style={styles.content}>{content}</Text>
+            </View>
+        </View>
+    </Card>
 );
 
-const NewsScreen = () => {
+const MessageScreen = () => {
     const navigation = useNavigation();
-    // Navigate to the NewsDetail screen with parameters
-    const handlePressCard = (item) => {
+
+    const handlePress = (item) => {
+        // Navigate to the NewsDetail screen with parameters
         navigation.navigate('NewsDetail', { item });
     };
-
 
     return (
         <ImageBackground
@@ -81,14 +69,14 @@ const NewsScreen = () => {
                 <ScrollView>
                     <View style={styles.tab}>
                         <TouchableOpacity onPress={() => {
+                            navigation.navigate('News');
                             console.log('News')
                         }} style={styles.tabLeftButton}><Text style={styles.tabText}>News</Text></TouchableOpacity>
                         <TouchableOpacity onPress={() => {
-                            navigation.navigate('Message');
-                            console.log('Message')
+                            console.log('Messages')
                         }} style={styles.tabRightButton}><Text style={styles.tabText}>Messages</Text></TouchableOpacity>
                     </View>
-                    <View >
+                    <View>
                         {cartItems.map(item => (
                             <CardComponent
                                 key={item.id}
@@ -96,7 +84,7 @@ const NewsScreen = () => {
                                 title={item.title}
                                 date={item.date}
                                 content={item.content}
-                                onPress={() => handlePressCard(item)}
+                                onPress={() => handlePress(item)}
                             />
                         ))}
                     </View>
@@ -107,7 +95,7 @@ const NewsScreen = () => {
     );
 };
 
-export default NewsScreen;
+export default MessageScreen;
 
 const styles = StyleSheet.create({
     backgroundImage: {
@@ -135,7 +123,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.3,
         shadowRadius: 6,
         elevation: 10,
-        backgroundColor: COLORS.white,
+        backgroundColor: COLORS.buttonGreen,
         borderRadius: 20,
         marginBottom: 10,
     },
@@ -147,7 +135,7 @@ const styles = StyleSheet.create({
         width: wp(32),
         borderTopLeftRadius: 20,
         borderBottomLeftRadius: 20,
-        backgroundColor: COLORS.buttonGreen,
+        backgroundColor: COLORS.white,
     },
     tabRightButton: {
         flex: 1,
@@ -157,10 +145,40 @@ const styles = StyleSheet.create({
         width: wp(32),
         borderTopRightRadius: 20,
         borderBottomRightRadius: 20,
-        backgroundColor: COLORS.white,
+        backgroundColor: COLORS.buttonGreen,
     },
     tabText: {
         fontSize: 15,
         color: COLORS.black,
-    }
+    },
+    card: {
+        width: wp(80),
+        alignSelf: 'center',
+        marginTop: hp(2),
+        backgroundColor: COLORS.cardBackground,
+        overflow: 'hidden',
+    },
+    cardLayout: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    cardImage: {
+        height: hp(10),
+        width: wp(20),
+        borderTopLeftRadius: 20,
+        borderBottomLeftRadius: 20,
+    },
+    cardText: {
+        flex: 1,
+        paddingLeft: wp(4),
+    },
+    title: {
+        fontSize: wp(5),
+        color: COLORS.black,
+        marginBottom: hp(1),
+    },
+    content: {
+        fontSize: wp(4),
+        color: COLORS.black,
+    },
 });

@@ -76,6 +76,11 @@ const UnAuthenticatedStack = () => {
         component={News.NewsDetailScreen}
         options={{ headerShown: false }}
       />
+      <Stack.Screen
+        name="Message"
+        component={News.MessageScreen}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 };
