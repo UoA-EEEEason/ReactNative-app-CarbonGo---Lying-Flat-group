@@ -75,7 +75,7 @@ const TestsScreen = () => {
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.button}
-                        onPress={() => navigation.navigate('Login')}
+                        onPress={() => navigation.navigate('Welcome')}
                     >
                         <Text style={styles.buttonText}>Login & Signup</Text>
                     </TouchableOpacity>
