@@ -22,9 +22,11 @@ const RegisterScreen = () => {
       source={require('./../../assets/images/background.png')}
       style={styles.backgroundImage}
       resizeMode="cover">
-      <StatusComponent title={'Register'} />
+      
       <SafeAreaView style={styles.safeArea}>
+      <StatusComponent title={'Register'} />
         <ScrollView contentContainerStyle={styles.scrollView}>
+        
           <Image
             source={require('./../../assets/images/logo.png')}
             style={styles.logo}

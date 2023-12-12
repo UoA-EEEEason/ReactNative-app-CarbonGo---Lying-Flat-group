@@ -27,8 +27,9 @@ const WelcomeScreen = () => {
       source={require('./../../assets/images/background.png')}
       style={styles.backgroundImage}
       resizeMode="cover">
-      <StatusComponent title={'Welcome'} />
+      
       <SafeAreaView style={styles.safeArea}>
+      <StatusComponent title={'Welcome'} />
         <ScrollView contentContainerStyle={styles.scrollView}>
           <Image
             source={require('./../../assets/images/logo.png')}
