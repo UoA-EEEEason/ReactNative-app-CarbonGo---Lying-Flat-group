@@ -42,7 +42,7 @@ import {
 const PageButton = (props) => (
     <Button
         mode="contained-tonal"
-        onPress={() => console.log('Pressed')}
+        // onPress={() => console.log('Pressed')}
         buttonColor='#00B161'
         textColor='white'
         rippleColor={'#00B161'}
@@ -94,7 +94,31 @@ const RegisterScreen = () => {
             <TextInputCompnent
             style={styles.passInput}
             label={'Password'}></TextInputCompnent>
-            <PageButton name={'Register'} />
+            <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+            <Button
+              mode="contained-tonal"
+            //   onPress={() => console.log('Pressed')}
+              buttonColor="#00B161"
+              textColor="white"
+              rippleColor={'#00B161'}
+              // uppercase
+              style={{
+                width: '80%',
+                height: '8%',
+                alignSelf: 'center',
+                marginTop: '10%',
+                borderRadius: 5,
+                shadowColor: 'grew',
+                shadowOffset: {width: 0, height: 2},
+                shadowOpacity: 0.25,
+                shadowRadius: 3.84,
+                elevation: 5,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <Text style={{fontSize: 20}}> Register</Text>
+            </Button>
+          </TouchableOpacity>
             <Text style={styles.alreadyText}>Already have an account?</Text>
             <TouchableOpacity
             onPress={() => navigation.navigate('LogIn')}>
@@ -189,6 +213,6 @@ const styles = StyleSheet.create({
     color: COLORS.black,
     position: 'absolute',
     alignSelf: 'center',
-    marginTop: '145%',
+    marginTop: '155%',
   },
 });

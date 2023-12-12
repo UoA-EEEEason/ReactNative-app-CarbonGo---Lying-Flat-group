@@ -51,7 +51,7 @@ const PageButton = (props) => (
             width: '80%',
             height: '10%',
             alignSelf: 'center',
-            marginTop: '10%',
+            marginTop: '20%',
             borderRadius: 5,
             shadowColor: 'grew', 
             shadowOffset: { width: 0, height: 2 },
@@ -74,7 +74,7 @@ const ResetScreen = () => {
       style={styles.backgroundImage}
       resizeMode="cover">
       <SafeAreaView style={{flex: 1}}>
-        <StatusComponent title={'Register'} />
+        <StatusComponent title={'Reset Password'} />
 
         <ScrollView>
           <View>
