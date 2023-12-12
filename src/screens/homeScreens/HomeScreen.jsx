@@ -8,15 +8,20 @@ import {
   ImageBackground,
   Image,
   StyleSheet,
+  Dimensions,
 } from 'react-native';
 import React from 'react';
 import { COLORS } from './../../constants/color/color';
 import { StatusComponent } from './../../components';
-import { FAB, Portal } from 'react-native-paper';
+import { FAB, Portal, Modal, Button, IconButton } from 'react-native-paper';
+
 import { useNavigation } from '@react-navigation/native';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
+
+  const screenWidth = Dimensions.get('window').width;
+  const screenHeight = Dimensions.get('window').height;
 
   const [openGroup1, setOpenGroup1] = React.useState(false);
   const [openGroup2, setOpenGroup2] = React.useState(false);
@@ -25,6 +30,11 @@ const HomeScreen = () => {
   const onStateChangeGroup1 = ({ open }) => setOpenGroup1(open);
   const onStateChangeGroup2 = ({ open }) => setOpenGroup2(open);
   const onStateChangeGroup3 = ({ open }) => setOpenGroup3(open);
+
+  const [isModalVisible, setIsModalVisible] = React.useState(false);
+
+  const openModal = () => setIsModalVisible(true);
+  const closeModal = () => setIsModalVisible(false);
 
   return (
     <ImageBackground
@@ -173,7 +183,7 @@ const HomeScreen = () => {
           actions={[
           ]}
           onStateChange={onStateChangeGroup3}
-          onPress={() => navigation.navigate('News')}
+          onPress={() => navigation.navigate('Account')}
         />
         <FAB.Group
           open={openGroup2}
@@ -217,7 +227,7 @@ const HomeScreen = () => {
             },
             {
               icon: 'share',
-              onPress: () => console.log('Share app'),
+              onPress: openModal,
               color: 'green',
               style: {
                 justifyContent: 'center',
@@ -235,6 +245,26 @@ const HomeScreen = () => {
             }
           }}
         />
+        <Modal visible={isModalVisible} onDismiss={closeModal}>
+          <View style={styles.modal}>
+            <IconButton
+              icon="close-circle-outline"
+              size={30}
+              onPress={closeModal}
+              style={styles.closeButton}
+            />
+            <Text style={styles.modalText}>Share to</Text>
+            <Image source={require('./../../assets/images/news1.png')} style={styles.modalImage} />
+            <View style={styles.iconButtonContainer}>
+              <Button icon="facebook" style={styles.iconButton} mode="contained" onPress={() => console.log('Pressed')}>
+                Facebook
+              </Button>
+              <Button icon="twitter" style={styles.iconButton} mode="contained" onPress={() => console.log('Pressed')}>
+                Twitter
+              </Button>
+            </View>
+          </View>
+        </Modal>
       </SafeAreaView>
     </ImageBackground>
 
@@ -292,5 +322,46 @@ const styles = StyleSheet.create({
     position: 'absolute',
     marginRight: '2%',
     bottom: '8%',
+  },
+  modal: {
+    backgroundColor: '#D9F3D9',
+    padding: 20,
+    borderRadius: 20,
+    width: '90%',
+    height: '85%',
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalText: {
+    color: COLORS.darkGrey,
+    textAlign: 'center',
+    fontSize: 25,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  modalImage: {
+    width: '80%',
+    height: '65%',
+    marginBottom: 20,
+  },
+  iconButtonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    width: '100%',
+  },
+  iconButton: {
+    width: '36%',
+    borderRadius: 10,
+    backgroundColor: COLORS.buttonGreen,
+  },
+  iconButtonText: {
+    color: 'white',
+  },
+  closeButton: {
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    margin: 15,
   },
 });
