@@ -20,9 +20,11 @@ const HomeScreen = () => {
 
   const [openGroup1, setOpenGroup1] = React.useState(false);
   const [openGroup2, setOpenGroup2] = React.useState(false);
+  const [openGroup3, setOpenGroup3] = React.useState(false);
 
   const onStateChangeGroup1 = ({ open }) => setOpenGroup1(open);
   const onStateChangeGroup2 = ({ open }) => setOpenGroup2(open);
+  const onStateChangeGroup3 = ({ open }) => setOpenGroup3(open);
 
   return (
     <ImageBackground
@@ -74,147 +76,165 @@ const HomeScreen = () => {
           mode='elevated'
           color='green'
         />
-          <FAB.Group
-            open={openGroup1}
-            visible
-            color='green'
-            backdropColor='transparent'
-            style={styles.fabCarbon}
-            fabStyle={{
-              backgroundColor: 'white',
-              borderRadius: 60,
-              height: 70,
-              width: 70,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-            icon={openGroup1 ? 'close' : 'foot-print'}
-            actions={[
-              {
-                icon: 'walk',
-                onPress: () => console.log('Pressed walk'),
-                color: 'green',
-                style: {
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  height: 55,
-                  width: 55,
-                  backgroundColor: 'white',
-                },
-              },
-              {
-                icon: 'bus-marker',
-                onPress: () => console.log('Pressed bus'),
-                color: 'green',
-                style: {
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  height: 55,
-                  width: 55,
-                  backgroundColor: 'white',
-                },
-              },
-              {
-                icon: 'flash',
-                onPress: () => console.log('Pressed electricity'),
-                color: 'green',
-                style: {
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  height: 55,
-                  width: 55,
-                  backgroundColor: 'white',
-                },
-              },
-              {
-                icon: 'food',
-                onPress: () => console.log('Pressed food'),
-                color: 'green',
-                style: {
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  height: 55,
-                  width: 55,
-                  backgroundColor: 'white',
-                },
-              },
-            ]}
-            onStateChange={onStateChangeGroup1}
-            onPress={() => {
-              if (openGroup1) {
-                // do something if the speed dial is open
-              }
-            }}
-          />
-        <FAB
-          icon="account-circle-outline"
-          style={styles.fabAccount}
-          onPress={() => console.log('Pressed')}
-          mode='elevated'
+        <FAB.Group
+          open={openGroup1}
+          visible
           color='green'
-          label='Account'
-          size='large'
+          backdropColor='transparent'
+          style={styles.fabCarbon}
+          fabStyle={{
+            backgroundColor: 'white',
+            borderRadius: 60,
+            height: 70,
+            width: 70,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+          icon={openGroup1 ? 'close' : 'foot-print'}
+          actions={[
+            {
+              icon: 'walk',
+              onPress: () => console.log('Pressed walk'),
+              color: 'green',
+              style: {
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: 55,
+                width: 55,
+                backgroundColor: 'white',
+              },
+            },
+            {
+              icon: 'bus-marker',
+              onPress: () => console.log('Pressed bus'),
+              color: 'green',
+              style: {
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: 55,
+                width: 55,
+                backgroundColor: 'white',
+              },
+            },
+            {
+              icon: 'flash',
+              onPress: () => console.log('Pressed electricity'),
+              color: 'green',
+              style: {
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: 55,
+                width: 55,
+                backgroundColor: 'white',
+              },
+            },
+            {
+              icon: 'food',
+              onPress: () => console.log('Pressed food'),
+              color: 'green',
+              style: {
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: 55,
+                width: 55,
+                backgroundColor: 'white',
+              },
+            },
+          ]}
+          onStateChange={onStateChangeGroup1}
+          onPress={() => {
+            if (openGroup1) {
+              // do something if the speed dial is open
+            }
+          }}
         />
-          <FAB.Group
-            open={openGroup2}
-            visible
-            color='green'
-            backdropColor='transparent'
-            style={styles.fabGroup}
-            fabStyle={{
-              backgroundColor: 'white',
-              borderRadius: 60,
-              height: 70,
-              width: 70,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-            icon={openGroup2 ? 'menu-open' : 'menu'}
-            actions={[
-              {
-                icon: 'google-analytics',
-                onPress: () => console.log('Data analysis'),
-                color: 'green',
-                style: {
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  height: 55,
-                  width: 55,
-                  backgroundColor: 'white',
-                },
+        <FAB.Group
+          open={openGroup3}
+          visible
+          color='green'
+          backdropColor='transparent'
+          style={styles.fabAccount}
+          label='Account'
+          fabStyle={{
+            backgroundColor: 'white',
+            borderRadius: 60,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: COLORS.white,
+            position: 'absolute',
+            bottom: '8%',
+            justifyContent: 'center',
+            alignItems: 'center',
+            alignSelf: 'center',
+            height: 70,
+            width: 160,
+          }}
+          icon={openGroup3 ? 'account-circle-outline' : 'account-circle-outline'}
+          actions={[
+          ]}
+          onStateChange={onStateChangeGroup3}
+          onPress={() => navigation.navigate('News')}
+        />
+        <FAB.Group
+          open={openGroup2}
+          visible
+          color='green'
+          backdropColor='transparent'
+          style={styles.fabGroup}
+          fabStyle={{
+            backgroundColor: 'white',
+            borderRadius: 60,
+            height: 70,
+            width: 70,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+          icon={openGroup2 ? 'menu-open' : 'menu'}
+          actions={[
+            {
+              icon: 'google-analytics',
+              onPress: () => console.log('Data analysis'),
+              color: 'green',
+              style: {
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: 55,
+                width: 55,
+                backgroundColor: 'white',
               },
-              {
-                icon: 'email',
-                onPress: () => console.log('About us'),
-                color: 'green',
-                style: {
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  height: 55,
-                  width: 55,
-                  backgroundColor: 'white',
-                },
+            },
+            {
+              icon: 'email',
+              onPress: () => console.log('About us'),
+              color: 'green',
+              style: {
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: 55,
+                width: 55,
+                backgroundColor: 'white',
               },
-              {
-                icon: 'share',
-                onPress: () => console.log('Share app'),
-                color: 'green',
-                style: {
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  height: 55,
-                  width: 55,
-                  backgroundColor: 'white',
-                },
+            },
+            {
+              icon: 'share',
+              onPress: () => console.log('Share app'),
+              color: 'green',
+              style: {
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: 55,
+                width: 55,
+                backgroundColor: 'white',
               },
-            ]}
-            onStateChange={onStateChangeGroup2}
-            onPress={() => {
-              if (openGroup2) {
-                // do something if the speed dial is open
-              }
-            }}
-          />
+            },
+          ]}
+          onStateChange={onStateChangeGroup2}
+          onPress={() => {
+            if (openGroup2) {
+              // do something if the speed dial is open
+            }
+          }}
+        />
       </SafeAreaView>
     </ImageBackground>
 
@@ -264,15 +284,9 @@ const styles = StyleSheet.create({
     bottom: '8%',
   },
   fabAccount: {
-    backgroundColor: COLORS.white,
     position: 'absolute',
-    borderRadius: 60,
-    bottom: '9.8%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignSelf: 'center',
-    height: 70,
-    width: 160,
+    marginRight: '2%',
+    bottom: '8%',
   },
   fabGroup: {
     position: 'absolute',
