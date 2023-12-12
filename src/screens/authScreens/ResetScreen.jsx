@@ -49,7 +49,7 @@ const PageButton = (props) => (
         // uppercase
         style={{
             width: '80%',
-            height: '8%',
+            height: '10%',
             alignSelf: 'center',
             marginTop: '10%',
             borderRadius: 5,
@@ -62,11 +62,11 @@ const PageButton = (props) => (
             justifyContent: 'center',
         }}
     >
-        <Text style={{ fontSize: 20 }}>{props.name}</Text>
+        {props.name}
     </Button>
 );
 
-const LoginPageScreen = () => {
+const ResetScreen = () => {
     const navigation = useNavigation();
   return (
     <ImageBackground
@@ -74,7 +74,7 @@ const LoginPageScreen = () => {
       style={styles.backgroundImage}
       resizeMode="cover">
       <SafeAreaView style={{flex: 1}}>
-        <StatusComponent title={'Login'} />
+        <StatusComponent title={'Register'} />
 
         <ScrollView>
           <View>
@@ -85,7 +85,7 @@ const LoginPageScreen = () => {
             />
 
             <Text style={styles.createText}>
-            Login now to track all your carbon footprint!
+            We have sent an email to your email account with a verification code!
             </Text>
           </View>
           <TextInputCompnent
@@ -94,30 +94,15 @@ const LoginPageScreen = () => {
             
             <TextInputCompnent
             style={styles.passInput}
-            label={'Password'}></TextInputCompnent>
-            <PageButton name={'Login'} />
-            <TouchableOpacity
-            onPress={() => navigation.navigate('Reset')}>
-              <Text style={styles.forgotPass}>Forgot password?</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.buttonGoogleContainer}>
-              <View style={styles.iconGoogleContainer}>
-                <Icon name="google" size={24} color="#575DFB" />
-              </View>
-              <Text style={styles.buttonGoogleText}>Continue with Google</Text>
-            </TouchableOpacity>
-            <Text style={styles.noAccountText}>No account?</Text>
-            <TouchableOpacity
-            onPress={() => navigation.navigate('Register')}>
-              <Text style={styles.registerLink}>Register</Text>
-            </TouchableOpacity>
+            label={'New Password'}></TextInputCompnent>
+            <PageButton name={'Reset'} />
         </ScrollView>
       </SafeAreaView>
     </ImageBackground>
   );
 };
 
-export default LoginPageScreen;
+export default ResetScreen;
 
 const styles = StyleSheet.create({
   backgroundImage: {
@@ -168,16 +153,6 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 5,
     borderBottomRightRadius: 5,
   },
-  nameInput: {
-    backgroundColor: 'transparent',
-    borderWidth: 1,
-    borderColor: 'black',
-    width: '80%',
-    alignSelf: 'center',
-    marginTop: '10%',
-    borderBottomLeftRadius: 5,
-    borderBottomRightRadius: 5,
-  },
   passInput: {
     backgroundColor: 'transparent',
     borderWidth: 1,
@@ -200,46 +175,6 @@ const styles = StyleSheet.create({
     color: COLORS.black,
     position: 'absolute',
     alignSelf: 'center',
-    marginTop: '130%',
-  },
-  forgotPass: {
-    fontSize: 16,
-    textDecorationLine: 'underline',
-    color: COLORS.purple,
-    marginTop: '5%',
-    alignSelf: 'center',
-  },
-  buttonGoogleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderColor: 'black',
-    borderWidth: 1,
-    height: 40,
-    width: '80%',
-    borderRadius: 8,
-    marginTop: '10%',
-    alignSelf: 'center',
-  },
-  iconGoogleContainer: {
-    marginRight: 10,
-  },
-  buttonGoogleText: {
-    fontSize: 16,
-    color: COLORS.black,
-  },
-  registerLink: {
-    fontSize: 16,
-    textDecorationLine: 'underline',
-    color: COLORS.purple,
-    marginLeft: '60%',
-    marginTop: '10%',
-  },
-  noAccountText: {
-    fontSize: 16,
-    color: COLORS.black,
-    position: 'absolute',
-    marginLeft: '30%',
-    marginTop: '163%',
+    marginTop: '145%',
   },
 });

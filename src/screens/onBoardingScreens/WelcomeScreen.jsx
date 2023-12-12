@@ -50,7 +50,7 @@ const WelcomeScreen = () => {
       style={styles.backgroundImage}
       resizeMode="cover">
       <SafeAreaView style={{flex: 1}}>
-        {/* <StatusComponent title={'Demo screen'} /> */}
+        <StatusComponent title={'Welcome'} />
         {/* LOGO */}
         <Image
           source={require('./../../assets/images/logo.png')}
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     height: undefined,
     aspectRatio: 3,
     position: 'absolute',
-    top: 72,
+    top: 120,
     left: 0,
     right: 0,
     alignItems: 'center',
@@ -132,21 +132,21 @@ const styles = StyleSheet.create({
     color: COLORS.black,
     position: 'absolute',
     marginLeft: '8%',
-    marginTop: '40%',
+    marginTop: '50%',
   },
   carbonText: {
     fontSize: 30,
     color: COLORS.purple,
     position: 'absolute',
     marginLeft: '8%',
-    marginTop: '48%',
+    marginTop: '58%',
   },
   appText: {
     fontSize: 20,
     color: COLORS.black,
     position: 'absolute',
     marginLeft: '8%',
-    marginTop: '60%',
+    marginTop: '68%',
   },
   startText: {
     fontSize: 20,
