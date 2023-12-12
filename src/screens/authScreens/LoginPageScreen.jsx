@@ -24,8 +24,9 @@ const LoginPageScreen = () => {
       source={require('./../../assets/images/background.png')}
       style={styles.backgroundImage}
       resizeMode="cover">
-      <StatusComponent title={'Login'} />
+      
       <SafeAreaView style={styles.safeArea}>
+      <StatusComponent title={'Login'} />
         <ScrollView contentContainerStyle={styles.scrollView}>
           <Image
             source={require('./../../assets/images/logo.png')}

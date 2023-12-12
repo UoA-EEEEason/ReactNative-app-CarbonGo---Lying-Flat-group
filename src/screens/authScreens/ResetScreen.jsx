@@ -22,8 +22,9 @@ const ResetScreen = () => {
       source={require('./../../assets/images/background.png')}
       style={styles.backgroundImage}
       resizeMode="cover">
-      <StatusComponent title={'Reset Password'} />
+      
       <SafeAreaView style={styles.safeArea}>
+      <StatusComponent title={'Reset Password'} />
         <ScrollView contentContainerStyle={styles.scrollView}>
           <Image
             source={require('./../../assets/images/logo.png')}
