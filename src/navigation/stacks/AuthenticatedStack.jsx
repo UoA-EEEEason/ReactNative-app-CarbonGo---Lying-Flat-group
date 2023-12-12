@@ -5,6 +5,7 @@ import {
   Account,
   Tests,
   Auth,
+  OnboardingScreen,
 } from '../../screens';
 
 const Stack = createNativeStackNavigator();
@@ -25,6 +26,21 @@ const AuthenticatedStack = () => {
       <Stack.Screen
         name="Login"
         component={Auth.LoginScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Welcome"
+        component={OnboardingScreen.WelcomeScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Register"
+        component={Auth.RegisterScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="LogIn"
+        component={Auth.LoginPageScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen

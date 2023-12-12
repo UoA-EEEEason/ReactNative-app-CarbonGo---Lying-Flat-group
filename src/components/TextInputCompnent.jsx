@@ -16,17 +16,18 @@ const TextInputComponent = (props) => {
             value={text}
             mode='flat'
             onChangeText={text => setText(text)}
-            style={{
-                backgroundColor: 'transparent',
-                borderWidth: 1,
-                borderColor: 'black',
-                width: '80%',
-                alignSelf: 'center',
-                marginTop: 20,
-                borderBottomLeftRadius: 5,
-                borderBottomRightRadius: 5,
-            }}
+            style={props.style}
             theme={customTheme}
+            // {
+            //     backgroundColor: 'transparent',
+            //     borderWidth: 1,
+            //     borderColor: 'black',
+            //     width: '80%',
+            //     alignSelf: 'center',
+            //     marginTop: 20,
+            //     borderBottomLeftRadius: 5,
+            //     borderBottomRightRadius: 5,
+            // }
         />
     );
 };

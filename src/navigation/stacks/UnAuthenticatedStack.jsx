@@ -26,12 +26,12 @@ const UnAuthenticatedStack = () => {
   }
 
   return (
-    <Stack.Navigator initialRouteName={isAppFirstLaunch ? 'Welcome' : 'Login'}>
+    <Stack.Navigator initialRouteName={isAppFirstLaunch ? 'Loading' : 'Login'}>
       {isAppFirstLaunch && (
         <>
           <Stack.Screen
-            name="Welcome"
-            component={OnboardingScreen.WelcomeScreen}
+            name="Loading"
+            component={OnboardingScreen.LoadingScreen}
             options={{ headerShown: false }}
           />
         </>
@@ -44,6 +44,21 @@ const UnAuthenticatedStack = () => {
       <Stack.Screen
         name="Login"
         component={Auth.LoginScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Welcome"
+        component={OnboardingScreen.WelcomeScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Register"
+        component={Auth.RegisterScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="LogIn"
+        component={Auth.LoginPageScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen

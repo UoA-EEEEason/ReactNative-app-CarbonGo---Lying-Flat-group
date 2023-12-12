@@ -1,3 +1,4 @@
+import LoadingScreen from './LoadingScreen';
 import WelcomeScreen from './WelcomeScreen';
 
-export {WelcomeScreen};
+export {LoadingScreen, WelcomeScreen};
