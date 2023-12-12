@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Tests, Auth, OnboardingScreen, Home, Account } from '../../screens';
+import { Tests, Auth, OnboardingScreen, Home, Account, News } from '../../screens';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createNativeStackNavigator();
@@ -26,12 +26,12 @@ const UnAuthenticatedStack = () => {
   }
 
   return (
-    <Stack.Navigator initialRouteName={isAppFirstLaunch ? 'Welcome' : 'Login'}>
+    <Stack.Navigator initialRouteName={isAppFirstLaunch ? 'Loading' : 'Login'}>
       {isAppFirstLaunch && (
         <>
           <Stack.Screen
-            name="Welcome"
-            component={OnboardingScreen.WelcomeScreen}
+            name="Loading"
+            component={OnboardingScreen.LoadingScreen}
             options={{ headerShown: false }}
           />
         </>
@@ -44,6 +44,26 @@ const UnAuthenticatedStack = () => {
       <Stack.Screen
         name="Login"
         component={Auth.LoginScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Welcome"
+        component={OnboardingScreen.WelcomeScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Register"
+        component={Auth.RegisterScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="LogIn"
+        component={Auth.LoginPageScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Reset"
+        component={Auth.ResetScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen
@@ -79,7 +99,17 @@ const UnAuthenticatedStack = () => {
       
       <Stack.Screen
         name="News"
-        component={Account.AccountScreen}
+        component={News.NewsScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="NewsDetail"
+        component={News.NewsDetailScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Message"
+        component={News.MessageScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

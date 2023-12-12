@@ -1,7 +1,12 @@
 import {StyleSheet} from 'react-native';
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {Account, Tests, Auth} from '../../screens';
+import {
+  Account,
+  Tests,
+  Auth,
+  OnboardingScreen,
+} from '../../screens';
 
 const Stack = createNativeStackNavigator();
 
@@ -32,6 +37,26 @@ const AuthenticatedStack = () => {
         name="Login"
         component={Auth.LoginScreen}
         options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Welcome"
+        component={OnboardingScreen.WelcomeScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Register"
+        component={Auth.RegisterScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="LogIn"
+        component={Auth.LoginPageScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Reset"
+        component={Auth.ResetScreen}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="SignUp"
