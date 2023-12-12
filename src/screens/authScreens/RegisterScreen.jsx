@@ -1,135 +1,61 @@
-import React, {useEffect} from 'react';
-import {COLORS} from '../../constants/color/color';
-import {useNavigation} from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import {TextInput} from 'react-native-paper';
-import {Button} from 'react-native-paper';
+import React from 'react';
 import {
   View,
   SafeAreaView,
-  StatusBar,
   ScrollView,
   Text,
   TouchableOpacity,
   ImageBackground,
   Image,
-  StyleSheet,
+  StyleSheet
 } from 'react-native';
-import {
-  StatusComponent,
-  TextInputCompnent,
-  ButtonComponent,
-  IconButtonComponent,
-  CardComponent,
-} from './../../components';
-import {
-  AntDesignIcon,
-  Entypo,
-  EvilIcons,
-  Feather,
-  FontAwesome,
-  FontAwesome5,
-  Fontisto,
-  Foundation,
-  Ionicons,
-  MaterialCommunityIcons,
-  MaterialIcons,
-  Octicons,
-  SimpleLineIcons,
-  Zocial,
-} from './../../constants/icons/icons';
-
-const PageButton = props => (
-  <Button
-    mode="contained-tonal"
-    // onPress={() => console.log('Pressed')}
-    buttonColor="#00B161"
-    textColor="white"
-    rippleColor={'#00B161'}
-    // uppercase
-    style={{
-      width: '80%',
-      alignSelf: 'center',
-      marginTop: 20,
-      borderRadius: 5,
-      shadowColor: 'grew',
-      shadowOffset: {width: 0, height: 2},
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
-      elevation: 5,
-    }}>
-    {props.name}
-  </Button>
-);
+import { useNavigation } from '@react-navigation/native';
+import { COLORS } from '../../constants/color/color';
+import StatusComponent from './../../components/StatusComponent';
+import TextInputComponent from './../../components/TextInputCompnent';
 
 const RegisterScreen = () => {
   const navigation = useNavigation();
+
   return (
     <ImageBackground
       source={require('./../../assets/images/background.png')}
       style={styles.backgroundImage}
       resizeMode="cover">
-      <SafeAreaView style={{flex: 1}}>
-        <StatusComponent title={'Register'} />
-
-        <ScrollView>
-          <View>
-            <Image
-              source={require('./../../assets/images/logo.png')}
-              style={styles.logo}
-              resizeMode="contain"
-            />
-
-            <Text style={styles.createText}>
-              Create an account to access all the features of Carbon GO
+      <StatusComponent title={'Register'} />
+      <SafeAreaView style={styles.safeArea}>
+        <ScrollView contentContainerStyle={styles.scrollView}>
+          <Image
+            source={require('./../../assets/images/logo.png')}
+            style={styles.logo}
+            resizeMode="contain"
+          />
+          <Text style={styles.createText}>
+            Create an account to access all the features of Carbon Go
+          </Text>
+          <TextInputComponent
+            style={styles.input}
+            label={'Email'}
+          />
+          <TextInputComponent
+            style={styles.input}
+            label={'Name'}
+          />
+          <TextInputComponent
+            style={styles.input}
+            label={'Password'}
+          />
+          <TouchableOpacity
+            style={styles.loginButton}
+            onPress={() => navigation.navigate('Home')}>
+            <Text style={styles.buttonText}>Register</Text>
+          </TouchableOpacity>
+          <Text style={styles.noAccountText}>
+            Already have an account?
+            <Text onPress={() => navigation.navigate('LogIn')} style={styles.registerLink}>
+              {' '}Login
             </Text>
-          </View>
-          <View>
-            <TextInputCompnent
-              style={styles.emailInput}
-              label={'Email'}></TextInputCompnent>
-            <TextInputCompnent
-              style={styles.nameInput}
-              label={'Name'}></TextInputCompnent>
-            <TextInputCompnent
-              style={styles.passInput}
-              label={'Password'}></TextInputCompnent>
-          </View>
-          <View>
-            <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-              <Button
-                mode="contained-tonal"
-                //   onPress={() => console.log('Pressed')}
-                buttonColor="#00B161"
-                textColor="white"
-                rippleColor={'#00B161'}
-                // uppercase
-                style={{
-                  width: '80%',
-                  height: '8%',
-                  alignSelf: 'center',
-                  marginTop: '10%',
-                  borderRadius: 5,
-                  shadowColor: 'grew',
-                  shadowOffset: {width: 0, height: 2},
-                  shadowOpacity: 0.25,
-                  shadowRadius: 3.84,
-                  elevation: 5,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
-                <Text style={{fontSize: 20}}> Register</Text>
-              </Button>
-            </TouchableOpacity>
-          </View>
-
-          <Text style={styles.alreadyText}>Already have an account?</Text>
-          <View>
-            <Text style={styles.alreadyText}>Already have an account?</Text>
-            <TouchableOpacity onPress={() => navigation.navigate('LogIn')}>
-              <Text style={styles.loginLink}>Login</Text>
-            </TouchableOpacity>
-          </View>
+          </Text>
         </ScrollView>
       </SafeAreaView>
     </ImageBackground>
@@ -142,83 +68,56 @@ const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
   },
-  container: {
+  safeArea: {
     flex: 1,
+  },
+  scrollView: {
+    flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: StatusBar.currentHeight || 0,
-  },
-  demoText: {
-    fontSize: 30,
-    color: COLORS.textGreen,
-    textAlign: 'center',
-  },
-  logoContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: 10,
-    marginHorizontal: '10%',
   },
   logo: {
-    width: '100%',
+    width: '60%',
     height: undefined,
-    aspectRatio: 3,
-    position: 'absolute',
-    top: 1,
-    left: 0,
-    right: 0,
-    alignItems: 'center',
-    padding: 16,
+    aspectRatio: 1,
   },
   createText: {
+    fontSize: 16,
+    width: '80%',
+    color: COLORS.black,
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  input: {
+    backgroundColor: 'transparent',
+    borderWidth: 1,
+    borderColor: 'black',
+    width: '80%',
+    marginBottom: 20,
+    borderRadius: 5,
+  },
+  loginButton: {
+    width: '80%',
+    paddingVertical: 12,
+    borderRadius: 5,
+    backgroundColor: COLORS.buttonGreen,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 10,
+  },
+  buttonText: {
+    fontSize: 20,
+    color: COLORS.white,
+  },
+  noAccountText: {
     fontSize: 12,
     color: COLORS.black,
-    position: 'absolute',
-    marginLeft: '8%',
-    marginTop: '48%',
-  },
-  emailInput: {
-    backgroundColor: 'transparent',
-    borderWidth: 1,
-    borderColor: 'black',
-    width: '80%',
     alignSelf: 'center',
-    marginTop: '60%',
-    borderBottomLeftRadius: 5,
-    borderBottomRightRadius: 5,
+    marginBottom: 20,
   },
-  nameInput: {
-    backgroundColor: 'transparent',
-    borderWidth: 1,
-    borderColor: 'black',
-    width: '80%',
-    alignSelf: 'center',
-    marginTop: '10%',
-    borderBottomLeftRadius: 5,
-    borderBottomRightRadius: 5,
-  },
-  passInput: {
-    backgroundColor: 'transparent',
-    borderWidth: 1,
-    borderColor: 'black',
-    width: '80%',
-    alignSelf: 'center',
-    marginTop: '10%',
-    borderBottomLeftRadius: 5,
-    borderBottomRightRadius: 5,
-  },
-  loginLink: {
-    fontSize: 16,
+  registerLink: {
+    fontSize: 12,
     textDecorationLine: 'underline',
     color: COLORS.purple,
-    marginTop: '15%',
-    alignSelf: 'center',
-  },
-  alreadyText: {
-    fontSize: 20,
-    color: COLORS.black,
-    position: 'absolute',
-    alignSelf: 'center',
-    marginTop: '155%',
   },
 });

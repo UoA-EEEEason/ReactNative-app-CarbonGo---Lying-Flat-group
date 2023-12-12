@@ -1,123 +1,52 @@
-import React, {useEffect} from 'react';
-import {COLORS} from '../../constants/color/color';
-import {useNavigation} from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import {TextInput} from 'react-native-paper';
-import {Button} from 'react-native-paper';
+import React from 'react';
 import {
   View,
   SafeAreaView,
-  StatusBar,
   ScrollView,
   Text,
   TouchableOpacity,
   ImageBackground,
   Image,
   StyleSheet,
+  Dimensions
 } from 'react-native';
-import {
-  StatusComponent,
-  TextInputCompnent,
-  ButtonComponent,
-  IconButtonComponent,
-  CardComponent,
-} from './../../components';
-import {
-  AntDesignIcon,
-  Entypo,
-  EvilIcons,
-  Feather,
-  FontAwesome,
-  FontAwesome5,
-  Fontisto,
-  Foundation,
-  Ionicons,
-  MaterialCommunityIcons,
-  MaterialIcons,
-  Octicons,
-  SimpleLineIcons,
-  Zocial,
-} from './../../constants/icons/icons';
-
-const PageButton = props => (
-  <Button
-    mode="contained-tonal"
-    onPress={() => console.log('Pressed')}
-    buttonColor="#00B161"
-    textColor="white"
-    rippleColor={'#00B161'}
-    // uppercase
-    style={{
-      width: '80%',
-      height: '8%',
-      alignSelf: 'center',
-      marginTop: '10%',
-      borderRadius: 5,
-      shadowColor: 'grew',
-      shadowOffset: {width: 0, height: 2},
-      shadowOpacity: 0.25,
-      shadowRadius: 3.84,
-      elevation: 5,
-      alignItems: 'center',
-      justifyContent: 'center',
-    }}>
-    <Text style={{fontSize: 20}}>{props.name}</Text>
-  </Button>
-);
+import { useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { COLORS } from '../../constants/color/color';
+import StatusComponent from './../../components/StatusComponent';
+import TextInputComponent from './../../components/TextInputCompnent';
 
 const LoginPageScreen = () => {
   const navigation = useNavigation();
+
   return (
     <ImageBackground
       source={require('./../../assets/images/background.png')}
       style={styles.backgroundImage}
       resizeMode="cover">
-      <SafeAreaView style={{flex: 1}}>
-        <StatusComponent title={'Login'} />
-
-        <ScrollView>
-          <View>
-            <Image
-              source={require('./../../assets/images/logo.png')}
-              style={styles.logo}
-              resizeMode="contain"
-            />
-
-            <Text style={styles.createText}>
-              Login now to track all your carbon footprint!
-            </Text>
-          </View>
-          <TextInputCompnent
-            style={styles.emailInput}
-            label={'Email'}></TextInputCompnent>
-
-          <TextInputCompnent
-            style={styles.passInput}
-            label={'Password'}></TextInputCompnent>
-          <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-            <Button
-              mode="contained-tonal"
-            //   onPress={() => console.log('Pressed')}
-              buttonColor="#00B161"
-              textColor="white"
-              rippleColor={'#00B161'}
-              // uppercase
-              style={{
-                width: '80%',
-                height: '8%',
-                alignSelf: 'center',
-                marginTop: '10%',
-                borderRadius: 5,
-                shadowColor: 'grew',
-                shadowOffset: {width: 0, height: 2},
-                shadowOpacity: 0.25,
-                shadowRadius: 3.84,
-                elevation: 5,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <Text style={{fontSize: 20}}> Login</Text>
-            </Button>
+      <StatusComponent title={'Login'} />
+      <SafeAreaView style={styles.safeArea}>
+        <ScrollView contentContainerStyle={styles.scrollView}>
+          <Image
+            source={require('./../../assets/images/logo.png')}
+            style={styles.logo}
+            resizeMode="contain"
+          />
+          <Text style={styles.createText}>
+            Login now to track all your carbon footprint!
+          </Text>
+          <TextInputComponent
+            style={styles.input}
+            label={'Email'}
+          />
+          <TextInputComponent
+            style={styles.input}
+            label={'Password'}
+          />
+          <TouchableOpacity
+            style={styles.loginButton}
+            onPress={() => navigation.navigate('Home')}>
+            <Text style={styles.buttonText}>Login</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('Reset')}>
             <Text style={styles.forgotPass}>Forgot password?</Text>
@@ -128,9 +57,13 @@ const LoginPageScreen = () => {
             </View>
             <Text style={styles.buttonGoogleText}>Continue with Google</Text>
           </TouchableOpacity>
-          <Text style={styles.noAccountText}>No account?</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Register')}>
-            <Text style={styles.registerLink}>Register</Text>
+          <TouchableOpacity>
+            <Text style={styles.noAccountText}>
+              No account?{' '}
+              <Text onPress={() => navigation.navigate('Register')} style={styles.registerLink}>
+                Register
+              </Text>
+            </Text>
           </TouchableOpacity>
         </ScrollView>
       </SafeAreaView>
@@ -144,91 +77,53 @@ const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
   },
-  container: {
+  safeArea: {
     flex: 1,
+  },
+  scrollView: {
+    flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: StatusBar.currentHeight || 0,
-  },
-  demoText: {
-    fontSize: 30,
-    color: COLORS.textGreen,
-    textAlign: 'center',
-  },
-  logoContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: 10,
-    marginHorizontal: '10%',
   },
   logo: {
-    width: '100%',
+    width: '60%',
     height: undefined,
-    aspectRatio: 3,
-    position: 'absolute',
-    top: 1,
-    left: 0,
-    right: 0,
-    alignItems: 'center',
-    padding: 16,
+    aspectRatio: 1,
   },
   createText: {
     fontSize: 16,
+    width: '80%',
     color: COLORS.black,
-    position: 'absolute',
-    marginLeft: '8%',
-    marginTop: '48%',
+    textAlign: 'center',
+    marginBottom: 20,
   },
-  emailInput: {
+  input: {
     backgroundColor: 'transparent',
     borderWidth: 1,
     borderColor: 'black',
     width: '80%',
-    alignSelf: 'center',
-    marginTop: '60%',
-    borderBottomLeftRadius: 5,
-    borderBottomRightRadius: 5,
+    marginBottom: 20,
+    borderRadius: 5,
   },
-  nameInput: {
-    backgroundColor: 'transparent',
-    borderWidth: 1,
-    borderColor: 'black',
+  loginButton: {
     width: '80%',
-    alignSelf: 'center',
-    marginTop: '10%',
-    borderBottomLeftRadius: 5,
-    borderBottomRightRadius: 5,
+    paddingVertical: 12,
+    borderRadius: 5,
+    backgroundColor: COLORS.buttonGreen,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 10,
   },
-  passInput: {
-    backgroundColor: 'transparent',
-    borderWidth: 1,
-    borderColor: 'black',
-    width: '80%',
-    alignSelf: 'center',
-    marginTop: '10%',
-    borderBottomLeftRadius: 5,
-    borderBottomRightRadius: 5,
-  },
-  loginLink: {
-    fontSize: 16,
-    textDecorationLine: 'underline',
-    color: COLORS.purple,
-    marginTop: '15%',
-    alignSelf: 'center',
-  },
-  alreadyText: {
+  buttonText: {
     fontSize: 20,
-    color: COLORS.black,
-    position: 'absolute',
-    alignSelf: 'center',
-    marginTop: '130%',
+    color: COLORS.white,
   },
   forgotPass: {
-    fontSize: 16,
+    fontSize: 12,
     textDecorationLine: 'underline',
     color: COLORS.purple,
-    marginTop: '5%',
     alignSelf: 'center',
+    marginBottom: 30,
   },
   buttonGoogleContainer: {
     flexDirection: 'row',
@@ -236,11 +131,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderColor: 'black',
     borderWidth: 1,
-    height: 40,
     width: '80%',
     borderRadius: 8,
-    marginTop: '10%',
+    paddingVertical: 12,
     alignSelf: 'center',
+    marginBottom: 10,
   },
   iconGoogleContainer: {
     marginRight: 10,
@@ -249,18 +144,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: COLORS.black,
   },
+  noAccountText: {
+    fontSize: 12,
+    color: COLORS.black,
+    alignSelf: 'center',
+    marginBottom: 20,
+  },
   registerLink: {
-    fontSize: 16,
+    fontSize: 12,
     textDecorationLine: 'underline',
     color: COLORS.purple,
-    marginLeft: '60%',
-    marginTop: '10%',
-  },
-  noAccountText: {
-    fontSize: 16,
-    color: COLORS.black,
-    position: 'absolute',
-    marginLeft: '30%',
-    marginTop: '163%',
   },
 });
