@@ -2,8 +2,8 @@ import React, {useEffect} from 'react';
 import {COLORS} from '../../constants/color/color';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { TextInput } from 'react-native-paper';
-import { Button } from 'react-native-paper';
+import {TextInput} from 'react-native-paper';
+import {Button} from 'react-native-paper';
 import {
   View,
   SafeAreaView,
@@ -39,32 +39,31 @@ import {
   Zocial,
 } from './../../constants/icons/icons';
 
-const PageButton = (props) => (
-    <Button
-        mode="contained-tonal"
-        // onPress={() => console.log('Pressed')}
-        buttonColor='#00B161'
-        textColor='white'
-        rippleColor={'#00B161'}
-        // uppercase
-        style={{
-            width: '80%',
-            alignSelf: 'center',
-            marginTop: 20,
-            borderRadius: 5,
-            shadowColor: 'grew', 
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.25,
-            shadowRadius: 3.84,
-            elevation: 5,
-        }}
-    >
-        {props.name}
-    </Button>
+const PageButton = props => (
+  <Button
+    mode="contained-tonal"
+    // onPress={() => console.log('Pressed')}
+    buttonColor="#00B161"
+    textColor="white"
+    rippleColor={'#00B161'}
+    // uppercase
+    style={{
+      width: '80%',
+      alignSelf: 'center',
+      marginTop: 20,
+      borderRadius: 5,
+      shadowColor: 'grew',
+      shadowOffset: {width: 0, height: 2},
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5,
+    }}>
+    {props.name}
+  </Button>
 );
 
 const RegisterScreen = () => {
-    const navigation = useNavigation();
+  const navigation = useNavigation();
   return (
     <ImageBackground
       source={require('./../../assets/images/background.png')}
@@ -85,45 +84,52 @@ const RegisterScreen = () => {
               Create an account to access all the features of Carbon GO
             </Text>
           </View>
-          <TextInputCompnent
-            style={styles.emailInput}
-            label={'Email'}></TextInputCompnent>
+          <View>
             <TextInputCompnent
-            style={styles.nameInput}
-            label={'Name'}></TextInputCompnent>
+              style={styles.emailInput}
+              label={'Email'}></TextInputCompnent>
             <TextInputCompnent
-            style={styles.passInput}
-            label={'Password'}></TextInputCompnent>
+              style={styles.nameInput}
+              label={'Name'}></TextInputCompnent>
+            <TextInputCompnent
+              style={styles.passInput}
+              label={'Password'}></TextInputCompnent>
+          </View>
+          <View>
             <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-            <Button
-              mode="contained-tonal"
-            //   onPress={() => console.log('Pressed')}
-              buttonColor="#00B161"
-              textColor="white"
-              rippleColor={'#00B161'}
-              // uppercase
-              style={{
-                width: '80%',
-                height: '8%',
-                alignSelf: 'center',
-                marginTop: '10%',
-                borderRadius: 5,
-                shadowColor: 'grew',
-                shadowOffset: {width: 0, height: 2},
-                shadowOpacity: 0.25,
-                shadowRadius: 3.84,
-                elevation: 5,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <Text style={{fontSize: 20}}> Register</Text>
-            </Button>
-          </TouchableOpacity>
+              <Button
+                mode="contained-tonal"
+                //   onPress={() => console.log('Pressed')}
+                buttonColor="#00B161"
+                textColor="white"
+                rippleColor={'#00B161'}
+                // uppercase
+                style={{
+                  width: '80%',
+                  height: '8%',
+                  alignSelf: 'center',
+                  marginTop: '10%',
+                  borderRadius: 5,
+                  shadowColor: 'grew',
+                  shadowOffset: {width: 0, height: 2},
+                  shadowOpacity: 0.25,
+                  shadowRadius: 3.84,
+                  elevation: 5,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                <Text style={{fontSize: 20}}> Register</Text>
+              </Button>
+            </TouchableOpacity>
+          </View>
+
+          <Text style={styles.alreadyText}>Already have an account?</Text>
+          <View>
             <Text style={styles.alreadyText}>Already have an account?</Text>
-            <TouchableOpacity
-            onPress={() => navigation.navigate('LogIn')}>
+            <TouchableOpacity onPress={() => navigation.navigate('LogIn')}>
               <Text style={styles.loginLink}>Login</Text>
             </TouchableOpacity>
+          </View>
         </ScrollView>
       </SafeAreaView>
     </ImageBackground>
