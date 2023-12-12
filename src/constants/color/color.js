@@ -8,7 +8,7 @@ export const COLORS = {
     red: '#FF1E1E',
     white: '#FFFFFF',
     backgroudGreen: '#56AF37',
-    buttonGreen: '#00B161',
+    buttonGreen: '#51AE6B',
     textGreen: '#23531E',
     purple: '#575DFB',
     cardBackground: '#F2FDEA',
