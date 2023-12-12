@@ -64,6 +64,7 @@ const PageButton = (props) => (
 );
 
 const RegisterScreen = () => {
+    const navigation = useNavigation();
   return (
     <ImageBackground
       source={require('./../../assets/images/background.png')}
@@ -95,7 +96,8 @@ const RegisterScreen = () => {
             label={'Password'}></TextInputCompnent>
             <PageButton name={'Register'} />
             <Text style={styles.alreadyText}>Already have an account?</Text>
-            <TouchableOpacity>
+            <TouchableOpacity
+            onPress={() => navigation.navigate('LogIn')}>
               <Text style={styles.loginLink}>Login</Text>
             </TouchableOpacity>
         </ScrollView>
