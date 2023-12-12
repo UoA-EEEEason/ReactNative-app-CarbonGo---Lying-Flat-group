@@ -87,7 +87,7 @@ const TestsScreen = () => {
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.button}
-                        onPress={() => navigation.navigate('Account')}
+                        onPress={() => navigation.navigate('News')}
                     >
                         <Text style={styles.buttonText}>News pages</Text>
                     </TouchableOpacity>
