@@ -2,8 +2,8 @@ import React, {useEffect} from 'react';
 import {COLORS} from '../../constants/color/color';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { TextInput } from 'react-native-paper';
-import { Button } from 'react-native-paper';
+import {TextInput} from 'react-native-paper';
+import {Button} from 'react-native-paper';
 import {
   View,
   SafeAreaView,
@@ -39,35 +39,34 @@ import {
   Zocial,
 } from './../../constants/icons/icons';
 
-const PageButton = (props) => (
-    <Button
-        mode="contained-tonal"
-        onPress={() => console.log('Pressed')}
-        buttonColor='#00B161'
-        textColor='white'
-        rippleColor={'#00B161'}
-        // uppercase
-        style={{
-            width: '80%',
-            height: '8%',
-            alignSelf: 'center',
-            marginTop: '10%',
-            borderRadius: 5,
-            shadowColor: 'grew', 
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.25,
-            shadowRadius: 3.84,
-            elevation: 5,
-            alignItems: 'center',
-            justifyContent: 'center',
-        }}
-    >
-        <Text style={{ fontSize: 20 }}>{props.name}</Text>
-    </Button>
+const PageButton = props => (
+  <Button
+    mode="contained-tonal"
+    onPress={() => console.log('Pressed')}
+    buttonColor="#00B161"
+    textColor="white"
+    rippleColor={'#00B161'}
+    // uppercase
+    style={{
+      width: '80%',
+      height: '8%',
+      alignSelf: 'center',
+      marginTop: '10%',
+      borderRadius: 5,
+      shadowColor: 'grew',
+      shadowOffset: {width: 0, height: 2},
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5,
+      alignItems: 'center',
+      justifyContent: 'center',
+    }}>
+    <Text style={{fontSize: 20}}>{props.name}</Text>
+  </Button>
 );
 
 const LoginPageScreen = () => {
-    const navigation = useNavigation();
+  const navigation = useNavigation();
   return (
     <ImageBackground
       source={require('./../../assets/images/background.png')}
@@ -85,32 +84,54 @@ const LoginPageScreen = () => {
             />
 
             <Text style={styles.createText}>
-            Login now to track all your carbon footprint!
+              Login now to track all your carbon footprint!
             </Text>
           </View>
           <TextInputCompnent
             style={styles.emailInput}
             label={'Email'}></TextInputCompnent>
-            
-            <TextInputCompnent
+
+          <TextInputCompnent
             style={styles.passInput}
             label={'Password'}></TextInputCompnent>
-            <PageButton name={'Login'} />
-            <TouchableOpacity
-            onPress={() => navigation.navigate('Reset')}>
-              <Text style={styles.forgotPass}>Forgot password?</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.buttonGoogleContainer}>
-              <View style={styles.iconGoogleContainer}>
-                <Icon name="google" size={24} color="#575DFB" />
-              </View>
-              <Text style={styles.buttonGoogleText}>Continue with Google</Text>
-            </TouchableOpacity>
-            <Text style={styles.noAccountText}>No account?</Text>
-            <TouchableOpacity
-            onPress={() => navigation.navigate('Register')}>
-              <Text style={styles.registerLink}>Register</Text>
-            </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+            <Button
+              mode="contained-tonal"
+            //   onPress={() => console.log('Pressed')}
+              buttonColor="#00B161"
+              textColor="white"
+              rippleColor={'#00B161'}
+              // uppercase
+              style={{
+                width: '80%',
+                height: '8%',
+                alignSelf: 'center',
+                marginTop: '10%',
+                borderRadius: 5,
+                shadowColor: 'grew',
+                shadowOffset: {width: 0, height: 2},
+                shadowOpacity: 0.25,
+                shadowRadius: 3.84,
+                elevation: 5,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <Text style={{fontSize: 20}}> Login</Text>
+            </Button>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Reset')}>
+            <Text style={styles.forgotPass}>Forgot password?</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.buttonGoogleContainer}>
+            <View style={styles.iconGoogleContainer}>
+              <Icon name="google" size={24} color="#575DFB" />
+            </View>
+            <Text style={styles.buttonGoogleText}>Continue with Google</Text>
+          </TouchableOpacity>
+          <Text style={styles.noAccountText}>No account?</Text>
+          <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+            <Text style={styles.registerLink}>Register</Text>
+          </TouchableOpacity>
         </ScrollView>
       </SafeAreaView>
     </ImageBackground>
