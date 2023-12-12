@@ -19,14 +19,24 @@ const AuthenticatedStack = () => {
         options={{headerShown: false}}
       />
       <Stack.Screen
+        name="CertificatesOutlines"
+        component={Account.AccountCertificatesOutlinesScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="CertificatesDetails"
+        component={Account.AccountCertificatesDetailsScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
         name="Demo"
         component={Tests.CommonDemo}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="Login"
         component={Auth.LoginScreen}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="Welcome"
@@ -51,12 +61,12 @@ const AuthenticatedStack = () => {
       <Stack.Screen
         name="SignUp"
         component={Auth.SignUpScreen}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="Tests"
         component={Tests.TestsScreen}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
     </Stack.Navigator>
   );

@@ -87,6 +87,17 @@ const UnAuthenticatedStack = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
+        name="CertificatesOutlines"
+        component={Account.AccountCertificatesOutlinesScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="CertificatesDetails"
+        component={Account.AccountCertificatesDetailsScreen}
+        options={{headerShown: false}}
+      />
+      
+      <Stack.Screen
         name="News"
         component={News.NewsScreen}
         options={{ headerShown: false }}
