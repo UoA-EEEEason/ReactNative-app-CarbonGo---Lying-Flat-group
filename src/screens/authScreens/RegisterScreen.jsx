@@ -12,7 +12,6 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { COLORS } from '../../constants/color/color';
 import StatusComponent from './../../components/StatusComponent';
-import ButtonComponent from './../../components/ButtonComponent';
 import TextInputComponent from './../../components/TextInputCompnent';
 
 const RegisterScreen = () => {
@@ -23,9 +22,8 @@ const RegisterScreen = () => {
       source={require('./../../assets/images/background.png')}
       style={styles.backgroundImage}
       resizeMode="cover">
+      <StatusComponent title={'Register'} />
       <SafeAreaView style={styles.safeArea}>
-        <StatusComponent title={'Register'} />
-
         <ScrollView contentContainerStyle={styles.scrollView}>
           <Image
             source={require('./../../assets/images/logo.png')}
@@ -35,7 +33,6 @@ const RegisterScreen = () => {
           <Text style={styles.createText}>
             Create an account to access all the features of Carbon GO
           </Text>
-
           <TextInputComponent
             style={styles.input}
             label={'Email'}
@@ -48,23 +45,24 @@ const RegisterScreen = () => {
             style={styles.input}
             label={'Password'}
           />
-
-          <ButtonComponent
-            title="Register"
-            onPress={() => navigation.navigate('Home')}
-            style={styles.button}
-          />
-
-          <Text style={styles.alreadyText}>Already have an account?</Text>
-          <TouchableOpacity onPress={() => navigation.navigate('LogIn')}>
-            <Text style={styles.loginLink}>Login</Text>
+          <TouchableOpacity
+            style={styles.loginButton}
+            onPress={() => navigation.navigate('Home')}>
+            <Text style={styles.buttonText}>Register</Text>
           </TouchableOpacity>
+          <Text style={styles.noAccountText}>
+            Already have an account?
+            <Text onPress={() => navigation.navigate('LogIn')} style={styles.registerLink}>
+              {' '}Login
+            </Text>
+          </Text>
         </ScrollView>
       </SafeAreaView>
     </ImageBackground>
   );
 };
 
+// Using the same styles from LoginPageScreen
 const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
@@ -83,7 +81,6 @@ const styles = StyleSheet.create({
     width: '60%',
     height: undefined,
     aspectRatio: 1,
-    marginBottom: 20,
   },
   createText: {
     fontSize: 16,
@@ -100,24 +97,29 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     borderRadius: 5,
   },
-  button: {
+  loginButton: {
     width: '80%',
     paddingVertical: 12,
     borderRadius: 5,
     backgroundColor: COLORS.buttonGreen,
-    marginBottom: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 10,
   },
-  alreadyText: {
-    fontSize: 16,
+  buttonText: {
+    fontSize: 20,
+    color: COLORS.white,
+  },
+  noAccountText: {
+    fontSize: 12,
     color: COLORS.black,
+    alignSelf: 'center',
     marginBottom: 20,
-    textAlign: 'center',
   },
-  loginLink: {
-    fontSize: 16,
+  registerLink: {
+    fontSize: 12,
     textDecorationLine: 'underline',
     color: COLORS.purple,
-    textAlign: 'center',
   },
 });
 
