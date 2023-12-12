@@ -51,12 +51,12 @@ const LoginPageScreen = () => {
           <TouchableOpacity onPress={() => navigation.navigate('Reset')}>
             <Text style={styles.forgotPass}>Forgot password?</Text>
           </TouchableOpacity>
-          <View style={styles.buttonGoogleContainer}>
+          <TouchableOpacity style={styles.buttonGoogleContainer}>
             <View style={styles.iconGoogleContainer}>
               <Icon name="google" size={24} color="#575DFB" />
             </View>
             <Text style={styles.buttonGoogleText}>Continue with Google</Text>
-          </View>
+          </TouchableOpacity>
           <TouchableOpacity>
             <Text style={styles.noAccountText}>
               No account?{' '}
@@ -71,14 +71,14 @@ const LoginPageScreen = () => {
   );
 };
 
+export default LoginPageScreen;
+
 const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
   },
   safeArea: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   scrollView: {
     flexGrow: 1,
@@ -86,12 +86,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   logo: {
-    width: '60%', // Adjust according to your requirement
+    width: '60%',
     height: undefined,
     aspectRatio: 1,
   },
   createText: {
     fontSize: 16,
+    width: '80%',
     color: COLORS.black,
     textAlign: 'center',
     marginBottom: 20,
@@ -100,13 +101,13 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     borderWidth: 1,
     borderColor: 'black',
-    width: '100%',
+    width: '80%',
     marginBottom: 20,
     borderRadius: 5,
   },
   loginButton: {
-    width: '100%',
-    paddingVertical: 12, // Adjust for button height
+    width: '80%',
+    paddingVertical: 12,
     borderRadius: 5,
     backgroundColor: COLORS.buttonGreen,
     alignItems: 'center',
@@ -130,7 +131,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderColor: 'black',
     borderWidth: 1,
-    width: '100%',
+    width: '80%',
     borderRadius: 8,
     paddingVertical: 12,
     alignSelf: 'center',
@@ -155,5 +156,3 @@ const styles = StyleSheet.create({
     color: COLORS.purple,
   },
 });
-
-export default LoginPageScreen;

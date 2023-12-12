@@ -31,7 +31,7 @@ const RegisterScreen = () => {
             resizeMode="contain"
           />
           <Text style={styles.createText}>
-            Create an account to access all the features of Carbon GO
+            Create an account to access all the features of Carbon Go
           </Text>
           <TextInputComponent
             style={styles.input}
@@ -62,15 +62,14 @@ const RegisterScreen = () => {
   );
 };
 
-// Using the same styles from LoginPageScreen
+export default RegisterScreen;
+
 const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
   },
   safeArea: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   scrollView: {
     flexGrow: 1,
@@ -122,5 +121,3 @@ const styles = StyleSheet.create({
     color: COLORS.purple,
   },
 });
-
-export default RegisterScreen;
