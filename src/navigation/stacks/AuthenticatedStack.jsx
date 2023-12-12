@@ -1,11 +1,7 @@
 import {StyleSheet} from 'react-native';
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {
-  Account,
-  Tests,
-  Auth,
-} from '../../screens';
+import {Account, Tests, Auth} from '../../screens';
 
 const Stack = createNativeStackNavigator();
 
@@ -18,24 +14,34 @@ const AuthenticatedStack = () => {
         options={{headerShown: false}}
       />
       <Stack.Screen
+        name="CertificatesOutlines"
+        component={Account.AccountCertificatesOutlinesScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="CertificatesDetails"
+        component={Account.AccountCertificatesDetailsScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
         name="Demo"
         component={Tests.CommonDemo}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="Login"
         component={Auth.LoginScreen}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="SignUp"
         component={Auth.SignUpScreen}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="Tests"
         component={Tests.TestsScreen}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
     </Stack.Navigator>
   );
