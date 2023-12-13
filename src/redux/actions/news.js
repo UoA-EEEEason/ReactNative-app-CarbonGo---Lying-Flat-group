@@ -27,7 +27,12 @@ export const fetchNews = () => {
       .collection('news')
       .get()
       .then(querySnapshot => {
-        const documents = querySnapshot.docs.map(doc => doc.data());
+        const documents = querySnapshot.docs.map(doc => {
+          return {
+            id: doc.id,
+            ...doc.data(),
+          };
+        });
         dispatch({
           type: actionTypes.FETCH_NEWS,
           payload: documents,

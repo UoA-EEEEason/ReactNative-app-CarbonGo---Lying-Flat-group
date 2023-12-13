@@ -8,7 +8,12 @@ export const fetchMessage = () => {
       .collection('message')
       .get()
       .then(querySnapshot => {
-        const documents = querySnapshot.docs.map(doc => doc.data());
+        const documents = querySnapshot.docs.map(doc => {
+          return {
+            id: doc.id,
+            ...doc.data(),
+          };
+        });
         dispatch({
           type: actionTypes.FETCH_MESSAGE,
           payload: documents,
