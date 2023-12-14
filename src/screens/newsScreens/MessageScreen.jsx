@@ -144,7 +144,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: hp(2),
     backgroundColor: COLORS.cardBackground,
-    overflow: 'hidden',
   },
   cardLayout: {
     flexDirection: 'row',
