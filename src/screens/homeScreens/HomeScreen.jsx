@@ -116,7 +116,7 @@ const HomeScreen = () => {
             },
             {
               icon: 'bus-marker',
-              onPress: () => console.log('Pressed bus'),
+              onPress: () => navigation.navigate('Bus'),
               color: 'green',
               style: {
                 justifyContent: 'center',
@@ -128,7 +128,7 @@ const HomeScreen = () => {
             },
             {
               icon: 'flash',
-              onPress: () => console.log('Pressed electricity'),
+              onPress: () => navigation.navigate('Elec'),
               color: 'green',
               style: {
                 justifyContent: 'center',
@@ -140,7 +140,7 @@ const HomeScreen = () => {
             },
             {
               icon: 'food',
-              onPress: () => console.log('Pressed food'),
+              onPress: () => navigation.navigate('Food'),
               color: 'green',
               style: {
                 justifyContent: 'center',
@@ -203,7 +203,7 @@ const HomeScreen = () => {
           actions={[
             {
               icon: 'google-analytics',
-              onPress: () => console.log('Data analysis'),
+              onPress: () => navigation.navigate('DataAnalysis'),
               color: 'green',
               style: {
                 justifyContent: 'center',
@@ -215,7 +215,7 @@ const HomeScreen = () => {
             },
             {
               icon: 'email',
-              onPress: () => console.log('About us'),
+              onPress: () => navigation.navigate('About'),
               color: 'green',
               style: {
                 justifyContent: 'center',

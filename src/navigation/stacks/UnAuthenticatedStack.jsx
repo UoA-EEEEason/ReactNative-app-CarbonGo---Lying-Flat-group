@@ -96,7 +96,6 @@ const UnAuthenticatedStack = () => {
         component={Account.AccountCertificatesDetailsScreen}
         options={{headerShown: false}}
       />
-      
       <Stack.Screen
         name="News"
         component={News.NewsScreen}
@@ -110,6 +109,31 @@ const UnAuthenticatedStack = () => {
       <Stack.Screen
         name="Message"
         component={News.MessageScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Bus"
+        component={Home.BusScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Elec"
+        component={Home.SaveElecScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Food"
+        component={Home.SaveFoodScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="About"
+        component={Home.AboutUsScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="DataAnalysis"
+        component={Home.DataAnalysisScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

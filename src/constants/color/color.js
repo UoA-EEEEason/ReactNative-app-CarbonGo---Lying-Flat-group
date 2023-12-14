@@ -12,5 +12,6 @@ export const COLORS = {
     textGreen: '#23531E',
     purple: '#575DFB',
     cardBackground: '#F2FDEA',
+    lightBackground: '#D9F3D9',
   };
   
