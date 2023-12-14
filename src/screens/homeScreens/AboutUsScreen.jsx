@@ -75,12 +75,11 @@ const styles = StyleSheet.create({
     marginBottom: 60,
   },
   information: {
-    width: wp(100),
+    width: wp(90),
     backgroundColor: COLORS.lightBackground,
-    borderTopRightRadius: 20,
-    borderTopLeftRadius: 20,
+    borderRadius: 20,
     paddingLeft: 10,
-    paddingBottom: hp(55),
+    paddingBottom: hp(5),
   },
   title: {
     fontSize: 32,
@@ -97,7 +96,7 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
     textAlign: 'justify',
-    lineHeight: 34,
+    lineHeight: 30,
   },
   row: {
     flex: 1,
