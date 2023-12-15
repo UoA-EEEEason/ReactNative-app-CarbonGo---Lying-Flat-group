@@ -1,7 +1,13 @@
 import {StyleSheet} from 'react-native';
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {Account, Tests, Auth, OnboardingScreen, Home} from '../../screens';
+import {
+  Account,
+  Tests,
+  Auth,
+  OnboardingScreen,
+  Home,
+} from '../../screens';
 
 const Stack = createNativeStackNavigator();
 
@@ -24,23 +30,6 @@ const AuthenticatedStack = () => {
         options={{headerShown: false}}
       />
       <Stack.Screen
-        name="TreeDetails"
-        component={Account.AccountTreeDetailsScreen}
-        options={{headerShown: false}}
-      />
-      <Stack.Screen
-        name="RedeemHistory"
-        component={Account.AccountRedeemHistoryScreen}
-        options={{headerShown: false}}
-      />
-
-      <Stack.Screen
-        name="Proile"
-        component={Account.AccountProfileScreen}
-        options={{headerShown: false}}
-      />
-
-      <Stack.Screen
         name="Demo"
         component={Tests.CommonDemo}
         options={{headerShown: false}}
@@ -53,22 +42,22 @@ const AuthenticatedStack = () => {
       <Stack.Screen
         name="Welcome"
         component={OnboardingScreen.WelcomeScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Register"
         component={Auth.RegisterScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="LogIn"
         component={Auth.LoginPageScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Reset"
         component={Auth.ResetScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="SignUp"
@@ -83,27 +72,27 @@ const AuthenticatedStack = () => {
       <Stack.Screen
         name="Bus"
         component={Home.BusScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Elec"
         component={Home.SaveElecScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Food"
         component={Home.SaveFoodScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="About"
         component={Home.AboutUsScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="DataAnalysis"
         component={Home.DataAnalysisScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );
