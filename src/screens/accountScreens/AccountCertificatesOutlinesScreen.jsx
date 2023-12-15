@@ -19,7 +19,7 @@ const CertificatesCard = ({imageUrl, title, buttonPress}) => {
   const navigation = useNavigation();
   return (
     <Card style={styles.child1}>
-      <Card.Cover source={{uri: imageUrl}} />
+      <Card.Cover source={require('./../../assets/images/Certificates.jpg')} />
       <Text style={styles.textStyle}>{title}</Text>
       <Button
         style={styles.button}
@@ -59,9 +59,8 @@ const AccountCertificatesOutlinesScreen = () => {
         <StatusComponent title={'Certificates'} />
         <ScrollView>
           <View>
-            <CertificatesContainer></CertificatesContainer>
-            <CertificatesContainer></CertificatesContainer>
-            <CertificatesContainer></CertificatesContainer>
+          <CertificatesContainer title={'Kauri Cerficate'}/>
+            <CertificatesContainer title={'Kauri Cerficate'}/>
           </View>
         </ScrollView>
       </SafeAreaView>

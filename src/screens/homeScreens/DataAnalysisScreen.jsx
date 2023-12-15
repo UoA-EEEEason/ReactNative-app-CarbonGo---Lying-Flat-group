@@ -32,7 +32,6 @@ const DataAnalysisScreen = () => {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    // 模拟进度更新
     const interval = setInterval(() => {
       setProgress(oldProgress => {
         if (oldProgress === 1) {
@@ -41,7 +40,7 @@ const DataAnalysisScreen = () => {
         }
         return Math.min(oldProgress + 0.01, 0.3);
       });
-    }, 1);
+    }, 10);
 
     return () => clearInterval(interval);
   }, []);
@@ -70,7 +69,7 @@ const DataAnalysisScreen = () => {
                     { x: 4, y: 4 },
                     { x: 5, y: 6 },
                   ]}
-                  animate={{ duration: 2000, onLoad: {duration: 1000}}}
+                  animate={{ duration: 2000, onLoad: {duration: 5000}}}
                 />
               </VictoryChart>
               <Text style={styles.title}>Emission reduction proportion</Text>
