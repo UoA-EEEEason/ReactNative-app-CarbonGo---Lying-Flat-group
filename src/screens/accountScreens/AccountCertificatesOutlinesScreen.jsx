@@ -59,9 +59,8 @@ const AccountCertificatesOutlinesScreen = () => {
         <StatusComponent title={'Certificates'} />
         <ScrollView>
           <View>
-            <CertificatesContainer></CertificatesContainer>
-            <CertificatesContainer></CertificatesContainer>
-            <CertificatesContainer></CertificatesContainer>
+          <CertificatesContainer imageUrl={'/Users/zhaojiaqi/Lying-Flat-2/src/assets/images/Certificates.jpg'} title={'Kauri Cerficate'}/>
+            <CertificatesContainer imageUrl={'/Users/zhaojiaqi/Lying-Flat-2/src/assets/images/Certificates.jpg'} title={'Kauri Cerficate'}/>
           </View>
         </ScrollView>
       </SafeAreaView>
