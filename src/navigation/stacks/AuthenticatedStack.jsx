@@ -30,6 +30,21 @@ const AuthenticatedStack = () => {
         options={{headerShown: false}}
       />
       <Stack.Screen
+        name="TreeDetails"
+        component={Account.AccountTreeDetailsScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="RedeemHistory"
+        component={Account.AccountRedeemHistoryScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Profile"
+        component={Account.AccountProfileScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
         name="Demo"
         component={Tests.CommonDemo}
         options={{headerShown: false}}

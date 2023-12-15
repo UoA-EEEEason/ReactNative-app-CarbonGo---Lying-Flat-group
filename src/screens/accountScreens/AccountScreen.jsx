@@ -7,20 +7,21 @@ import {
   ImageBackground,
   StyleSheet,
   TouchableOpacity,
-  Icon,
+  Image,
 } from 'react-native';
 import React from 'react';
 import {COLORS} from './../../constants/color/color';
 import {StatusComponent, ButtonComponent} from './../../components';
-import {Button, Card} from 'react-native-paper';
+import {Button, Card, FAB} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
-
+  
 const CustomCard = ({imageUrl, title, buttonPress}) => {
+  const navigation = useNavigation();
   return (
     <Card style={styles.child1}>
       <Card.Cover source={{uri: imageUrl}} />
       <Text style={styles.textStyle}>{title}</Text>
-      <Button icon={<Icon name="Buy" color="#ffffff" />} onPress={buttonPress}>
+      <Button onPress={() => navigation.navigate('TreeDetails')}>
         Get it!
       </Button>
     </Card>
@@ -39,6 +40,11 @@ const CardContainer = ({imageUrl, title, onPress}) => {
 
 const AccountScreen = () => {
   const navigation = useNavigation();
+  const navigateToProfile = () => {
+ 
+    navigation.navigate('Profile');
+  };
+
   return (
     <ImageBackground
       source={require('./../../assets/images/background.png')}
@@ -56,13 +62,24 @@ const AccountScreen = () => {
                 backgroundColor: '#F2FDEA',
                 color: '#898A8D',
               }}>
-              <ButtonComponent title = "User"></ButtonComponent>
-              <Card.Title
-                style={styles.textCard}
-                title="My carbon foot"
-                subtitle="30 points"></Card.Title>
+              <View style={styles.UserLayout}>
+                
+                <TouchableOpacity style={styles.userButton} onPress={navigateToProfile}>
+                  <View style={styles.userIcon}>
+                    <Image
+                      source={require('./../../assets/images/user.png')}
+                      style={styles.userAvatar}
+                    />
+                  </View>
+                  <Text style={styles.userText}>User</Text>
+                </TouchableOpacity>
+                <View style = {styles.PointsText}>
+                  <Text>My carbon foot</Text>
+                  <Text>30 points</Text>
+                </View>
+              </View>
 
-              <Button onPress={() => console.log('Pressed')}>
+              <Button onPress={() => navigation.navigate('RedeemHistory')}>
                 Remeed History
               </Button>
               <View style={styles.container1}>
@@ -165,7 +182,49 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 10,
   },
-  CertificatesButton:{
+  CertificatesButton: {
     textAlign: 'center',
+  },
+  userButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF',
+    borderTopRightRadius: 20,
+    borderBottomRightRadius: 20,
+    borderTopLeftRadius: 0,
+    borderBottomLeftRadius: 0,
+    overflow: 'hidden', 
+    width: 132,
+    height:52,
+  },
+  userIcon: {
+    width: 40,
+    height: 40,
+    borderRadius: 20, 
+    justifyContent: 'center',
+    alignItems: 'center',
+    overflow: 'hidden', 
+    marginLeft:20
+  },
+  userAvatar: {
+    width: '100%',
+    height: '100%', 
+  },
+
+  userText: {
+    color:  COLORS.textGreen,
+    fontSize: 16,
+    marginLeft:20,
+    fontWeight: 'bold'
+    
+  },
+  UserLayout: {
+    flexDirection: 'row', 
+   
+    marginVertical:30,
+    
+  },
+  PointsText:{
+    marginHorizontal: 60
   }
 });
