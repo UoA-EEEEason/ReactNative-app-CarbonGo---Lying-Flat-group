@@ -10,30 +10,65 @@ import {
   Image,
 } from 'react-native';
 import React from 'react';
-import {COLORS} from './../../constants/color/color';
-import {StatusComponent, ButtonComponent} from './../../components';
-import {Button, Card, FAB} from 'react-native-paper';
-import {useNavigation} from '@react-navigation/native';
-  
-const CustomCard = ({imageUrl, title, buttonPress}) => {
+import { COLORS } from './../../constants/color/color';
+import { StatusComponent, ButtonComponent } from './../../components';
+import { Button, Card, IconButton } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
+import { hp, wp } from './../../utils/dimensions';
+
+const cartItems = [
+  {
+    id: 1,
+    title: 'news1',
+    date: '2023-04-05T14:30:00.000Z',
+    content: 'This this news1',
+    image: require('./../../assets/images/news1.png'),
+  },
+  {
+    id: 2,
+    title: 'news2',
+    date: '2023-04-05T14:30:00.000Z',
+    content: 'This this news1',
+    image: require('./../../assets/images/news1.png'),
+  },
+  {
+    id: 3,
+    title: 'news3',
+    date: '2023-04-05T14:30:00.000Z',
+    content: 'This this news1',
+    image: require('./../../assets/images/news1.png'),
+  },
+
+  // ... more items
+];
+
+const CustomCard = ({ imageUrl }) => {
   const navigation = useNavigation();
   return (
-    <Card style={styles.child1}>
-      <Card.Cover source={{uri: imageUrl}} />
-      <Text style={styles.textStyle}>{title}</Text>
-      <Button onPress={() => navigation.navigate('TreeDetails')}>
-        Get it!
-      </Button>
-    </Card>
-  );
-};
+    <View style={{ margin: 10 }}>
+      <TouchableOpacity onPress={() => navigation.navigate('TreeDetails')}>
+        <Card
+          mode='contained'
+          style={{
+            flex: 1,
+            width: wp(40),
+            height: wp(40),
+            backgroundColor: COLORS.cardBackground,
+          }}>
+          <Card.Cover
+            source={{ uri: imageUrl }}
+            style={{
+              height: wp(30),
+              borderBottomLeftRadius: 0,
+              borderBottomRightRadius: 0,
+            }}
 
-// CardContainer
-const CardContainer = ({imageUrl, title, onPress}) => {
-  return (
-    <View style={styles.container1}>
-      <CustomCard imageUrl={imageUrl} title={title} buttonPress={onPress} />
-      <CustomCard imageUrl={imageUrl} title={title} buttonPress={onPress} />
+          />
+          <Card.Content style={{ padding: 10, alignSelf: 'center' }}>
+            <Text variant="titleLarge" style={{ color: COLORS.black }}>Get it now!</Text>
+          </Card.Content>
+        </Card>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -41,16 +76,23 @@ const CardContainer = ({imageUrl, title, onPress}) => {
 const AccountScreen = () => {
   const navigation = useNavigation();
   const navigateToProfile = () => {
- 
     navigation.navigate('Profile');
   };
+
+  // Navigate to the Trees Detail screen with parameters
+  const handlePressCard = item => {
+    navigation.navigate('TreeDetails', { item });
+  };
+
+  // caculate whether the number of cards is odd
+  const isOdd = cartItems.length % 2 !== 0;
 
   return (
     <ImageBackground
       source={require('./../../assets/images/background.png')}
       style={styles.backgroundImage}
       resizeMode="cover">
-      <SafeAreaView style={{flex: 1}}>
+      <SafeAreaView style={{ flex: 1 }}>
         <StatusComponent title={'Account'} />
         <ScrollView>
           <View>
@@ -63,7 +105,7 @@ const AccountScreen = () => {
                 color: '#898A8D',
               }}>
               <View style={styles.UserLayout}>
-                
+
                 <TouchableOpacity style={styles.userButton} onPress={navigateToProfile}>
                   <View style={styles.userIcon}>
                     <Image
@@ -73,7 +115,7 @@ const AccountScreen = () => {
                   </View>
                   <Text style={styles.userText}>User</Text>
                 </TouchableOpacity>
-                <View style = {styles.PointsText}>
+                <View style={styles.PointsText}>
                   <Text>My carbon foot</Text>
                   <Text>30 points</Text>
                 </View>
@@ -96,37 +138,19 @@ const AccountScreen = () => {
 
             <Text style={styles.textTitle}>Carbon Credit Mall</Text>
 
-            <View style={styles.container1}>
-              <CustomCard
-                imageUrl="https://picsum.photos/700"
-                title="nidaye"
-                buttonPress={() => console.log('Pressed')}
-              />
-              <CustomCard
-                imageUrl="https://picsum.photos/700"
-                title="nidaye"
-                buttonPress={() => console.log('Pressed')}
-              />
+            {/* cards components */}
+            <View style={styles.CardsDisplay}>
+              {cartItems.map((item) => (
+                <CustomCard key={item.id} imageUrl="https://picsum.photos/700" onPress={() => handlePressCard(item)} />
+              ))}
+              {isOdd && <View
+                style={{
+                  margin: 10,
+                  width: wp(40),
+                  height: wp(40),
+                }} />}
             </View>
 
-            <View style={styles.container1}>
-              <CustomCard
-                imageUrl="https://picsum.photos/700"
-                title="nidaye"
-                buttonPress={() => console.log('Pressed')}
-              />
-              <CustomCard
-                imageUrl="https://picsum.photos/700"
-                title="nidaye"
-                buttonPress={() => console.log('Pressed')}
-              />
-            </View>
-
-            <CardContainer
-              imageUrl="https://picsum.photos/700"
-              title="nidaye"
-              onPress={() => console.log('Pressed')}
-            />
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -155,9 +179,8 @@ const styles = StyleSheet.create({
     alignItems: 'Right',
   },
   container1: {
+    flex: 1,
     flexDirection: 'row',
-    paddingHorizontal: 30,
-    paddingVertical: 10,
     justifyContent: 'space-between',
   },
 
@@ -193,38 +216,50 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 20,
     borderTopLeftRadius: 0,
     borderBottomLeftRadius: 0,
-    overflow: 'hidden', 
+    overflow: 'hidden',
     width: 132,
-    height:52,
+    height: 52,
   },
   userIcon: {
     width: 40,
     height: 40,
-    borderRadius: 20, 
+    borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
-    overflow: 'hidden', 
-    marginLeft:20
+    overflow: 'hidden',
+    marginLeft: 20
   },
   userAvatar: {
     width: '100%',
-    height: '100%', 
+    height: '100%',
   },
 
   userText: {
-    color:  COLORS.textGreen,
+    color: COLORS.textGreen,
     fontSize: 16,
-    marginLeft:20,
+    marginLeft: 20,
     fontWeight: 'bold'
-    
+
   },
   UserLayout: {
-    flexDirection: 'row', 
-   
-    marginVertical:30,
-    
+    flexDirection: 'row',
+
+    marginVertical: 30,
+
   },
-  PointsText:{
+  PointsText: {
     marginHorizontal: 60
+  },
+  CardsRowcontainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    marginBottom: 20,
+  },
+  CardsDisplay: {
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-evenly',
   }
 });
