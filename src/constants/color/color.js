@@ -13,5 +13,6 @@ export const COLORS = {
     purple: '#575DFB',
     cardBackground: '#F2FDEA',
     lightBackground: '#D9F3D9',
+    lightGrey: '#FFF6F6',
   };
   
