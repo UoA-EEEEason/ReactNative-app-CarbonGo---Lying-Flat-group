@@ -84,7 +84,7 @@ const AccountScreen = () => {
     navigation.navigate('TreeDetails', { item });
   };
 
-  // caculate whether the number of cards is odd
+  // calculate whether the number of cards is odd
   const isOdd = cartItems.length % 2 !== 0;
 
   return (
