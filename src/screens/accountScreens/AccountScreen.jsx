@@ -11,8 +11,8 @@ import {
 } from 'react-native';
 import React from 'react';
 import { COLORS } from './../../constants/color/color';
-import { StatusComponent, ButtonComponent } from './../../components';
-import { Button, Card, IconButton } from 'react-native-paper';
+import { StatusComponent } from './../../components';
+import { Button, Card } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { hp, wp } from './../../utils/dimensions';
 
@@ -33,6 +33,20 @@ const cartItems = [
   },
   {
     id: 3,
+    title: 'news3',
+    date: '2023-04-05T14:30:00.000Z',
+    content: 'This this news1',
+    image: require('./../../assets/images/news1.png'),
+  },
+  {
+    id: 4,
+    title: 'news3',
+    date: '2023-04-05T14:30:00.000Z',
+    content: 'This this news1',
+    image: require('./../../assets/images/news1.png'),
+  },
+  {
+    id: 5,
     title: 'news3',
     date: '2023-04-05T14:30:00.000Z',
     content: 'This this news1',
@@ -95,17 +109,9 @@ const AccountScreen = () => {
       <SafeAreaView style={{ flex: 1 }}>
         <StatusComponent title={'Account'} />
         <ScrollView>
-          <View>
-            <Card
-              style={{
-                width: '80%',
-                alignSelf: 'center',
-                marginTop: 20,
-                backgroundColor: '#F2FDEA',
-                color: '#898A8D',
-              }}>
+          <View container>
+            <View style={styles.UserInfoCard}>
               <View style={styles.UserLayout}>
-
                 <TouchableOpacity style={styles.userButton} onPress={navigateToProfile}>
                   <View style={styles.userIcon}>
                     <Image
@@ -115,27 +121,37 @@ const AccountScreen = () => {
                   </View>
                   <Text style={styles.userText}>User</Text>
                 </TouchableOpacity>
-                <View style={styles.PointsText}>
-                  <Text>My carbon foot</Text>
-                  <Text>30 points</Text>
-                </View>
+                <Text style={{ fontSize: 14, color: COLORS.textGreen, fontWeight: 'bold', marginLeft: wp(20) }}>My carbon foot</Text>
               </View>
 
-              <Button onPress={() => navigation.navigate('RedeemHistory')}>
-                Remeed History
+              <View style={styles.PointsText}>
+                <Text style={{ fontSize: hp(7), color: COLORS.textGreen, fontWeight: 'bold', marginRight: 10 }}>30</Text>
+                <Text style={{ fontSize: 13, color: COLORS.textGreen, lineHeight: hp(7) }}>points</Text>
+              </View>
+
+              <Button
+                style={styles.HistoryButton}
+                onPress={() => navigation.navigate('RedeemHistory')}
+              >
+                <Text style={styles.buttonText}>Remeed History &gt;</Text>
               </Button>
-              <View style={styles.container1}>
-                <Text>15 points redeemed</Text>
-                <Text>15 points convertible</Text>
-              </View>
-            </Card>
+            </View>
 
+            {/* The Tab */}
+            <View style={styles.CardTab}>
+              <Text style={styles.CardTabText}>15 points redeemed</Text>
+              <View style={{width:1,backgroundColor:COLORS.green}}/>
+              <Text style={styles.CardTabText}>15 points convertible</Text>
+            </View>
+
+            {/* My Certificates button */}
             <Button
               style={styles.CertificatesButton}
               onPress={() => navigation.navigate('CertificatesOutlines')}>
-              <Text style={styles.buttonText}>My Certificates</Text>
+              <Text style={styles.buttonText}>My Certificates &gt;</Text>
             </Button>
 
+            {/* Carbon Credit Mall */}
             <Text style={styles.textTitle}>Carbon Credit Mall</Text>
 
             {/* cards components */}
@@ -170,43 +186,55 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: StatusBar.currentHeight || 0,
   },
-  buttonCertificates: {
-    fontSize: 30,
-    textAlign: 'left',
+  UserInfoCard: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-evenly',
+    alignSelf: 'center',
+    width: wp(90),
+    height: wp(45),
+    marginTop: 20,
+    backgroundColor: COLORS.cardBackground,
+    borderTopLeftRadius: 18,
+    borderTopRightRadius: 18,
   },
-  textCard: {
-    color: '#898A8D',
-    alignItems: 'Right',
-  },
-  container1: {
+  CardTab: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignContent: 'center',
+    alignSelf: 'center',
+    width: wp(90),
+    height: wp(15),
+    borderBottomLeftRadius: 18,
+    borderBottomRightRadius: 18,
+    marginHorizontal: 20,
+    backgroundColor: COLORS.lightGrey,
   },
-
-  child1: {
+  CardTabText: {
     flex: 1,
-    marginHorizontal: 8,
-    backgroundColor: '#F2FDEA',
-    color: '#898A8D',
+    alignSelf: 'center',
+    padding: 20,
+    fontSize: 13,
+    color: COLORS.textGreen,
+    fontWeight: 'bold',
   },
   textTitle: {
-    color: '#23531E',
-    marginTop: 40,
+    alignSelf:'flex-start',
+    marginTop: hp(2),
     marginBottom: 10,
+    marginLeft: wp(6),
+    color: COLORS.textGreen,
     fontSize: 20,
-    paddingHorizontal: 40,
-  },
-
-  textStyle: {
-    color: '#23531E',
-    marginBottom: 10,
-    fontSize: 16,
-    textAlign: 'center',
-    marginTop: 10,
   },
   CertificatesButton: {
-    textAlign: 'center',
+    flex: 1,
+    alignSelf: 'flex-end',
+    padding: 20,
+  },
+  buttonText: {
+    fontSize: 13,
+    color: COLORS.textGreen,
   },
   userButton: {
     flexDirection: 'row',
@@ -233,33 +261,32 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-
   userText: {
     color: COLORS.textGreen,
     fontSize: 16,
     marginLeft: 20,
     fontWeight: 'bold'
-
   },
   UserLayout: {
     flexDirection: 'row',
-
-    marginVertical: 30,
-
+    marginVertical: wp(5),
+    alignItems: 'center',
+    paddingTop: 20,
   },
   PointsText: {
-    marginHorizontal: 60
-  },
-  CardsRowcontainer: {
-    flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    marginBottom: 20,
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+    marginRight: wp(12)
   },
   CardsDisplay: {
     flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-evenly',
-  }
+  },
+  HistoryButton: {
+    alignSelf: 'flex-start',
+    padding: 20,
+  },
 });
