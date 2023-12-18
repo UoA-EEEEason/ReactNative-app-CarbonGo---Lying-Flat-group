@@ -92,7 +92,7 @@ const HomeScreen = () => {
             </View>
           )}
           style={styles.fabuser}
-          onPress={() => console.log('Pressed')}
+          onPress={() => navigation.navigate('Account')}
           mode='elevated'
           label='      user  '
           color='#23531E'
