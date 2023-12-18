@@ -3,30 +3,21 @@ import {
   SafeAreaView,
   StatusBar,
   ScrollView,
-  TouchableOpacity,
   ImageBackground,
   StyleSheet,
   Text,
 } from 'react-native';
-import React, { useState, useEffect } from 'react';
-import { COLORS } from '../../constants/color/color';
-import { StatusComponent } from '../../components';
-import { hp, wp } from '../../utils/dimensions';
-import { Card, Icon, ProgressBar, MD3Colors } from 'react-native-paper';
+import React, {useState, useEffect} from 'react';
+import {COLORS} from '../../constants/color/color';
+import {StatusComponent} from '../../components';
+import {hp, wp} from '../../utils/dimensions';
+import {Icon} from 'react-native-paper';
 import {
   VictoryLine,
   VictoryChart,
-  VictoryTheme,
-  VictoryBar,
+  VictoryAxis,
 } from 'victory-native';
 import * as Progress from 'react-native-progress';
-
-const data = [
-  { quarter: 1, earnings: 13000 },
-  { quarter: 2, earnings: 16500 },
-  { quarter: 3, earnings: 14250 },
-  { quarter: 4, earnings: 19000 },
-];
 
 const DataAnalysisScreen = () => {
   const [progress, setProgress] = useState(0);
@@ -50,49 +41,98 @@ const DataAnalysisScreen = () => {
       source={require('./../../assets/images/background.png')}
       style={styles.backgroundImage}
       resizeMode="cover">
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={{flex: 1}}>
         <StatusComponent title={'Data Analysis'} />
         <ScrollView>
           <View style={styles.container}>
             <View style={styles.numberFrame}>
-              <Text style={styles.counterText}>Cumulative emission reductions</Text>
+              <Text style={styles.counterText}>
+                Cumulative emission reductions
+              </Text>
               <Text style={styles.number}>543210 g</Text>
             </View>
             <View style={styles.whitebackground}>
               <Text style={styles.title}>Emission reduction details</Text>
               <VictoryChart width={wp(90)} height={wp(70)}>
+                <VictoryAxis
+                  style={{
+                    axis: {stroke: COLORS.buttonGreen, strokeWidth: 2},
+                    tickLabels: {fill: COLORS.buttonGreen},
+                  }}
+                />
+                <VictoryAxis
+                  dependentAxis
+                  style={{
+                    axis: {stroke: COLORS.buttonGreen, strokeWidth: 2},
+                    tickLabels: {fill: COLORS.buttonGreen},
+                  }}
+                />
                 <VictoryLine
                   data={[
-                    { x: 1, y: 2 },
-                    { x: 2, y: 3 },
-                    { x: 3, y: 5 },
-                    { x: 4, y: 4 },
-                    { x: 5, y: 6 },
+                    {x: 'Jan', y: 2},
+                    {x: 'Feb', y: 3},
+                    {x: 'Mar', y: 5},
+                    {x: 'Apr', y: 4},
+                    {x: 'May', y: 6},
+                    {x: 'Jun', y: 7},
                   ]}
-                  animate={{ duration: 2000, onLoad: {duration: 5000}}}
+                  animate={{duration: 2000, onLoad: {duration: 5000}}}
+                  style={{data: {stroke: COLORS.green, strokeWidth: 4}}}
                 />
               </VictoryChart>
               <Text style={styles.title}>Emission reduction proportion</Text>
               <View style={styles.prograssContainer}>
                 <View style={styles.progressBar}>
                   <Icon source="walk" size={30}></Icon>
-                  <Progress.Bar progress={progress} width={200} color="green" marginLeft={10}/>
-                  <Text style={{ marginRight: 10 }}>   {Math.round(progress * 100)}%</Text>
+                  <Progress.Bar
+                    progress={progress}
+                    width={200}
+                    color="green"
+                    marginLeft={10}
+                  />
+                  <Text style={{marginRight: 10}}>
+                    {' '}
+                    {Math.round(progress * 100)}%
+                  </Text>
                 </View>
                 <View style={styles.progressBar}>
                   <Icon source="bus-marker" size={30}></Icon>
-                  <Progress.Bar progress={progress} width={200} color="green" marginLeft={10}/>
-                  <Text style={{ marginRight: 10 }}>   {Math.round(progress * 100)}%</Text>
+                  <Progress.Bar
+                    progress={progress}
+                    width={200}
+                    color="green"
+                    marginLeft={10}
+                  />
+                  <Text style={{marginRight: 10}}>
+                    {' '}
+                    {Math.round(progress * 100)}%
+                  </Text>
                 </View>
                 <View style={styles.progressBar}>
                   <Icon source="food" size={30}></Icon>
-                  <Progress.Bar progress={progress} width={200} color="green" marginLeft={10}/>
-                  <Text style={{ marginRight: 10 }}>   {Math.round(progress * 100)}%</Text>
+                  <Progress.Bar
+                    progress={progress}
+                    width={200}
+                    color="green"
+                    marginLeft={10}
+                  />
+                  <Text style={{marginRight: 10}}>
+                    {' '}
+                    {Math.round(progress * 100)}%
+                  </Text>
                 </View>
                 <View style={styles.progressBar}>
                   <Icon source="flash" size={30}></Icon>
-                  <Progress.Bar progress={progress} width={200} color="green" marginLeft={10}/>
-                  <Text style={{ marginRight: 10 }}>   {Math.round(progress * 100)}%</Text>
+                  <Progress.Bar
+                    progress={progress}
+                    width={200}
+                    color="green"
+                    marginLeft={10}
+                  />
+                  <Text style={{marginRight: 10}}>
+                    {' '}
+                    {Math.round(progress * 100)}%
+                  </Text>
                 </View>
               </View>
               <Text style={styles.title}>Emission reduction trends</Text>
@@ -172,7 +212,7 @@ const styles = StyleSheet.create({
   },
   progressBar: {
     flexDirection: 'row',
-    alignItems: 'center', 
+    alignItems: 'center',
     marginBottom: 10,
   },
 });
