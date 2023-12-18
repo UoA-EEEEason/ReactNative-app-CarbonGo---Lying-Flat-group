@@ -57,7 +57,8 @@ const HomeScreen = () => {
               loop
               style={{
                 width: '100%',
-                height: 300,
+                height: '40%',
+                marginTop: '30%',
 
               }} />
             <LottieView
@@ -66,9 +67,9 @@ const HomeScreen = () => {
               loop
               speed={0.5}
               style={{
-                width: 500,
+                width: '100%',
                 height: 500,
-
+                marginTop: '-10%',
               }} />
           </View>
         </ScrollView>
