@@ -3,53 +3,89 @@ import {
   SafeAreaView,
   StatusBar,
   ScrollView,
-  Text,
   ImageBackground,
   StyleSheet,
-  Icon,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import React from 'react';
-import {COLORS} from './../../constants/color/color';
-import {StatusComponent, ButtonComponent} from './../../components';
-import {Button, Card} from 'react-native-paper';
+import {StatusComponent} from './../../components';
 import {useNavigation} from '@react-navigation/native';
+import {hp, wp} from './../../utils/dimensions';
 
-const CertificatesCard = ({imageUrl, title, buttonPress}) => {
+const cardItems = [
+  {
+    id: 1,
+    title: 'news1',
+    date: '2023-04-05T14:30:00.000Z',
+    content: 'This this news1',
+    image: require('./../../assets/images/news1.png'),
+  },
+  {
+    id: 2,
+    title: 'news2',
+    date: '2023-04-05T14:30:00.000Z',
+    content: 'This this news1',
+    image: require('./../../assets/images/news1.png'),
+  },
+  {
+    id: 3,
+    title: 'news3',
+    date: '2023-04-05T14:30:00.000Z',
+    content: 'This this news1',
+    image: require('./../../assets/images/news1.png'),
+  },
+  {
+    id: 4,
+    title: 'news3',
+    date: '2023-04-05T14:30:00.000Z',
+    content: 'This this news1',
+    image: require('./../../assets/images/news1.png'),
+  },
+  {
+    id: 5,
+    title: 'news3',
+    date: '2023-04-05T14:30:00.000Z',
+    content: 'This this news1',
+    image: require('./../../assets/images/news1.png'),
+  },
+
+  // ... more items
+];
+
+const CertificatesCard = () => {
   const navigation = useNavigation();
   return (
-    <Card style={styles.child1}>
-      <Card.Cover source={require('./../../assets/images/Certificates.jpg')} />
-      <Text style={styles.textStyle}>{title}</Text>
-      <Button
-        style={styles.button}
+    <View style={{margin: 10}}>
+      <TouchableOpacity
         onPress={() => navigation.navigate('CertificatesDetails')}>
-        <Text style={styles.buttonText}>More details</Text>
-      </Button>
-    </Card>
-  );
-};
-
-// CertificatesContainer
-const CertificatesContainer = ({imageUrl, title, onPress}) => {
-  return (
-    <View style={styles.container1}>
-      <CertificatesCard
-        imageUrl={imageUrl}
-        title={title}
-        buttonPress={onPress}
-      />
-      <CertificatesCard
-        imageUrl={imageUrl}
-        title={title}
-        buttonPress={onPress}
-      />
+        <View
+          style={{
+            flex: 1,
+            width: wp(40),
+            height: wp(60),
+            borderRadius: 5,
+          }}>
+          <Image
+            resizeMode="cover"
+            source={require('./../../assets/images/Certificates.jpg')}
+            style={{width: '100%', height: '100%',borderRadius: 5,}}
+          />
+        </View>
+      </TouchableOpacity>
     </View>
   );
 };
 
 const AccountCertificatesOutlinesScreen = () => {
   const navigation = useNavigation();
+  // Navigate to the Trees Detail screen with parameters
+  const handlePressCard = item => {
+    navigation.navigate('CertificatesDetails', {item});
+  };
+
+  // calculate whether the number of cards is odd
+  const isOdd = cardItems.length % 2 !== 0;
   return (
     <ImageBackground
       source={require('./../../assets/images/background.png')}
@@ -58,9 +94,23 @@ const AccountCertificatesOutlinesScreen = () => {
       <SafeAreaView style={{flex: 1}}>
         <StatusComponent title={'Certificates'} />
         <ScrollView>
-          <View>
-          <CertificatesContainer title={'Kauri Cerficate'}/>
-            <CertificatesContainer title={'Kauri Cerficate'}/>
+          {/* cards components */}
+          <View style={styles.CardsDisplay}>
+            {cardItems.map(item => (
+              <CertificatesCard
+                key={item.id}
+                onPress={() => handlePressCard(item)}
+              />
+            ))}
+            {isOdd && (
+              <View
+                style={{
+                  margin: 10,
+                  width: wp(40),
+                  height: wp(40),
+                }}
+              />
+            )}
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -80,40 +130,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: StatusBar.currentHeight || 0,
   },
-  buttonCertificates: {
-    fontSize: 30,
-    textAlign: 'left',
-  },
-  textCard: {
-    color: '#898A8D',
-    alignItems: 'Right',
-  },
-  container1: {
-    flexDirection: 'row',
-    paddingHorizontal: 30,
-    paddingVertical: 10,
-    justifyContent: 'space-between',
-  },
-
-  child1: {
+  CardsDisplay: {
     flex: 1,
-    marginHorizontal: 8,
-    backgroundColor: '#F2FDEA',
-    color: '#898A8D',
-  },
-  textTitle: {
-    color: '#23531E',
-    marginTop: 40,
-    marginBottom: 10,
-    fontSize: 20,
-    paddingHorizontal: 40,
-  },
-
-  textStyle: {
-    color: '#23531E',
-    marginBottom: 10,
-    fontSize: 16,
-    textAlign: 'center',
-    marginTop: 10,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-evenly',
   },
 });

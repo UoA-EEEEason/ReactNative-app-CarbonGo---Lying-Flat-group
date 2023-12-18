@@ -16,7 +16,7 @@ import { Button, Card } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { hp, wp } from './../../utils/dimensions';
 
-const cartItems = [
+const cardItems = [
   {
     id: 1,
     title: 'news1',
@@ -99,7 +99,7 @@ const AccountScreen = () => {
   };
 
   // calculate whether the number of cards is odd
-  const isOdd = cartItems.length % 2 !== 0;
+  const isOdd = cardItems.length % 2 !== 0;
 
   return (
     <ImageBackground
@@ -156,7 +156,7 @@ const AccountScreen = () => {
 
             {/* cards components */}
             <View style={styles.CardsDisplay}>
-              {cartItems.map((item) => (
+              {cardItems.map((item) => (
                 <CustomCard key={item.id} imageUrl="https://picsum.photos/700" onPress={() => handlePressCard(item)} />
               ))}
               {isOdd && <View
@@ -214,6 +214,7 @@ const styles = StyleSheet.create({
   CardTabText: {
     flex: 1,
     alignSelf: 'center',
+    textAlign: 'center',
     padding: 20,
     fontSize: 13,
     color: COLORS.textGreen,
