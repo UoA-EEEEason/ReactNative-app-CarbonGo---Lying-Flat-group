@@ -14,7 +14,7 @@ import React from 'react';
 import { COLORS } from './../../constants/color/color';
 import { StatusComponent } from './../../components';
 import { FAB, Portal, Modal, Button, IconButton } from 'react-native-paper';
-
+import LottieView from "lottie-react-native";
 import { useNavigation } from '@react-navigation/native';
 
 const HomeScreen = () => {
@@ -38,7 +38,7 @@ const HomeScreen = () => {
 
   return (
     <ImageBackground
-      source={require('./../../assets/images/backgroundtree.png')}
+      source={require('./../../assets/images/backgroundblue.png')}
       style={styles.backgroundImage}
       resizeMode="cover"
     >
@@ -46,8 +46,30 @@ const HomeScreen = () => {
         <StatusComponent title={''} />
 
         <ScrollView>
-          <View>
-            <Text></Text>
+          <View style={{
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+            <LottieView
+              source={require("./../../assets/animations/cloudyAnimation.json")}
+              autoPlay
+              loop
+              style={{
+                width: '100%',
+                height: 300,
+
+              }} />
+            <LottieView
+              source={require("./../../assets/animations/treeAnimation.json")}
+              autoPlay
+              loop
+              speed={0.5}
+              style={{
+                width: 500,
+                height: 500,
+
+              }} />
           </View>
         </ScrollView>
         <FAB
@@ -311,17 +333,17 @@ const styles = StyleSheet.create({
   fabCarbon: {
     position: 'absolute',
     marginRight: '73%',
-    bottom: '8%',
+    bottom: '5%',
   },
   fabAccount: {
     position: 'absolute',
     marginRight: '2%',
-    bottom: '8%',
+    bottom: '5%',
   },
   fabGroup: {
     position: 'absolute',
     marginRight: '2%',
-    bottom: '8%',
+    bottom: '5%',
   },
   modal: {
     backgroundColor: '#D9F3D9',
