@@ -45,7 +45,6 @@ const HomeScreen = () => {
       <SafeAreaView style={{ flex: 1 }}>
         <StatusComponent title={''} />
 
-        <ScrollView>
           <View style={{
             flex: 1,
             justifyContent: 'center',
@@ -58,7 +57,6 @@ const HomeScreen = () => {
               style={{
                 width: '100%',
                 height: '40%',
-                marginTop: '30%',
 
               }} />
             <LottieView
@@ -72,7 +70,6 @@ const HomeScreen = () => {
                 marginTop: '-10%',
               }} />
           </View>
-        </ScrollView>
         <FAB
           icon={({ size, color }) => (
             <View style={{
