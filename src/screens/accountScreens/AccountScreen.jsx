@@ -9,12 +9,14 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import { COLORS } from './../../constants/color/color';
 import { StatusComponent } from './../../components';
 import { Button, Card } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { hp, wp } from './../../utils/dimensions';
+import {useDispatch, useSelector} from 'react-redux';
+import {fetchTree} from '../../redux/actions/tree';
 
 const cardItems = [
   {
@@ -56,11 +58,9 @@ const cardItems = [
   // ... more items
 ];
 
-const CustomCard = ({ imageUrl }) => {
-  const navigation = useNavigation();
-  return (
+const CustomCard = ({ name, desc, image, onPress }) => (
     <View style={{ margin: 10 }}>
-      <TouchableOpacity onPress={() => navigation.navigate('TreeDetails')}>
+      <TouchableOpacity onPress={onPress}>
         <Card
           mode='contained'
           style={{
@@ -70,22 +70,20 @@ const CustomCard = ({ imageUrl }) => {
             backgroundColor: COLORS.cardBackground,
           }}>
           <Card.Cover
-            source={{ uri: imageUrl }}
+            source={image}
             style={{
               height: wp(30),
               borderBottomLeftRadius: 0,
               borderBottomRightRadius: 0,
             }}
-
           />
           <Card.Content style={{ padding: 10, alignSelf: 'center' }}>
-            <Text variant="titleLarge" style={{ color: COLORS.black }}>Get it now!</Text>
+            <Text variant="titleLarge" style={{ color: COLORS.black }}>{name}</Text>
           </Card.Content>
         </Card>
       </TouchableOpacity>
     </View>
-  );
-};
+);
 
 const AccountScreen = () => {
   const navigation = useNavigation();
@@ -100,6 +98,14 @@ const AccountScreen = () => {
 
   // calculate whether the number of cards is odd
   const isOdd = cardItems.length % 2 !== 0;
+
+  // Get news data from redux state
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchTree());
+  }, [dispatch]);
+  const tree = useSelector(state => state.tree).tree;
+  //   console.log('news:', message);
 
   return (
     <ImageBackground
@@ -156,8 +162,12 @@ const AccountScreen = () => {
 
             {/* cards components */}
             <View style={styles.CardsDisplay}>
-              {cardItems.map((item) => (
-                <CustomCard key={item.id} imageUrl="https://picsum.photos/700" onPress={() => handlePressCard(item)} />
+              {tree.map((item) => (
+                <CustomCard 
+                key={item.id} 
+                image={{uri: item.image}}
+                name={item.name}
+                onPress={() => handlePressCard(item)} />
               ))}
               {isOdd && <View
                 style={{
