@@ -9,80 +9,40 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { COLORS } from './../../constants/color/color';
 import { StatusComponent } from './../../components';
 import { Button, Card } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { hp, wp } from './../../utils/dimensions';
-import {useDispatch, useSelector} from 'react-redux';
-import {fetchTree} from '../../redux/actions/tree';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchTree } from '../../redux/actions/tree';
 
-const cardItems = [
-  {
-    id: 1,
-    title: 'news1',
-    date: '2023-04-05T14:30:00.000Z',
-    content: 'This this news1',
-    image: require('./../../assets/images/news1.png'),
-  },
-  {
-    id: 2,
-    title: 'news2',
-    date: '2023-04-05T14:30:00.000Z',
-    content: 'This this news1',
-    image: require('./../../assets/images/news1.png'),
-  },
-  {
-    id: 3,
-    title: 'news3',
-    date: '2023-04-05T14:30:00.000Z',
-    content: 'This this news1',
-    image: require('./../../assets/images/news1.png'),
-  },
-  {
-    id: 4,
-    title: 'news3',
-    date: '2023-04-05T14:30:00.000Z',
-    content: 'This this news1',
-    image: require('./../../assets/images/news1.png'),
-  },
-  {
-    id: 5,
-    title: 'news3',
-    date: '2023-04-05T14:30:00.000Z',
-    content: 'This this news1',
-    image: require('./../../assets/images/news1.png'),
-  },
-
-  // ... more items
-];
-
-const CustomCard = ({ name, desc, image, onPress }) => (
-    <View style={{ margin: 10 }}>
-      <TouchableOpacity onPress={onPress}>
-        <Card
-          mode='contained'
+const CustomCard = ({ name, image, onPress }) => (
+  <View style={{ margin: 10 }}>
+    <TouchableOpacity onPress={onPress}>
+      <Card
+        mode='contained'
+        style={{
+          flex: 1,
+          width: wp(40),
+          height: wp(40),
+          backgroundColor: COLORS.cardBackground,
+        }}>
+        <Card.Cover
+          source={image}
           style={{
-            flex: 1,
-            width: wp(40),
-            height: wp(40),
-            backgroundColor: COLORS.cardBackground,
-          }}>
-          <Card.Cover
-            source={image}
-            style={{
-              height: wp(30),
-              borderBottomLeftRadius: 0,
-              borderBottomRightRadius: 0,
-            }}
-          />
-          <Card.Content style={{ padding: 10, alignSelf: 'center' }}>
-            <Text variant="titleLarge" style={{ color: COLORS.black }}>{name}</Text>
-          </Card.Content>
-        </Card>
-      </TouchableOpacity>
-    </View>
+            height: wp(30),
+            borderBottomLeftRadius: 0,
+            borderBottomRightRadius: 0,
+          }}
+        />
+        <Card.Content style={{ padding: 10, alignSelf: 'center' }}>
+          <Text variant="titleLarge" style={{ color: COLORS.black }}>{name}</Text>
+        </Card.Content>
+      </Card>
+    </TouchableOpacity>
+  </View>
 );
 
 const AccountScreen = () => {
@@ -96,9 +56,6 @@ const AccountScreen = () => {
     navigation.navigate('TreeDetails', { item });
   };
 
-  // calculate whether the number of cards is odd
-  const isOdd = cardItems.length % 2 !== 0;
-
   // Get news data from redux state
   const dispatch = useDispatch();
   useEffect(() => {
@@ -106,6 +63,9 @@ const AccountScreen = () => {
   }, [dispatch]);
   const tree = useSelector(state => state.tree).tree;
   //   console.log('news:', message);
+
+  // calculate whether the number of cards is odd
+  const isOdd = tree.length % 2 !== 0;
 
   return (
     <ImageBackground
@@ -146,7 +106,7 @@ const AccountScreen = () => {
             {/* The Tab */}
             <View style={styles.CardTab}>
               <Text style={styles.CardTabText}>15 points redeemed</Text>
-              <View style={{width:1,backgroundColor:COLORS.green}}/>
+              <View style={{ width: 1, backgroundColor: COLORS.green }} />
               <Text style={styles.CardTabText}>15 points convertible</Text>
             </View>
 
@@ -163,11 +123,11 @@ const AccountScreen = () => {
             {/* cards components */}
             <View style={styles.CardsDisplay}>
               {tree.map((item) => (
-                <CustomCard 
-                key={item.id} 
-                image={{uri: item.image}}
-                name={item.name}
-                onPress={() => handlePressCard(item)} />
+                <CustomCard
+                  key={item.id}
+                  image={{ uri: item.image }}
+                  name={item.name}
+                  onPress={() => handlePressCard(item)} />
               ))}
               {isOdd && <View
                 style={{
@@ -231,7 +191,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   textTitle: {
-    alignSelf:'flex-start',
+    alignSelf: 'flex-start',
     marginTop: hp(2),
     marginBottom: 10,
     marginLeft: wp(6),

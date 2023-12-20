@@ -5,6 +5,7 @@ import newsReducer from './news';
 import messageReducer from './message';
 import profileReducer from './profile';
 import treeReducer from './tree';
+import certificateReducer from './certificate';
 
 export default combineReducers({
   auth: authReducer,
@@ -13,4 +14,5 @@ export default combineReducers({
   message: messageReducer,
   profile: profileReducer,
   tree: treeReducer,
+  certificate: certificateReducer,
 });
