@@ -40,7 +40,6 @@ const styles = StyleSheet.create({
     slide: {
         height: wp(70),
         width: actualScreenWidth - wp(50), // Set the width of each slide
-        // marginRight: wp(12.5),
         justifyContent: 'center',
         alignItems: 'center',
     },
