@@ -12,9 +12,8 @@ import {
 } from '../../utils/dimensions';
 
 const ImageCarousel = ({ items }) => {
-    const imageWidth = actualScreenWidth - wp(15);
-    const spacing = wp(5); // The spacing between images
-    console.log('items:',items)
+    const imageWidth = actualScreenWidth - wp(50);
+    const spacing = wp(12.5); // The spacing between images
 
     return (
         <FlatList
@@ -23,7 +22,7 @@ const ImageCarousel = ({ items }) => {
             showsHorizontalScrollIndicator={false}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ item, index }) => (
-                <View style={[styles.slide, { marginLeft: index == 0 ? wp(5) : 0 }]}>
+                <View style={[styles.slide, { marginLeft: index == 0 ? wp(25) : 0 }]}>
                     <Image source={{ uri: item }} resizeMode="cover" style={styles.image} />
                 </View>
             )}
@@ -35,16 +34,16 @@ const ImageCarousel = ({ items }) => {
 
 const styles = StyleSheet.create({
     slide: {
-        height: hp(40),
-        width: actualScreenWidth - wp(15), // Set the width of each slide
-        marginRight: wp(5),
+        height: wp(70),
+        width: actualScreenWidth - wp(50), // Set the width of each slide
+        marginRight: wp(12.5),
         justifyContent: 'center',
         alignItems: 'center',
     },
     image: {
         width: '100%',
         height: '100%',
-        borderRadius: 20,
+        borderRadius: 5,
     },
 });
 
