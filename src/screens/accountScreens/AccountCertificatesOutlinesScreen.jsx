@@ -15,52 +15,50 @@ import { hp, wp } from './../../utils/dimensions';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCertificate,fetchCertificateImage } from '../../redux/actions/certificate';
 
-const cardItems = [
-  {
-    id: 1,
-    title: 'news1',
-    date: '2023-04-05T14:30:00.000Z',
-    content: 'This this news1',
-    image: require('./../../assets/images/news1.png'),
-  },
-  {
-    id: 2,
-    title: 'news2',
-    date: '2023-04-05T14:30:00.000Z',
-    content: 'This this news1',
-    image: require('./../../assets/images/news1.png'),
-  },
-  {
-    id: 3,
-    title: 'news3',
-    date: '2023-04-05T14:30:00.000Z',
-    content: 'This this news1',
-    image: require('./../../assets/images/news1.png'),
-  },
-  {
-    id: 4,
-    title: 'news3',
-    date: '2023-04-05T14:30:00.000Z',
-    content: 'This this news1',
-    image: require('./../../assets/images/news1.png'),
-  },
-  {
-    id: 5,
-    title: 'news3',
-    date: '2023-04-05T14:30:00.000Z',
-    content: 'This this news1',
-    image: require('./../../assets/images/news1.png'),
-  },
+// const cardItems = [
+//   {
+//     id: 1,
+//     title: 'news1',
+//     date: '2023-04-05T14:30:00.000Z',
+//     content: 'This this news1',
+//     image: require('./../../assets/images/news1.png'),
+//   },
+//   {
+//     id: 2,
+//     title: 'news2',
+//     date: '2023-04-05T14:30:00.000Z',
+//     content: 'This this news1',
+//     image: require('./../../assets/images/news1.png'),
+//   },
+//   {
+//     id: 3,
+//     title: 'news3',
+//     date: '2023-04-05T14:30:00.000Z',
+//     content: 'This this news1',
+//     image: require('./../../assets/images/news1.png'),
+//   },
+//   {
+//     id: 4,
+//     title: 'news3',
+//     date: '2023-04-05T14:30:00.000Z',
+//     content: 'This this news1',
+//     image: require('./../../assets/images/news1.png'),
+//   },
+//   {
+//     id: 5,
+//     title: 'news3',
+//     date: '2023-04-05T14:30:00.000Z',
+//     content: 'This this news1',
+//     image: require('./../../assets/images/news1.png'),
+//   },
 
-  // ... more items
-];
+//   // ... more items
+// ];
 
-const CertificatesCard = () => {
-  const navigation = useNavigation();
+const CertificatesCard = ({onPress}) => {
   return (
     <View style={{ margin: 10 }}>
-      <TouchableOpacity
-        onPress={() => navigation.navigate('CertificatesDetails')}>
+      <TouchableOpacity onPress={onPress}>
         <View
           style={{
             flex: 1,
@@ -86,23 +84,16 @@ const AccountCertificatesOutlinesScreen = () => {
     navigation.navigate('CertificatesDetails', { item });
   };
 
-  // Get news data from redux state
+  // Get certificate data from redux state
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchCertificate());
   }, [dispatch]);
 
-  useEffect(() => {
-    certificate.map(item => {dispatch(fetchCertificateImage(item.id));})
-  }, []);
-
   const certificate = useSelector(state => state.certificate).certificate;
-  const certificateImage = useSelector(state => state.certificate).image;
-    // console.log('certificate:', certificate);
-    console.log('certificateImage:', certificateImage);
 
   // calculate whether the number of cards is odd
-  const isOdd = cardItems.length % 2 !== 0;
+  const isOdd = certificate.length % 2 !== 0;
 
   return (
     <ImageBackground

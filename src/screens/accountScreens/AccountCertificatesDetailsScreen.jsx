@@ -6,18 +6,16 @@ import {
   Text,
   ImageBackground,
   StyleSheet,
-  Icon,
-  Image,
 } from 'react-native';
 import React from 'react';
 import {COLORS} from './../../constants/color/color';
-import {StatusComponent, ButtonComponent} from './../../components';
-import {Button, Card} from 'react-native-paper';
-import {useNavigation} from '@react-navigation/native';
+import {StatusComponent} from './../../components';
 import {hp, wp} from './../../utils/dimensions';
+import ImageCarousel from './ImageCarousel';
 
-const AccountCertificatesOutlinesScreen = () => {
-  const navigation = useNavigation();
+const AccountCertificatesOutlinesScreen = ({route}) => {
+  const {item} = route.params;
+
   return (
     <ImageBackground
       source={require('./../../assets/images/background.png')}
@@ -27,31 +25,13 @@ const AccountCertificatesOutlinesScreen = () => {
         <StatusComponent title={'Certificates Details'} />
         <ScrollView>
           <View style={styles.container}>
-            <ScrollView
-              horizontal={true} 
-              showsHorizontalScrollIndicator={false}
-              style={styles.scrollView}
-              contentContainerStyle={styles.contentContainer}>
-              <Image
-                style={styles.image}
-                source={require('./../../assets/images/KauriTreePhoto.jpg')}
-              />
-              <Image
-                style={styles.image}
-                source={require('./../../assets/images/Certificates.jpg')}
-              />
-              <Image
-                style={styles.image}
-                source={require('./../../assets/images/KauriTreePhoto.jpg')}
-              />
-            </ScrollView>
+            <ImageCarousel items={item.cimage} />
             <View style={styles.information}>
               <Text variant="titleLarge" style={styles.title}>
                 Certificate of KAURI
               </Text>
               <Text variant="bodyMedium" style={styles.content}>
-                This xx variety of sapling was planted by user xxx on
-                xx/xx/xxxx. Thank you for your participation!
+                {item.desc}
               </Text>
             </View>
           </View>
@@ -69,7 +49,6 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
