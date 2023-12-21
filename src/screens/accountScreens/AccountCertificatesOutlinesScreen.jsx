@@ -8,10 +8,12 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import React from 'react';
-import {StatusComponent} from './../../components';
-import {useNavigation} from '@react-navigation/native';
-import {hp, wp} from './../../utils/dimensions';
+import React, { useEffect } from 'react';
+import { StatusComponent } from './../../components';
+import { useNavigation } from '@react-navigation/native';
+import { hp, wp } from './../../utils/dimensions';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCertificate,fetchCertificateImage } from '../../redux/actions/certificate';
 
 const cardItems = [
   {
@@ -56,7 +58,7 @@ const cardItems = [
 const CertificatesCard = () => {
   const navigation = useNavigation();
   return (
-    <View style={{margin: 10}}>
+    <View style={{ margin: 10 }}>
       <TouchableOpacity
         onPress={() => navigation.navigate('CertificatesDetails')}>
         <View
@@ -69,7 +71,7 @@ const CertificatesCard = () => {
           <Image
             resizeMode="cover"
             source={require('./../../assets/images/Certificates.jpg')}
-            style={{width: '100%', height: '100%',borderRadius: 5,}}
+            style={{ width: '100%', height: '100%', borderRadius: 5, }}
           />
         </View>
       </TouchableOpacity>
@@ -81,22 +83,38 @@ const AccountCertificatesOutlinesScreen = () => {
   const navigation = useNavigation();
   // Navigate to the Trees Detail screen with parameters
   const handlePressCard = item => {
-    navigation.navigate('CertificatesDetails', {item});
+    navigation.navigate('CertificatesDetails', { item });
   };
+
+  // Get news data from redux state
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchCertificate());
+  }, [dispatch]);
+
+  useEffect(() => {
+    certificate.map(item => {dispatch(fetchCertificateImage(item.id));})
+  }, []);
+
+  const certificate = useSelector(state => state.certificate).certificate;
+  const certificateImage = useSelector(state => state.certificate).image;
+    // console.log('certificate:', certificate);
+    console.log('certificateImage:', certificateImage);
 
   // calculate whether the number of cards is odd
   const isOdd = cardItems.length % 2 !== 0;
+
   return (
     <ImageBackground
       source={require('./../../assets/images/background.png')}
       style={styles.backgroundImage}
       resizeMode="cover">
-      <SafeAreaView style={{flex: 1}}>
+      <SafeAreaView style={{ flex: 1 }}>
         <StatusComponent title={'Certificates'} />
         <ScrollView>
           {/* cards components */}
           <View style={styles.CardsDisplay}>
-            {cardItems.map(item => (
+            {certificate.map(item => (
               <CertificatesCard
                 key={item.id}
                 onPress={() => handlePressCard(item)}
