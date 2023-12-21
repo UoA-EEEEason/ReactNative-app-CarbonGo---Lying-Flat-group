@@ -22,7 +22,11 @@ const ImageCarousel = ({ items }) => {
             showsHorizontalScrollIndicator={false}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ item, index }) => (
-                <View style={[styles.slide, { marginLeft: index == 0 ? wp(25) : 0 }]}>
+                <View style={[
+                    styles.slide, 
+                    { marginLeft: index === 0 ? wp(25) : 0 }, 
+                    { marginRight: index === (items.length-1) ? wp(25) : wp(12.5) }
+                    ]}>
                     <Image source={{ uri: item }} resizeMode="cover" style={styles.image} />
                 </View>
             )}
@@ -36,7 +40,7 @@ const styles = StyleSheet.create({
     slide: {
         height: wp(70),
         width: actualScreenWidth - wp(50), // Set the width of each slide
-        marginRight: wp(12.5),
+        // marginRight: wp(12.5),
         justifyContent: 'center',
         alignItems: 'center',
     },
