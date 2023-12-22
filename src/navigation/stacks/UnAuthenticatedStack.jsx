@@ -57,18 +57,8 @@ const UnAuthenticatedStack = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="LogIn"
-        component={Auth.LoginPageScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
         name="Reset"
         component={Auth.ResetScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="SignUp"
-        component={Auth.SignUpScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen

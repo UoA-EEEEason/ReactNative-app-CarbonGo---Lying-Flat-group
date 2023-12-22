@@ -44,7 +44,7 @@ const ResetScreen = () => {
           />
           <TouchableOpacity
             style={styles.loginButton}
-            onPress={() => navigation.navigate('LogIn')}>
+            onPress={() => navigation.navigate('Login')}>
             <Text style={styles.buttonText}>Reset</Text>
           </TouchableOpacity>
         </ScrollView>

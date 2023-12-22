@@ -7,9 +7,11 @@ export const login = (email, password) => dispatch => {
       // login successful
       dispatch({
         type: actionTypes.LOGIN,
-        payload: userCredential.user,
+        payload: {
+          isAuthenticated: true,
+          uid: userCredential.user.uid,
+        }
       });
-      console.log('User signed in!');
     })
     .catch((error) => {
       // login failed
@@ -31,6 +33,10 @@ export const logout = () => dispatch => {
       // logout successful
       dispatch({
         type: actionTypes.LOGOUT,
+        payload: {
+          isAuthenticated: false,
+          uid: null,
+        }
       });
       console.log('User signed out!');
     })
