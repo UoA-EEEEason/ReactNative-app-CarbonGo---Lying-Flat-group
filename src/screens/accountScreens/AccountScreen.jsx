@@ -62,6 +62,7 @@ const AccountScreen = () => {
     dispatch(fetchTree());
   }, [dispatch]);
   const tree = useSelector(state => state.tree).tree;
+  const limitedTree = tree.slice(0, 4);
   //   console.log('news:', message);
 
   // calculate whether the number of cards is odd
@@ -132,7 +133,7 @@ const AccountScreen = () => {
 
             {/* cards components */}
             <View style={styles.CardsDisplay}>
-              {tree.map((item) => (
+              {limitedTree.map((item) => (
                 <CustomCard
                   key={item.id}
                   image={{ uri: item.image }}
