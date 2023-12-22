@@ -2,6 +2,7 @@ import {actionTypes} from '../actionTypes';
 
 const initialState = {
   isAuthenticated: false,
+  uid: null,
 };
 
 export default (state = initialState, action) => {
@@ -9,12 +10,12 @@ export default (state = initialState, action) => {
     case actionTypes.LOGIN:
       return {
         ...state,
-        isAuthenticated: true,
+        ...action.payload
       };
     case actionTypes.LOGOUT:
       return {
         ...state,
-        isAuthenticated: false,
+        ...action.payload
       };
     default:
       return state;

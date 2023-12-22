@@ -67,7 +67,7 @@ const WelcomeScreen = () => {
           <TouchableOpacity>
             <Text style={styles.noAccountText}>
               Already have an account?{' '}
-              <Text onPress={() => navigation.navigate('LogIn')} style={styles.registerLink}>
+              <Text onPress={() => navigation.navigate('Login')} style={styles.registerLink}>
                 Login
               </Text>
             </Text>
