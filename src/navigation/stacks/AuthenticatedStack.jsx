@@ -1,6 +1,6 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import React from 'react';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {
   Account,
   Tests,
@@ -17,42 +17,42 @@ const AuthenticatedStack = () => {
       <Stack.Screen
         name="Account"
         component={Account.AccountScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="CertificatesOutlines"
         component={Account.AccountCertificatesOutlinesScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="CertificatesDetails"
         component={Account.AccountCertificatesDetailsScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="TreeDetails"
         component={Account.AccountTreeDetailsScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="RedeemHistory"
         component={Account.AccountRedeemHistoryScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Profile"
         component={Account.AccountProfileScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Demo"
         component={Tests.CommonDemo}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Login"
         component={Auth.LoginScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Welcome"
@@ -72,7 +72,7 @@ const AuthenticatedStack = () => {
       <Stack.Screen
         name="Tests"
         component={Tests.TestsScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Bus"
@@ -97,6 +97,11 @@ const AuthenticatedStack = () => {
       <Stack.Screen
         name="DataAnalysis"
         component={Home.DataAnalysisScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="CreditMall"
+        component={Account.CreditMallScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

@@ -2,26 +2,20 @@ import {
   View,
   SafeAreaView,
   StatusBar,
-  ScrollView,
   Text,
-  TouchableOpacity,
   ImageBackground,
   Image,
   StyleSheet,
-  Dimensions,
 } from 'react-native';
 import React from 'react';
 import { COLORS } from './../../constants/color/color';
 import { StatusComponent } from './../../components';
-import { FAB, Portal, Modal, Button, IconButton } from 'react-native-paper';
+import { FAB, Modal, Button, IconButton } from 'react-native-paper';
 import LottieView from "lottie-react-native";
 import { useNavigation } from '@react-navigation/native';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
-
-  const screenWidth = Dimensions.get('window').width;
-  const screenHeight = Dimensions.get('window').height;
 
   const [openGroup1, setOpenGroup1] = React.useState(false);
   const [openGroup2, setOpenGroup2] = React.useState(false);
@@ -71,7 +65,7 @@ const HomeScreen = () => {
               }} />
           </View>
         <FAB
-          icon={({ size, color }) => (
+          icon={({ size }) => (
             <View style={{
               width: size,
               height: size,
@@ -92,7 +86,7 @@ const HomeScreen = () => {
             </View>
           )}
           style={styles.fabuser}
-          onPress={() => navigation.navigate('Account')}
+          onPress={() => navigation.navigate('CertificatesOutlines')}
           mode='elevated'
           label='      user  '
           color='#23531E'
@@ -309,7 +303,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   fabuser: {
-    backgroundColor: 'rgba(0, 177, 97, 0.5)',
+    backgroundColor: 'rgba(0, 177, 97, 0.3)',
     position: 'absolute',
     margin: 16,
     left: '0.1%',

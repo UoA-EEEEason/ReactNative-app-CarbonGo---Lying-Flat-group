@@ -4,6 +4,7 @@ import AccountCertificatesDetailsScreen from './AccountCertificatesDetailsScreen
 import AccountRedeemHistoryScreen from './AccountRedeemHistoryScreen';
 import AccountTreeDetailsScreen from './AccountTreeDetailsScreen';
 import AccountProfileScreen from './AccountProfileScreen';
+import CreditMallScreen from './CreditMallScreen';
 
 export {
   AccountScreen,
@@ -11,5 +12,6 @@ export {
   AccountCertificatesDetailsScreen,
   AccountRedeemHistoryScreen,
   AccountTreeDetailsScreen,
-  AccountProfileScreen
+  AccountProfileScreen,
+  CreditMallScreen,
 };

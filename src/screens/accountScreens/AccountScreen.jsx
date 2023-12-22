@@ -118,7 +118,17 @@ const AccountScreen = () => {
             </Button>
 
             {/* Carbon Credit Mall */}
-            <Text style={styles.textTitle}>Carbon Credit Mall</Text>
+            <TouchableOpacity
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}
+              onPress={() => {
+                navigation.navigate('CreditMall');
+              }}>
+              <Text style={styles.textTitle}>Carbon Credit Mall {' >'} </Text>
+            </TouchableOpacity>
+
 
             {/* cards components */}
             <View style={styles.CardsDisplay}>
