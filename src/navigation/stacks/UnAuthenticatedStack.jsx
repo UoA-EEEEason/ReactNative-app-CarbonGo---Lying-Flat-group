@@ -74,32 +74,32 @@ const UnAuthenticatedStack = () => {
       <Stack.Screen
         name="Account"
         component={Account.AccountScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="CertificatesOutlines"
         component={Account.AccountCertificatesOutlinesScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="CertificatesDetails"
         component={Account.AccountCertificatesDetailsScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="TreeDetails"
         component={Account.AccountTreeDetailsScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="RedeemHistory"
         component={Account.AccountRedeemHistoryScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="Profile"
         component={Account.AccountProfileScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="News"
@@ -139,6 +139,11 @@ const UnAuthenticatedStack = () => {
       <Stack.Screen
         name="DataAnalysis"
         component={Home.DataAnalysisScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="CreditMall"
+        component={Account.CreditMallScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
