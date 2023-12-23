@@ -44,9 +44,6 @@ const RegisterScreen = () => {
 
   const handleRegister = async () => {
     dispatch(register(email, password, username));
-    if (isAuthenticated) {
-      navigation.navigate('Home')
-    }
   };
 
   // solve login latency issue
