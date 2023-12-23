@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
-  View,
   SafeAreaView,
   ScrollView,
   Text,
@@ -12,10 +11,55 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { COLORS } from '../../constants/color/color';
 import StatusComponent from './../../components/StatusComponent';
-import TextInputComponent from './../../components/TextInputCompnent';
+import { useDispatch, useSelector } from 'react-redux';
+import { register } from '../../redux/actions/auth';
+import { TextInput } from 'react-native-paper';
+
+const TextInputComponent = ({ label, value, onChangeText, style, secureTextEntry }) => {
+  const customTheme = {
+    colors: {
+      primary: 'black',
+    },
+  };
+
+  return (
+    <TextInput
+      label={label}
+      value={value}
+      mode="flat"
+      onChangeText={onChangeText}
+      style={style}
+      theme={customTheme}
+      secureTextEntry={secureTextEntry}
+    />
+  );
+};
 
 const RegisterScreen = () => {
   const navigation = useNavigation();
+
+  // get auth state from redux
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+  const dispatch = useDispatch();
+
+  const handleRegister = async () => {
+    dispatch(register(email, password, username));
+    if (isAuthenticated) {
+      navigation.navigate('Home')
+    }
+  };
+
+  // solve login latency issue
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigation.navigate('Home')
+    }
+  }, [isAuthenticated]);
+
+    // initial input text
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [username, setUsername] = useState('');
 
   return (
     <ImageBackground
@@ -38,18 +82,25 @@ const RegisterScreen = () => {
           <TextInputComponent
             style={styles.input}
             label={'Email'}
-          />
-          <TextInputComponent
-            style={styles.input}
-            label={'Name'}
+            value={email}
+            onChangeText={setEmail}
           />
           <TextInputComponent
             style={styles.input}
             label={'Password'}
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry={true}
+          />
+          <TextInputComponent
+            style={styles.input}
+            label={'Username'}
+            value={username}
+            onChangeText={setUsername}
           />
           <TouchableOpacity
             style={styles.loginButton}
-            onPress={() => navigation.navigate('Home')}>
+            onPress={handleRegister}>
             <Text style={styles.buttonText}>Register</Text>
           </TouchableOpacity>
           <Text style={styles.noAccountText}>
