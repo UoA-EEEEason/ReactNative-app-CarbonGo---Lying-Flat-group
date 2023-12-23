@@ -17,6 +17,11 @@ export default (state = initialState, action) => {
         ...state,
         ...action.payload
       };
+      case actionTypes.REGISTER:
+        return {
+          ...state,
+          ...action.payload
+        };
     default:
       return state;
   }

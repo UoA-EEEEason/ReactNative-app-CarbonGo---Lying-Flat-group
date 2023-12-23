@@ -1,5 +1,6 @@
 import { actionTypes } from '../actionTypes';
 import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 
 export const login = (email, password) => dispatch => {
   auth().signInWithEmailAndPassword(email, password)
@@ -46,15 +47,25 @@ export const logout = () => dispatch => {
     });
 };
 
-export const register = (email, password) => dispatch => {
+export const register = (email, password, username) => dispatch => {
   auth().createUserWithEmailAndPassword(email, password)
     .then((userCredential) => {
-      // success
-      dispatch({
-        type: actionTypes.LOGIN,
-        payload: userCredential.user,
+      // add user name in fire store
+      firestore()
+      .collection('user')
+      .doc(userCredential.user.uid)
+      .set({
+        username: username,
+      })
+      .then(() => {
+        dispatch({
+          type: actionTypes.REGISTER,
+          payload: {
+            isAuthenticated: true,
+            uid: userCredential.user.uid,
+          }
+        });
       });
-      console.log('User account created & signed in!');
     })
     .catch((error) => {
       // fail
