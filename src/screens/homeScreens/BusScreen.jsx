@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   View,
   SafeAreaView,
@@ -10,17 +10,53 @@ import {
   StyleSheet,
   Button,
   PermissionsAndroid,
-  Platform
+  Platform,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { COLORS } from '../../constants/color/color';
+import {useNavigation} from '@react-navigation/native';
+import {COLORS} from '../../constants/color/color';
 import StatusComponent from './../../components/StatusComponent';
-import TextInputComponent from './../../components/TextInputCompnent';
 import ImagePicker from 'react-native-image-picker';
+import {TextInput} from 'react-native-paper';
+import {useDispatch, useSelector} from 'react-redux';
+import {postTraffic} from '../../redux/actions/carbonFootprint';
+import firestore from '@react-native-firebase/firestore';
+
+const TextInputComponent = ({label, onChangeText, style, value}) => {
+  const customTheme = {
+    colors: {
+      primary: 'black',
+    },
+  };
+
+  return (
+    <TextInput
+      label={label}
+      value={value}
+      mode="flat"
+      onChangeText={onChangeText}
+      style={style}
+      theme={customTheme}
+    />
+  );
+};
 
 const BusScreen = () => {
-  const navigation = useNavigation();
   const [photo, setPhoto] = useState(null);
+  const [trafficConsumption, setTrafficConsumption] = useState('');
+  const dispatch = useDispatch();
+
+  // get auth state from redux
+  const uid = useSelector(state => state.auth.uid);
+
+  const handleSubmitPress = async () => {
+    const createdAt = firestore.Timestamp.now();
+    const consumptionNumber = Number(trafficConsumption);
+    dispatch(postTraffic(uid, consumptionNumber, createdAt));
+  };
+
+  const handleFoodConsumptionChange = value => {
+    setTrafficConsumption(value);
+  };
 
   const handleChoosePhoto = async () => {
     const options = {
@@ -33,7 +69,7 @@ const BusScreen = () => {
         {
           title: 'Storage Permission Required',
           message: 'App needs access to your storage to download Photos',
-        }
+        },
       );
       if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
         return;
@@ -63,35 +99,29 @@ const BusScreen = () => {
           <Text style={styles.createText}>
             Submit your Bus carbon footprint
           </Text>
+          {/* <TextInputComponent style={styles.input} label={'Travel distance'} />
+          <TextInputComponent style={styles.input} label={'Your spending'} /> */}
+          <Text style={styles.input}>
+            Points you will earn: {trafficConsumption ? trafficConsumption * 2 : ''}
+          </Text>
           <TextInputComponent
             style={styles.input}
             label={'Travel distance'}
+            onChangeText={handleFoodConsumptionChange}
+            value={trafficConsumption}
           />
-          <TextInputComponent
-            style={styles.input}
-            label={'Your spending'}
-          />
-          <TextInputComponent
-            style={styles.input}
-            label={'Points you will earn'}
-          />
-          <Text style={styles.uploadPhotoText}>
-            Please upload your photo
-          </Text>
+          <Text style={styles.uploadPhotoText}>Please upload your photo</Text>
           <TouchableOpacity
             style={styles.photoButton}
             onPress={handleChoosePhoto}>
             <Text style={styles.buttonText}>Upload Photo</Text>
           </TouchableOpacity>
           {photo && (
-            <Image
-              source={{ uri: photo }}
-              style={styles.uploadedImage}
-            />
+            <Image source={{uri: photo}} style={styles.uploadedImage} />
           )}
           <TouchableOpacity
             style={styles.loginButton}
-            onPress={() => navigation.navigate('Home')}>
+            onPress={handleSubmitPress}>
             <Text style={styles.buttonText}>Submit</Text>
           </TouchableOpacity>
         </ScrollView>

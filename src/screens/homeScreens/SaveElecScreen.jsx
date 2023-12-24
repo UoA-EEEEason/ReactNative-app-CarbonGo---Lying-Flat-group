@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {
-    View,
     SafeAreaView,
     ScrollView,
     Text,
@@ -8,19 +7,53 @@ import {
     ImageBackground,
     Image,
     StyleSheet,
-    Button,
     PermissionsAndroid,
-    Platform
+    Platform,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import { COLORS } from '../../constants/color/color';
 import StatusComponent from './../../components/StatusComponent';
-import TextInputComponent from './../../components/TextInputCompnent';
 import ImagePicker from 'react-native-image-picker';
+import { TextInput } from 'react-native-paper';
+import { useDispatch, useSelector } from 'react-redux';
+import { postElectricity } from '../../redux/actions/carbonFootprint';
+import firestore from '@react-native-firebase/firestore';
+
+const TextInputComponent = ({ label, onChangeText, style, value }) => {
+    const customTheme = {
+        colors: {
+            primary: 'black',
+        },
+    };
+
+    return (
+        <TextInput
+            label={label}
+            value={value}
+            mode="flat"
+            onChangeText={onChangeText}
+            style={style}
+            theme={customTheme}
+        />
+    );
+};
 
 const SaveElecScreen = () => {
-    const navigation = useNavigation();
     const [photo, setPhoto] = useState(null);
+    const [electricityConsumption, setFoodConsumption] = useState('');
+    const dispatch = useDispatch();
+
+    // get auth state from redux
+    const uid = useSelector(state => state.auth.uid);
+
+    const handleSubmitPress = async () => {
+        const createdAt = firestore.Timestamp.now();
+        const consumptionNumber = Number(electricityConsumption);
+        dispatch(postElectricity(uid, consumptionNumber, createdAt));
+    };
+
+    const handleElectricityConsumptionChange = value => {
+        setFoodConsumption(value);
+    };
 
     const handleChoosePhoto = async () => {
         const options = {
@@ -33,7 +66,7 @@ const SaveElecScreen = () => {
                 {
                     title: 'Storage Permission Required',
                     message: 'App needs access to your storage to download Photos',
-                }
+                },
             );
             if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
                 return;
@@ -63,31 +96,27 @@ const SaveElecScreen = () => {
                     <Text style={styles.createText}>
                         Submit your Electricity carbon footprint
                     </Text>
+                    <Text style={styles.input}>
+                        Points you will earn: {electricityConsumption ? electricityConsumption * 2 : ''}
+                    </Text>
                     <TextInputComponent
                         style={styles.input}
                         label={'The amount of electricity you use'}
+                        onChangeText={handleElectricityConsumptionChange}
+                        value={electricityConsumption}
                     />
-                    <TextInputComponent
-                        style={styles.input}
-                        label={'Points you will earn'}
-                    />
-                    <Text style={styles.uploadPhotoText}>
-                        Please upload your photo
-                    </Text>
+                    <Text style={styles.uploadPhotoText}>Please upload your photo</Text>
                     <TouchableOpacity
                         style={styles.photoButton}
                         onPress={handleChoosePhoto}>
                         <Text style={styles.buttonText}>Upload Photo</Text>
                     </TouchableOpacity>
                     {photo && (
-                        <Image
-                            source={{ uri: photo }}
-                            style={styles.uploadedImage}
-                        />
+                        <Image source={{ uri: photo }} style={styles.uploadedImage} />
                     )}
                     <TouchableOpacity
                         style={styles.loginButton}
-                        onPress={() => navigation.navigate('Home')}>
+                        onPress={handleSubmitPress}>
                         <Text style={styles.buttonText}>Submit</Text>
                     </TouchableOpacity>
                 </ScrollView>
