@@ -15,12 +15,48 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { COLORS } from '../../constants/color/color';
 import StatusComponent from './../../components/StatusComponent';
-import TextInputComponent from './../../components/TextInputCompnent';
 import ImagePicker from 'react-native-image-picker';
+import { TextInput } from 'react-native-paper';
+import { useDispatch, useSelector } from 'react-redux';
+import { postFood } from '../../redux/actions/carbonFootprint';
+import firestore from '@react-native-firebase/firestore';
+
+const TextInputComponent = ({ label, onChangeText, style, value }) => {
+    const customTheme = {
+        colors: {
+            primary: 'black',
+        },
+    };
+
+    return (
+        <TextInput
+            label={label}
+            value={value}
+            mode="flat"
+            onChangeText={onChangeText}
+            style={style}
+            theme={customTheme}
+        />
+    );
+};
 
 const SaveFoodScreen = () => {
-    const navigation = useNavigation();
     const [photo, setPhoto] = useState(null);
+    const [foodConsumption, setFoodConsumption] = useState('');
+    const dispatch = useDispatch();
+
+    // get auth state from redux
+    const uid = useSelector(state => state.auth.uid);
+
+    const handleSubmitPress = async () => {
+        const createdAt = firestore.Timestamp.now();
+        const consumptionNumber = Number(foodConsumption);
+        dispatch(postFood(uid, consumptionNumber, createdAt));
+    };
+
+    const handleFoodConsumptionChange = value => {
+        setFoodConsumption(value);
+    };
 
     const handleChoosePhoto = async () => {
         const options = {
@@ -63,17 +99,19 @@ const SaveFoodScreen = () => {
                     <Text style={styles.createText}>
                         Submit your Food carbon footprint
                     </Text>
-                    <TextInputComponent
+                    {/* here should be a drop down bar to select food type */}
+                    {/* <TextInputComponent
                         style={styles.input}
                         label={'The kind of food you buy'}
-                    />
+                    /> */}
+                    <Text style={styles.input}>
+                        Points you will earn: {foodConsumption ? foodConsumption * 2 : ''}
+                    </Text>
                     <TextInputComponent
                         style={styles.input}
                         label={'The weight of the food you buy'}
-                    />
-                    <TextInputComponent
-                        style={styles.input}
-                        label={'Points you will earn'}
+                        onChangeText={handleFoodConsumptionChange}
+                        value={foodConsumption}
                     />
                     <Text style={styles.uploadPhotoText}>
                         Please upload your photo
@@ -91,7 +129,7 @@ const SaveFoodScreen = () => {
                     )}
                     <TouchableOpacity
                         style={styles.loginButton}
-                        onPress={() => navigation.navigate('Home')}>
+                        onPress={handleSubmitPress}>
                         <Text style={styles.buttonText}>Submit</Text>
                     </TouchableOpacity>
                 </ScrollView>
