@@ -10,12 +10,45 @@ import {
 } from 'react-native';
 import React, {useEffect} from 'react';
 import {COLORS} from './../../constants/color/color';
-import {StatusComponent} from './../../components';
-import {hp, wp} from './../../utils/dimensions';
+import {hp, wp, statusBarHeight} from './../../utils/dimensions';
 import {Card, Text} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchMessage} from '../../redux/actions/message';
+import {Ionicons} from './../../constants/icons/icons';
+
+const StatusComponent = ({title}) => {
+  const navigation = useNavigation();
+
+  return (
+    <View>
+      <StatusBar translucent backgroundColor="transparent" />
+      <View
+        style={{
+          position: 'relative',
+          paddingTop: statusBarHeight,
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          paddingHorizontal: 15,
+          paddingBottom: 15,
+        }}>
+        {/* GO BACK BUTTON */}
+        <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+          <Ionicons name="arrow-back" size={28} color={COLORS.green} />
+        </TouchableOpacity>
+
+        {/* TITLE */}
+        <View>
+          <Text style={{color: COLORS.green, fontSize: 22}}>{title}</Text>
+        </View>
+
+        {/* NULL */}
+        <View></View>
+      </View>
+    </View>
+  );
+};
 
 const CardComponent = ({title, content}) => (
   <Card style={styles.card}>
@@ -55,14 +88,13 @@ const MessageScreen = () => {
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate('News');
-                console.log('News');
               }}
               style={styles.tabLeftButton}>
               <Text style={styles.tabText}>News</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
-                console.log('Messages');
+                // console.log('Messages');
               }}
               style={styles.tabRightButton}>
               <Text style={styles.tabText}>Messages</Text>
