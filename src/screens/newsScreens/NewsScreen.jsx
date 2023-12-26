@@ -70,7 +70,7 @@ const NewsScreen = () => {
           <View style={styles.tab}>
             <TouchableOpacity
               onPress={() => {
-                console.log('News');
+                // console.log('News');
               }}
               style={styles.tabLeftButton}>
               <Text style={styles.tabText}>News</Text>
@@ -78,7 +78,6 @@ const NewsScreen = () => {
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate('Message');
-                console.log('Message');
               }}
               style={styles.tabRightButton}>
               <Text style={styles.tabText}>Messages</Text>
