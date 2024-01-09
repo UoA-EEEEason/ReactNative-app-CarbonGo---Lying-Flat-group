@@ -79,8 +79,6 @@ export const postWalk = (uid, consumption, createdAt) => {
 };
 
 // Fetch carbon footprint data
-
-
 export const fetchFood = (uid) => {
     return dispatch => {
         firestore()
