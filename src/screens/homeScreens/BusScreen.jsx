@@ -46,7 +46,7 @@ const BusScreen = () => {
   const uid = useSelector(state => state.auth.uid);
 
   // get weight value from redux
-  const trafficWeight = useSelector(state => state.weight).weight.traffic;
+  const trafficWeight = useSelector(state => state.weight).weight.traffic ?? 0;
   // console.log('trafficWeight:',trafficWeight)
 
   // fetch traffic

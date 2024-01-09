@@ -48,7 +48,7 @@ const SaveFoodScreen = () => {
     const uid = useSelector(state => state.auth.uid);
 
     // get weight value from redux
-    const foodWeight = useSelector(state => state.weight).weight.food;
+    const foodWeight = useSelector(state => state.weight).weight.food ?? 0;
 
     // fetch food
     useEffect(() => {
