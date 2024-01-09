@@ -126,7 +126,7 @@ const HomeScreen = () => {
           actions={[
             {
               icon: 'walk',
-              onPress: () => console.log('Pressed walk'),
+              onPress: () => navigation.navigate('Walk'),
               color: 'green',
               style: {
                 justifyContent: 'center',

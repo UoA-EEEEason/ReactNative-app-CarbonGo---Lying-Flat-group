@@ -149,22 +149,61 @@ export const fetchElectricity = (uid) => {
 
 export const fetchWalk = (uid) => {
     return dispatch => {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const todayTimestamp = firestore.Timestamp.fromDate(today);
+
         firestore()
             .collection('user')
             .doc(uid)
             .collection('UserCFP-Walk')
-            .orderBy('createdAt', 'desc')
+            .where("createdAt", "<", todayTimestamp)
+            .orderBy("createdAt", "desc")
+            .limit(1)
             .get()
             .then(querySnapshot => {
-                const documents = querySnapshot.docs.map(doc => {
-                    return {
-                        ...doc.data(),
-                    };
-                });
-                dispatch({
-                    type: actionTypes.FETCH_WALK,
-                    payload: documents[0].walkConsumption,
-                });
+                if (querySnapshot.empty) {
+                    dispatch({
+                        type: actionTypes.FETCH_WALK,
+                        payload: 0,
+                    });
+                }
+                else {
+                    const documents = querySnapshot.docs.map(doc => {
+                        return {
+                            ...doc.data(),
+                        };
+                    });
+                    console.log('yestoday: ', documents)
+                    dispatch({
+                        type: actionTypes.FETCH_WALK,
+                        payload: documents[0].walkConsumption,
+                    });
+                }
+
             });
     };
 };
+
+// export const fetchWalk = (uid) => {
+//     return dispatch => {
+//         firestore()
+//             .collection('user')
+//             .doc(uid)
+//             .collection('UserCFP-Walk')
+//             .orderBy('createdAt', 'desc')
+//             .get()
+//             .then(querySnapshot => {
+//                 const documents = querySnapshot.docs.map(doc => {
+//                     return {
+//                         ...doc.data(),
+//                     };
+//                 });
+//                 dispatch({
+//                     type: actionTypes.FETCH_WALK,
+//                     payload: documents[0].walkConsumption,
+//                 });
+//             });
+//     };
+// };

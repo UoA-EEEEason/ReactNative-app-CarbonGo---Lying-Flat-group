@@ -8,66 +8,50 @@ import {
     Image,
     StyleSheet,
     PermissionsAndroid,
-    Platform
+    Platform,
 } from 'react-native';
 import { COLORS } from '../../constants/color/color';
 import StatusComponent from './../../components/StatusComponent';
 import ImagePicker from 'react-native-image-picker';
 import { TextInput } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
-import { postFood,fetchFood } from '../../redux/actions/carbonFootprint';
-import { fetchWeight } from '../../redux/actions/weight';
+import { fetchWalk, postWalk } from '../../redux/actions/carbonFootprint';
 import firestore from '@react-native-firebase/firestore';
 import useHealthData from './../../hooks/useHealthData';
 import { useNavigation } from '@react-navigation/native';
 
-const TextInputComponent = ({ label, onChangeText, style, value }) => {
-    const customTheme = {
-        colors: {
-            primary: 'black',
-        },
-    };
-
-    return (
-        <TextInput
-            label={label}
-            value={value}
-            mode="flat"
-            onChangeText={onChangeText}
-            style={style}
-            theme={customTheme}
-        />
-    );
-};
-
-const SaveFoodScreen = () => {
+const WalkScreen = () => {
     const [photo, setPhoto] = useState(null);
-    const [foodConsumption, setFoodConsumption] = useState('');
+    const [walkConsumption, setWalkConsumption] = useState('');
     const dispatch = useDispatch();
     const navigation = useNavigation();
+
+    // test for walk data
+    const [date, setDate] = useState(new Date());
+    const { steps, flights, distance } = useHealthData(date);
 
     // get auth state from redux
     const uid = useSelector(state => state.auth.uid);
 
     // get weight value from redux
-    const foodWeight = useSelector(state => state.weight).weight.food ?? 0;
+    const walkWeight = useSelector(state => state.weight).weight.walk ?? 0;
 
-    // fetch food
+    // fetch walk
     useEffect(() => {
-        dispatch(fetchFood(uid));
+        dispatch(fetchWalk(uid));
     }, [dispatch]);
-    const lastFood = useSelector(state => state.carbonFootprint).foodConsumption ?? 0;
-    // console.log('last foodConsumption:', lastFood)
+    const lastWalk = useSelector(state => state.carbonFootprint).walkConsumption ?? 0;
+    console.log('last lastWalk:', lastWalk)
 
     const handleSubmitPress = async () => {
         const createdAt = firestore.Timestamp.now();
-        const consumptionNumber = Number(foodConsumption) * foodWeight + lastFood;
-        // console.log('consumptionNumber:', consumptionNumber)
-        dispatch(postFood(uid, consumptionNumber, createdAt));
+        const consumptionNumber = steps * walkWeight + lastWalk;
+        console.log('consumptionNumber:', consumptionNumber)
+        dispatch(postWalk(uid, consumptionNumber, createdAt));
         navigation.navigate('Home')
     };
 
-    const handleFoodConsumptionChange = value => {
+    const handleElectricityConsumptionChange = value => {
         setFoodConsumption(value);
     };
 
@@ -82,7 +66,7 @@ const SaveFoodScreen = () => {
                 {
                     title: 'Storage Permission Required',
                     message: 'App needs access to your storage to download Photos',
-                }
+                },
             );
             if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
                 return;
@@ -102,44 +86,24 @@ const SaveFoodScreen = () => {
             style={styles.backgroundImage}
             resizeMode="cover">
             <SafeAreaView style={styles.safeArea}>
-                <StatusComponent title={'Food carbon footprint'} />
+                <StatusComponent title={'Electricity carbon footprint'} />
                 <ScrollView contentContainerStyle={styles.scrollView}>
                     <Image
                         source={require('./../../assets/images/logo.png')}
                         style={styles.logo}
                         resizeMode="contain"
                     />
-                    <Text style={styles.createText}>
-                        Submit your Food carbon footprint
+                    <Text
+                        style={styles.createText}
+                    >
+                        {steps.toString()}
                     </Text>
-                    {/* here should be a drop down bar to select food type */}
-                    {/* <TextInputComponent
-                        style={styles.input}
-                        label={'The kind of food you buy'}
-                    /> */}
+                    {/* <Text style={styles.createText}>
+                        Submit your Electricity carbon footprint
+                    </Text> */}
                     <Text style={styles.input}>
-                        Points you will earn: {foodConsumption ? foodConsumption * foodWeight : ''}
+                        Points you will earn: {steps.toString() ? steps.toString() * walkWeight : ''}
                     </Text>
-                    <TextInputComponent
-                        style={styles.input}
-                        label={'The weight of the food you buy'}
-                        onChangeText={handleFoodConsumptionChange}
-                        value={foodConsumption}
-                    />
-                    <Text style={styles.uploadPhotoText}>
-                        Please upload your photo
-                    </Text>
-                    <TouchableOpacity
-                        style={styles.photoButton}
-                        onPress={handleChoosePhoto}>
-                        <Text style={styles.buttonText}>Upload Photo</Text>
-                    </TouchableOpacity>
-                    {photo && (
-                        <Image
-                            source={{ uri: photo }}
-                            style={styles.uploadedImage}
-                        />
-                    )}
                     <TouchableOpacity
                         style={styles.loginButton}
                         onPress={handleSubmitPress}>
@@ -151,7 +115,7 @@ const SaveFoodScreen = () => {
     );
 };
 
-export default SaveFoodScreen;
+export default WalkScreen;
 
 const styles = StyleSheet.create({
     backgroundImage: {
@@ -178,10 +142,11 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     input: {
+        fontSize: 16,
         backgroundColor: 'transparent',
-        borderWidth: 1,
-        borderColor: 'black',
         width: '80%',
+        color: COLORS.black,
+        textAlign: 'center',
         marginBottom: 20,
         borderRadius: 5,
     },

@@ -17,6 +17,7 @@ import { TextInput } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { postTraffic, fetchTraffic } from '../../redux/actions/carbonFootprint';
 import firestore from '@react-native-firebase/firestore';
+import { useNavigation } from '@react-navigation/native';
 
 const TextInputComponent = ({ label, onChangeText, style, value }) => {
   const customTheme = {
@@ -41,6 +42,7 @@ const BusScreen = () => {
   const [photo, setPhoto] = useState(null);
   const [trafficConsumption, setTrafficConsumption] = useState('');
   const dispatch = useDispatch();
+  const navigation = useNavigation();
 
   // get auth state from redux
   const uid = useSelector(state => state.auth.uid);
@@ -61,6 +63,7 @@ const BusScreen = () => {
     const consumptionNumber = Number(trafficConsumption) * trafficWeight + lastTraffic;
     // console.log('consumptionNumber:', consumptionNumber)
     dispatch(postTraffic(uid, consumptionNumber, createdAt));
+    navigation.navigate('Home')
   };
 
   const handleFoodConsumptionChange = value => {
