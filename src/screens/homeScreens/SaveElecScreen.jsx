@@ -7,18 +7,18 @@ import {
     ImageBackground,
     Image,
     StyleSheet,
-    PermissionsAndroid,
-    Platform,
+    Alert,
+    ActivityIndicator,
 } from 'react-native';
 import { COLORS } from '../../constants/color/color';
 import StatusComponent from './../../components/StatusComponent';
-import ImagePicker from 'react-native-image-picker';
 import { TextInput } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchElectricity, postElectricity } from '../../redux/actions/carbonFootprint';
 import firestore from '@react-native-firebase/firestore';
-import useHealthData from './../../hooks/useHealthData';
 import { useNavigation } from '@react-navigation/native';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import storage from '@react-native-firebase/storage';
 
 const TextInputComponent = ({ label, onChangeText, style, value }) => {
     const customTheme = {
@@ -40,14 +40,12 @@ const TextInputComponent = ({ label, onChangeText, style, value }) => {
 };
 
 const SaveElecScreen = () => {
-    const [photo, setPhoto] = useState(null);
     const [electricityConsumption, setFoodConsumption] = useState('');
     const dispatch = useDispatch();
     const navigation = useNavigation();
+    const [photo, setPhoto] = useState(null);
 
-    // test for walk data
-    // const [date, setDate] = useState(new Date());
-    // const { steps, flights, distance } = useHealthData(date);
+    const [isLoading, setIsLoading] = useState(false);
 
     // get auth state from redux
     const uid = useSelector(state => state.auth.uid);
@@ -66,37 +64,71 @@ const SaveElecScreen = () => {
         const createdAt = firestore.Timestamp.now();
         const consumptionNumber = Number(electricityConsumption) * electricityWeight + lastElectricity;
         // console.log('consumptionNumber:', consumptionNumber)
+        await handleUploadPhoto();
         dispatch(postElectricity(uid, consumptionNumber, createdAt));
         navigation.navigate('Home')
-      };
+    };
 
     const handleElectricityConsumptionChange = value => {
         setFoodConsumption(value);
     };
 
-    const handleChoosePhoto = async () => {
+    const handleChoosePhoto = () => {
         const options = {
             noData: true,
         };
 
-        if (Platform.OS === 'android') {
-            const granted = await PermissionsAndroid.request(
-                PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+        const selectPhoto = response => {
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            } else {
+                if (response.assets && response.assets.length > 0) {
+                    const selectedPhoto = response.assets[0];
+                    setPhoto(selectedPhoto);
+                }
+            }
+        };
+
+        Alert.alert(
+            'Upload Photo',
+            'Choose an option',
+            [
                 {
-                    title: 'Storage Permission Required',
-                    message: 'App needs access to your storage to download Photos',
+                    text: 'Camera',
+                    onPress: () => launchCamera(options, selectPhoto),
                 },
-            );
-            if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
-                return;
+                {
+                    text: 'Gallery',
+                    onPress: () => launchImageLibrary(options, selectPhoto),
+                },
+                {
+                    text: 'Cancel',
+                    onPress: () => console.log('Cancelled'),
+                    style: 'cancel',
+                },
+            ],
+            { cancelable: true },
+        );
+    };
+
+    const handleUploadPhoto = async () => {
+        if (photo) {
+            setIsLoading(true);
+            const uploadUri = Platform.OS === 'ios' ? photo.uri.replace('file://', '') : photo.uri;
+            const filename = uploadUri.substring(uploadUri.lastIndexOf('/') + 1);
+            const storageRef = storage().ref(`photos/${filename}`);
+
+            try {
+                await storageRef.putFile(uploadUri);
+                Alert.alert('Photo Uploaded', 'Your photo has been uploaded to Firebase storage.');
+            } catch (e) {
+                console.error(e);
+            } finally {
+                setIsLoading(false);
             }
         }
-
-        ImagePicker.showImagePicker(options, response => {
-            if (response.uri) {
-                setPhoto(response.uri);
-            }
-        });
     };
 
     return (
@@ -105,7 +137,7 @@ const SaveElecScreen = () => {
             style={styles.backgroundImage}
             resizeMode="cover">
             <SafeAreaView style={styles.safeArea}>
-                <StatusComponent title={'Electricity carbon footprint'} />
+                <StatusComponent title={'Electricity'} />
                 <ScrollView contentContainerStyle={styles.scrollView}>
                     <Image
                         source={require('./../../assets/images/logo.png')}
@@ -128,14 +160,18 @@ const SaveElecScreen = () => {
                         value={electricityConsumption}
                     />
                     <Text style={styles.uploadPhotoText}>Please upload your photo</Text>
+                    {photo && (
+                        <Image
+                            source={{ uri: photo.uri }}
+                            style={styles.uploadedImage}
+                        />
+                    )}
                     <TouchableOpacity
                         style={styles.photoButton}
                         onPress={handleChoosePhoto}>
                         <Text style={styles.buttonText}>Upload Photo</Text>
                     </TouchableOpacity>
-                    {photo && (
-                        <Image source={{ uri: photo }} style={styles.uploadedImage} />
-                    )}
+
                     <TouchableOpacity
                         style={styles.loginButton}
                         onPress={handleSubmitPress}>
@@ -143,6 +179,9 @@ const SaveElecScreen = () => {
                     </TouchableOpacity>
                 </ScrollView>
             </SafeAreaView>
+            {isLoading && (
+                <ActivityIndicator size="large" color={COLORS.buttonGreen} />
+            )}
         </ImageBackground>
     );
 };
@@ -177,6 +216,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
         borderWidth: 1,
         borderColor: 'black',
+        color: COLORS.black,
         width: '80%',
         marginBottom: 20,
         borderRadius: 5,

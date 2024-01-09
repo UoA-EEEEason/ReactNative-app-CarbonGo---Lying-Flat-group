@@ -139,12 +139,12 @@ const styles = StyleSheet.create({
     },
     welcomeText: {
         fontSize: 30,
-        color: COLORS.grew,
+        color: COLORS.black,
         textAlign: 'center',
     },
     userText: {
         fontSize: 20,
-        color: COLORS.grew,
+        color: COLORS.black,
         textAlign: 'center',
         marginVertical: 20,
     },

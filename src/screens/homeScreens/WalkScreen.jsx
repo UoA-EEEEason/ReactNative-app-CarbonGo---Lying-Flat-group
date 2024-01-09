@@ -7,13 +7,9 @@ import {
     ImageBackground,
     Image,
     StyleSheet,
-    PermissionsAndroid,
-    Platform,
 } from 'react-native';
 import { COLORS } from '../../constants/color/color';
 import StatusComponent from './../../components/StatusComponent';
-import ImagePicker from 'react-native-image-picker';
-import { TextInput } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchWalk, postWalk } from '../../redux/actions/carbonFootprint';
 import firestore from '@react-native-firebase/firestore';
@@ -21,8 +17,6 @@ import useHealthData from './../../hooks/useHealthData';
 import { useNavigation } from '@react-navigation/native';
 
 const WalkScreen = () => {
-    const [photo, setPhoto] = useState(null);
-    const [walkConsumption, setWalkConsumption] = useState('');
     const dispatch = useDispatch();
     const navigation = useNavigation();
 
@@ -41,7 +35,7 @@ const WalkScreen = () => {
         dispatch(fetchWalk(uid));
     }, [dispatch]);
     const lastWalk = useSelector(state => state.carbonFootprint).walkConsumption ?? 0;
-    console.log('last lastWalk:', lastWalk)
+    // console.log('last lastWalk:', lastWalk)
 
     const handleSubmitPress = async () => {
         const createdAt = firestore.Timestamp.now();
@@ -51,42 +45,13 @@ const WalkScreen = () => {
         navigation.navigate('Home')
     };
 
-    const handleElectricityConsumptionChange = value => {
-        setFoodConsumption(value);
-    };
-
-    const handleChoosePhoto = async () => {
-        const options = {
-            noData: true,
-        };
-
-        if (Platform.OS === 'android') {
-            const granted = await PermissionsAndroid.request(
-                PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-                {
-                    title: 'Storage Permission Required',
-                    message: 'App needs access to your storage to download Photos',
-                },
-            );
-            if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
-                return;
-            }
-        }
-
-        ImagePicker.showImagePicker(options, response => {
-            if (response.uri) {
-                setPhoto(response.uri);
-            }
-        });
-    };
-
     return (
         <ImageBackground
             source={require('./../../assets/images/background.png')}
             style={styles.backgroundImage}
             resizeMode="cover">
             <SafeAreaView style={styles.safeArea}>
-                <StatusComponent title={'Electricity carbon footprint'} />
+                <StatusComponent title={'Walk'} />
                 <ScrollView contentContainerStyle={styles.scrollView}>
                     <Image
                         source={require('./../../assets/images/logo.png')}
