@@ -43,7 +43,9 @@ const StatusComponent = ({ title }) => {
                 </View>
 
                 {/* NULL */}
-                <View></View>
+                <View>
+                    <Ionicons name="arrow-back" size={28} color={'transparent'} />
+                </View>
             </View>
         </View>
     );
