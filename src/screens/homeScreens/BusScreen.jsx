@@ -1,6 +1,5 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
-  View,
   SafeAreaView,
   ScrollView,
   Text,
@@ -8,20 +7,18 @@ import {
   ImageBackground,
   Image,
   StyleSheet,
-  Button,
   PermissionsAndroid,
   Platform,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
-import {COLORS} from '../../constants/color/color';
+import { COLORS } from '../../constants/color/color';
 import StatusComponent from './../../components/StatusComponent';
 import ImagePicker from 'react-native-image-picker';
-import {TextInput} from 'react-native-paper';
-import {useDispatch, useSelector} from 'react-redux';
-import {postTraffic} from '../../redux/actions/carbonFootprint';
+import { TextInput } from 'react-native-paper';
+import { useDispatch, useSelector } from 'react-redux';
+import { postTraffic, fetchTraffic } from '../../redux/actions/carbonFootprint';
 import firestore from '@react-native-firebase/firestore';
 
-const TextInputComponent = ({label, onChangeText, style, value}) => {
+const TextInputComponent = ({ label, onChangeText, style, value }) => {
   const customTheme = {
     colors: {
       primary: 'black',
@@ -48,9 +45,21 @@ const BusScreen = () => {
   // get auth state from redux
   const uid = useSelector(state => state.auth.uid);
 
+  // get weight value from redux
+  const trafficWeight = useSelector(state => state.weight).weight.traffic;
+  // console.log('trafficWeight:',trafficWeight)
+
+  // fetch traffic
+  useEffect(() => {
+    dispatch(fetchTraffic(uid));
+  }, [dispatch]);
+  const lastTraffic = useSelector(state => state.carbonFootprint).trafficConsumption ?? 0;
+  // console.log('last trafficConsumption:', lastTraffic)
+
   const handleSubmitPress = async () => {
     const createdAt = firestore.Timestamp.now();
-    const consumptionNumber = Number(trafficConsumption);
+    const consumptionNumber = Number(trafficConsumption) * trafficWeight + lastTraffic;
+    // console.log('consumptionNumber:', consumptionNumber)
     dispatch(postTraffic(uid, consumptionNumber, createdAt));
   };
 
@@ -99,10 +108,8 @@ const BusScreen = () => {
           <Text style={styles.createText}>
             Submit your Bus carbon footprint
           </Text>
-          {/* <TextInputComponent style={styles.input} label={'Travel distance'} />
-          <TextInputComponent style={styles.input} label={'Your spending'} /> */}
           <Text style={styles.input}>
-            Points you will earn: {trafficConsumption ? trafficConsumption * 2 : ''}
+            Points you will earn: {trafficConsumption ? trafficConsumption * trafficWeight : ''}
           </Text>
           <TextInputComponent
             style={styles.input}
@@ -117,7 +124,7 @@ const BusScreen = () => {
             <Text style={styles.buttonText}>Upload Photo</Text>
           </TouchableOpacity>
           {photo && (
-            <Image source={{uri: photo}} style={styles.uploadedImage} />
+            <Image source={{ uri: photo }} style={styles.uploadedImage} />
           )}
           <TouchableOpacity
             style={styles.loginButton}

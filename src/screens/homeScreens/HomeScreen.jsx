@@ -7,12 +7,14 @@ import {
   Image,
   StyleSheet,
 } from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { COLORS } from './../../constants/color/color';
 import { StatusComponent } from './../../components';
 import { FAB, Modal, Button, IconButton } from 'react-native-paper';
 import LottieView from "lottie-react-native";
 import { useNavigation } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchWeight } from '../../redux/actions/weight';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -30,6 +32,12 @@ const HomeScreen = () => {
   const openModal = () => setIsModalVisible(true);
   const closeModal = () => setIsModalVisible(false);
 
+  // fetch weight
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchWeight());
+  }, [dispatch]);
+
   return (
     <ImageBackground
       source={require('./../../assets/images/backgroundblue.png')}
@@ -39,31 +47,31 @@ const HomeScreen = () => {
       <SafeAreaView style={{ flex: 1 }}>
         <StatusComponent title={''} />
 
-          <View style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-            <LottieView
-              source={require("./../../assets/animations/cloudyAnimation.json")}
-              autoPlay
-              loop
-              style={{
-                width: '100%',
-                height: '40%',
+        <View style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+          <LottieView
+            source={require("./../../assets/animations/cloudyAnimation.json")}
+            autoPlay
+            loop
+            style={{
+              width: '100%',
+              height: '40%',
 
-              }} />
-            <LottieView
-              source={require("./../../assets/animations/treeAnimation.json")}
-              autoPlay
-              loop
-              speed={0.5}
-              style={{
-                width: '100%',
-                height: 500,
-                marginTop: '-10%',
-              }} />
-          </View>
+            }} />
+          <LottieView
+            source={require("./../../assets/animations/treeAnimation.json")}
+            autoPlay
+            loop
+            speed={0.5}
+            style={{
+              width: '100%',
+              height: 500,
+              marginTop: '-10%',
+            }} />
+        </View>
         <FAB
           icon={({ size }) => (
             <View style={{

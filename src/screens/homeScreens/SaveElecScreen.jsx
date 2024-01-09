@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     SafeAreaView,
     ScrollView,
@@ -15,8 +15,9 @@ import StatusComponent from './../../components/StatusComponent';
 import ImagePicker from 'react-native-image-picker';
 import { TextInput } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
-import { postElectricity } from '../../redux/actions/carbonFootprint';
+import { fetchElectricity, postElectricity } from '../../redux/actions/carbonFootprint';
 import firestore from '@react-native-firebase/firestore';
+import useHealthData from './../../hooks/useHealthData';
 
 const TextInputComponent = ({ label, onChangeText, style, value }) => {
     const customTheme = {
@@ -42,14 +43,29 @@ const SaveElecScreen = () => {
     const [electricityConsumption, setFoodConsumption] = useState('');
     const dispatch = useDispatch();
 
+    // test for walk data
+    // const [date, setDate] = useState(new Date());
+    // const { steps, flights, distance } = useHealthData(date);
+
     // get auth state from redux
     const uid = useSelector(state => state.auth.uid);
 
+    // get weight value from redux
+    const electricityWeight = useSelector(state => state.weight).weight.electricy;
+
+    // fetch electricy
+    useEffect(() => {
+        dispatch(fetchElectricity(uid));
+    }, [dispatch]);
+    const lastElectricity = useSelector(state => state.carbonFootprint).electricityConsumption ?? 0;
+    // console.log('last lastElectricity:', lastElectricity)
+
     const handleSubmitPress = async () => {
         const createdAt = firestore.Timestamp.now();
-        const consumptionNumber = Number(electricityConsumption);
+        const consumptionNumber = Number(electricityConsumption) * electricityWeight + lastElectricity;
+        // console.log('consumptionNumber:', consumptionNumber)
         dispatch(postElectricity(uid, consumptionNumber, createdAt));
-    };
+      };
 
     const handleElectricityConsumptionChange = value => {
         setFoodConsumption(value);
@@ -93,11 +109,14 @@ const SaveElecScreen = () => {
                         style={styles.logo}
                         resizeMode="contain"
                     />
+                    {/* <Text style={styles.createText}>
+                        {steps.toString()}
+                    </Text> */}
                     <Text style={styles.createText}>
                         Submit your Electricity carbon footprint
                     </Text>
                     <Text style={styles.input}>
-                        Points you will earn: {electricityConsumption ? electricityConsumption * 2 : ''}
+                        Points you will earn: {electricityConsumption ? electricityConsumption * electricityWeight : ''}
                     </Text>
                     <TextInputComponent
                         style={styles.input}
