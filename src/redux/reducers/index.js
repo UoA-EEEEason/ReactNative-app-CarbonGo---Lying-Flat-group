@@ -7,6 +7,7 @@ import profileReducer from './profile';
 import treeReducer from './tree';
 import certificateReducer from './certificate';
 import carbonFootprintReducer from './carbonFootprint';
+import weightReducer from './weight';
 
 export default combineReducers({
   auth: authReducer,
@@ -17,4 +18,5 @@ export default combineReducers({
   tree: treeReducer,
   certificate: certificateReducer,
   carbonFootprint: carbonFootprintReducer,
+  weight: weightReducer,
 });

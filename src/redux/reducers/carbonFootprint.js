@@ -1,7 +1,7 @@
 import { actionTypes } from '../actionTypes';
 
 const initialState = {
-    electricyConsumption: null,
+    electricityConsumption: null,
     foodConsumption: null,
     trafficConsumption: null,
     walkConsumption: null,
@@ -10,13 +10,21 @@ const initialState = {
 export default (state = initialState, action) => {
     switch (action.type) {
         case actionTypes.POST_ELECTRICITY:
-            return { ...state, profile: action.payload };
+            return { ...state, electricityConsumption: action.payload };
         case actionTypes.POST_FOOD:
-            return { ...state, profile: action.payload };
+            return { ...state, foodConsumption: action.payload };
         case actionTypes.POST_TRAFFIC:
-            return { ...state, profile: action.payload };
+            return { ...state, trafficConsumption: action.payload };
         case actionTypes.POST_WALK:
-            return { ...state, profile: action.payload };
+            return { ...state, walkConsumption: action.payload };
+        case actionTypes.FETCH_ELECTRICITY:
+            return { ...state, electricityConsumption: action.payload };
+        case actionTypes.FETCH_FOOD:
+            return { ...state, foodConsumption: action.payload };
+        case actionTypes.FETCH_TRAFFIC:
+            return { ...state, trafficConsumption: action.payload };
+        case actionTypes.FETCH_WALK:
+            return { ...state, walkConsumption: action.payload };
         default:
             return state;
     }

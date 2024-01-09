@@ -1,8 +1,7 @@
 import { actionTypes } from '../actionTypes';
 import firestore from '@react-native-firebase/firestore';
 
-// Post collection
-// replaces any existing data
+// Post carbon footprint data
 export const postElectricity = (uid, consumption, createdAt) => {
     return dispatch => {
         firestore()
@@ -16,6 +15,7 @@ export const postElectricity = (uid, consumption, createdAt) => {
             .then(() => {
                 dispatch({
                     type: actionTypes.POST_ELECTRICITY,
+                    payload: consumption,
                 });
             });
     };
@@ -34,6 +34,7 @@ export const postFood = (uid, consumption, createdAt) => {
             .then(() => {
                 dispatch({
                     type: actionTypes.POST_FOOD,
+                    payload: consumption,
                 });
             });
     };
@@ -52,12 +53,13 @@ export const postTraffic = (uid, consumption, createdAt) => {
             .then(() => {
                 dispatch({
                     type: actionTypes.POST_TRAFFIC,
+                    payload: consumption,
                 });
             });
     };
 };
 
-export const postWlk = (uid, consumption, createdAt) => {
+export const postWalk = (uid, consumption, createdAt) => {
     return dispatch => {
         firestore()
             .collection('user')
@@ -70,6 +72,98 @@ export const postWlk = (uid, consumption, createdAt) => {
             .then(() => {
                 dispatch({
                     type: actionTypes.POST_WALK,
+                    payload: consumption,
+                });
+            });
+    };
+};
+
+// Fetch carbon footprint data
+
+
+export const fetchFood = (uid) => {
+    return dispatch => {
+        firestore()
+            .collection('user')
+            .doc(uid)
+            .collection('UserCFP-Food')
+            .orderBy('createdAt', 'desc')
+            .get()
+            .then(querySnapshot => {
+                const documents = querySnapshot.docs.map(doc => {
+                    return {
+                        ...doc.data(),
+                    };
+                });
+                dispatch({
+                    type: actionTypes.FETCH_FOOD,
+                    payload: documents[0].foodConsumption,
+                });
+            });
+    };
+};
+
+export const fetchTraffic = (uid) => {
+    return dispatch => {
+        firestore()
+            .collection('user')
+            .doc(uid)
+            .collection('UserCFP-Traffic')
+            .orderBy('createdAt', 'desc')
+            .get()
+            .then(querySnapshot => {
+                const documents = querySnapshot.docs.map(doc => {
+                    return {
+                        ...doc.data(),
+                    };
+                });
+                dispatch({
+                    type: actionTypes.FETCH_TRAFFIC,
+                    payload: documents[0].trafficConsumption,
+                });
+            });
+    };
+};
+
+export const fetchElectricity = (uid) => {
+    return dispatch => {
+        firestore()
+            .collection('user')
+            .doc(uid)
+            .collection('UserCFP-Electricity')
+            .orderBy('createdAt', 'desc')
+            .get()
+            .then(querySnapshot => {
+                const documents = querySnapshot.docs.map(doc => {
+                    return {
+                        ...doc.data(),
+                    };
+                });
+                dispatch({
+                    type: actionTypes.FETCH_ELECTRICITY,
+                    payload: documents[0].electricityConsumption,
+                });
+            });
+    };
+};
+
+export const fetchWalk = (uid) => {
+    return dispatch => {
+        firestore()
+            .collection('user')
+            .doc(uid)
+            .collection('UserCFP-Walk')
+            .orderBy('createdAt', 'desc')
+            .get()
+            .then(querySnapshot => {
+                const documents = querySnapshot.docs.map(doc => {
+                    return {
+                        ...doc.data(),
+                    };
+                });
+                dispatch({
+                    type: actionTypes.FETCH_WALK,
+                    payload: documents[0].walkConsumption,
                 });
             });
     };

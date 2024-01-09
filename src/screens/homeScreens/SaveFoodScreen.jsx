@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
-    View,
     SafeAreaView,
     ScrollView,
     Text,
@@ -8,18 +7,18 @@ import {
     ImageBackground,
     Image,
     StyleSheet,
-    Button,
     PermissionsAndroid,
     Platform
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import { COLORS } from '../../constants/color/color';
 import StatusComponent from './../../components/StatusComponent';
 import ImagePicker from 'react-native-image-picker';
 import { TextInput } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
-import { postFood } from '../../redux/actions/carbonFootprint';
+import { postFood,fetchFood } from '../../redux/actions/carbonFootprint';
+import { fetchWeight } from '../../redux/actions/weight';
 import firestore from '@react-native-firebase/firestore';
+import useHealthData from './../../hooks/useHealthData';
 
 const TextInputComponent = ({ label, onChangeText, style, value }) => {
     const customTheme = {
@@ -48,9 +47,20 @@ const SaveFoodScreen = () => {
     // get auth state from redux
     const uid = useSelector(state => state.auth.uid);
 
+    // get weight value from redux
+    const foodWeight = useSelector(state => state.weight).weight.food;
+
+    // fetch food
+    useEffect(() => {
+        dispatch(fetchFood(uid));
+    }, [dispatch]);
+    const lastFood = useSelector(state => state.carbonFootprint).foodConsumption ?? 0;
+    // console.log('last foodConsumption:', lastFood)
+
     const handleSubmitPress = async () => {
         const createdAt = firestore.Timestamp.now();
-        const consumptionNumber = Number(foodConsumption);
+        const consumptionNumber = Number(foodConsumption) * foodWeight + lastFood;
+        // console.log('consumptionNumber:', consumptionNumber)
         dispatch(postFood(uid, consumptionNumber, createdAt));
     };
 
@@ -105,7 +115,7 @@ const SaveFoodScreen = () => {
                         label={'The kind of food you buy'}
                     /> */}
                     <Text style={styles.input}>
-                        Points you will earn: {foodConsumption ? foodConsumption * 2 : ''}
+                        Points you will earn: {foodConsumption ? foodConsumption * foodWeight : ''}
                     </Text>
                     <TextInputComponent
                         style={styles.input}
