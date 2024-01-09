@@ -117,6 +117,11 @@ const UnAuthenticatedStack = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
+        name="Walk"
+        component={Home.WalkScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
         name="Bus"
         component={Home.BusScreen}
         options={{ headerShown: false }}

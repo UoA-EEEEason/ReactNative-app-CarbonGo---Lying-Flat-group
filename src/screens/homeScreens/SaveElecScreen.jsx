@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchElectricity, postElectricity } from '../../redux/actions/carbonFootprint';
 import firestore from '@react-native-firebase/firestore';
 import useHealthData from './../../hooks/useHealthData';
+import { useNavigation } from '@react-navigation/native';
 
 const TextInputComponent = ({ label, onChangeText, style, value }) => {
     const customTheme = {
@@ -42,6 +43,7 @@ const SaveElecScreen = () => {
     const [photo, setPhoto] = useState(null);
     const [electricityConsumption, setFoodConsumption] = useState('');
     const dispatch = useDispatch();
+    const navigation = useNavigation();
 
     // test for walk data
     // const [date, setDate] = useState(new Date());
@@ -65,6 +67,7 @@ const SaveElecScreen = () => {
         const consumptionNumber = Number(electricityConsumption) * electricityWeight + lastElectricity;
         // console.log('consumptionNumber:', consumptionNumber)
         dispatch(postElectricity(uid, consumptionNumber, createdAt));
+        navigation.navigate('Home')
       };
 
     const handleElectricityConsumptionChange = value => {
