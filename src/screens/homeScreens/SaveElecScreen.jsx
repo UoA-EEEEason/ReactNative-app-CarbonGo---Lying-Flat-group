@@ -51,7 +51,7 @@ const SaveElecScreen = () => {
     const uid = useSelector(state => state.auth.uid);
 
     // get weight value from redux
-    const electricityWeight = useSelector(state => state.weight).weight.electricy;
+    const electricityWeight = useSelector(state => state.weight).weight.electricy ?? 0;
 
     // fetch electricy
     useEffect(() => {
