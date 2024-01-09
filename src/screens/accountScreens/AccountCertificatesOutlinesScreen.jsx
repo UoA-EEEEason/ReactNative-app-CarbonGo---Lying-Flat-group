@@ -13,49 +13,9 @@ import { StatusComponent } from './../../components';
 import { useNavigation } from '@react-navigation/native';
 import { hp, wp } from './../../utils/dimensions';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCertificate,fetchCertificateImage } from '../../redux/actions/certificate';
+import { fetchCertificate } from '../../redux/actions/certificate';
 
-// const cardItems = [
-//   {
-//     id: 1,
-//     title: 'news1',
-//     date: '2023-04-05T14:30:00.000Z',
-//     content: 'This this news1',
-//     image: require('./../../assets/images/news1.png'),
-//   },
-//   {
-//     id: 2,
-//     title: 'news2',
-//     date: '2023-04-05T14:30:00.000Z',
-//     content: 'This this news1',
-//     image: require('./../../assets/images/news1.png'),
-//   },
-//   {
-//     id: 3,
-//     title: 'news3',
-//     date: '2023-04-05T14:30:00.000Z',
-//     content: 'This this news1',
-//     image: require('./../../assets/images/news1.png'),
-//   },
-//   {
-//     id: 4,
-//     title: 'news3',
-//     date: '2023-04-05T14:30:00.000Z',
-//     content: 'This this news1',
-//     image: require('./../../assets/images/news1.png'),
-//   },
-//   {
-//     id: 5,
-//     title: 'news3',
-//     date: '2023-04-05T14:30:00.000Z',
-//     content: 'This this news1',
-//     image: require('./../../assets/images/news1.png'),
-//   },
-
-//   // ... more items
-// ];
-
-const CertificatesCard = ({onPress}) => {
+const CertificatesCard = ({ onPress }) => {
   return (
     <View style={{ margin: 10 }}>
       <TouchableOpacity onPress={onPress}>
@@ -79,21 +39,27 @@ const CertificatesCard = ({onPress}) => {
 
 const AccountCertificatesOutlinesScreen = () => {
   const navigation = useNavigation();
-  // Navigate to the Trees Detail screen with parameters
-  const handlePressCard = item => {
-    navigation.navigate('CertificatesDetails', { item });
-  };
+
+  // get auth state from redux
+  const uid = useSelector(state => state.auth.uid);
 
   // Get certificate data from redux state
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchCertificate());
+    dispatch(fetchCertificate(uid));
   }, [dispatch]);
 
   const certificate = useSelector(state => state.certificate).certificate;
+  // console.log('certificate:',certificate)
 
   // calculate whether the number of cards is odd
   const isOdd = certificate.length % 2 !== 0;
+
+
+  // Navigate to the Trees Detail screen with parameters
+  const handlePressCard = item => {
+    navigation.navigate('CertificatesDetails', { item });
+  };
 
   return (
     <ImageBackground

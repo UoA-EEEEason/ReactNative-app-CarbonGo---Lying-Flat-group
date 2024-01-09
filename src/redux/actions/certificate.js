@@ -1,10 +1,12 @@
-import {actionTypes} from '../actionTypes';
+import { actionTypes } from '../actionTypes';
 import firestore from '@react-native-firebase/firestore';
 
-// Get collection
-export const fetchCertificate = () => {
+// Fetch cerification data by uid
+export const fetchCertificate = (uid) => {
   return dispatch => {
     firestore()
+      .collection('user')
+      .doc(uid)
       .collection('certificate')
       .get()
       .then(querySnapshot => {
