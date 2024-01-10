@@ -16,10 +16,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { postCertificate } from '../../redux/actions/certificate';
 import firestore from '@react-native-firebase/firestore';
 import { postPoints } from '../../redux/actions/carbonFootprint';
+import { useNavigation } from '@react-navigation/native';
 
 const AccountTreeDetailsScreen = ({ route }) => {
   const { item } = route.params;
   // console.log('item:',item)
+
+  const navigation = useNavigation();
 
   // get auth state from redux
   const uid = useSelector(state => state.auth.uid);
