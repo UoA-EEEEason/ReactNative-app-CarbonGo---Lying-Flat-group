@@ -1,26 +1,6 @@
 import { actionTypes } from '../actionTypes';
 import firestore from '@react-native-firebase/firestore';
 
-// Post carbon footprint data
-// export const postElectricity = (uid, consumption, createdAt) => {
-//     return dispatch => {
-//         firestore()
-//             .collection('user')
-//             .doc(uid)
-//             .collection('UserCFP-Electricity')
-//             .add({
-//                 electricityConsumption: consumption,
-//                 createdAt: createdAt,
-//             })
-//             .then(() => {
-//                 dispatch({
-//                     type: actionTypes.POST_ELECTRICITY,
-//                     payload: consumption,
-//                 });
-//             });
-//     };
-// };
-
 export const postElectricity = (uid, consumption, points, createdAt) => {
     return dispatch => {
         firestore()
@@ -178,6 +158,25 @@ export const postWalk = (uid, consumption, points, createdAt) => {
                 // Handle errors in any operation
                 console.error("Error in Firestore operations:", error);
             });
+    };
+};
+
+export const postPoints = (uid, points, createdAt) => {
+    return dispatch => {
+        firestore()
+            .collection('user')
+            .doc(uid)
+            .collection('points')
+            .add({
+                points: points,
+                createdAt: createdAt,
+            })
+            .then(() => {
+                dispatch({
+                    type: actionTypes.POST_POINTS,
+                    payload: points,
+                });
+            })
     };
 };
 

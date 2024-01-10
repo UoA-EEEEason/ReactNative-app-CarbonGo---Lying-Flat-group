@@ -27,7 +27,7 @@ export const fetchCertificate = (uid) => {
 // Buy a tree
 // Equivalent to post a certificate
 // Modify the total points at the same time
-export const postCertificate = (uid, tid, createdAt, cimage, desc, location) => {
+export const postCertificate = (uid, tid, createdAt, cimage, desc) => {
   return dispatch => {
       firestore()
           .collection('user')
@@ -38,7 +38,7 @@ export const postCertificate = (uid, tid, createdAt, cimage, desc, location) => 
               createdAt: createdAt,
               cimage: cimage,
               desc: desc,
-              location: location,
+              location: null,
           })
           .then(() => {
               dispatch({
