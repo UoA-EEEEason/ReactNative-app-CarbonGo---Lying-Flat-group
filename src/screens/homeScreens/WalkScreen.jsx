@@ -35,7 +35,7 @@ const WalkScreen = () => {
         dispatch(fetchWalk(uid));
     }, [dispatch]);
     const lastWalk = useSelector(state => state.carbonFootprint).walkConsumption ?? 0;
-    // console.log('last lastWalk:', lastWalk)
+    console.log('last lastWalk:', lastWalk)
 
     // fetch last total points
     const lastPoints = useSelector(state => state.carbonFootprint).points ?? 0;

@@ -11,6 +11,15 @@ import React, { useState, useEffect } from 'react';
 import { COLORS } from '../../constants/color/color';
 import { StatusComponent } from '../../components';
 import { hp, wp } from '../../utils/dimensions';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  fetchPoints,
+  fetchWalk,
+  fetchTraffic,
+  fetchElectricity,
+  fetchFood,
+  fetchMonth,
+} from '../../redux/actions/carbonFootprint';
 import { Icon } from 'react-native-paper';
 import {
   VictoryLine,
@@ -20,19 +29,37 @@ import {
 import * as Progress from 'react-native-progress';
 
 const DataAnalysisScreen = () => {
-  const [progress, setProgress] = useState(0);
+
+  const uid = useSelector(state => state.auth.uid);
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchPoints(uid));
+    dispatch(fetchWalk(uid));
+    dispatch(fetchTraffic(uid));
+    dispatch(fetchElectricity(uid));
+    dispatch(fetchFood(uid));
+  }, [dispatch]);
+
+  const walkPoints = useSelector(state => state.carbonFootprint).walkConsumption ?? 0;
+  const trafficPoints = useSelector(state => state.carbonFootprint).trafficConsumption ?? 0;
+  const electricityPoints = useSelector(state => state.carbonFootprint).electricityConsumption ?? 0;
+  const foodPoints = useSelector(state => state.carbonFootprint).foodConsumption ?? 0;
+  const emissions = walkPoints + trafficPoints + electricityPoints + foodPoints;
+
+  const [animatedProgress, setAnimatedProgress] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setProgress(oldProgress => {
-        if (oldProgress === 1) {
+      setAnimatedProgress(oldProgress => {
+        const newProgress = oldProgress + 0.01;
+        if (newProgress >= 1) {
           clearInterval(interval);
           return 1;
         }
-        return Math.min(oldProgress + 0.01, 0.3);
+        return newProgress;
       });
     }, 10);
-
     return () => clearInterval(interval);
   }, []);
 
@@ -45,66 +72,72 @@ const DataAnalysisScreen = () => {
         <StatusComponent title={'Data Analysis'} />
         <ScrollView>
           <View style={styles.container}>
+
             <View style={styles.numberFrame}>
               <Text style={styles.counterText}>
                 Cumulative emission reductions
               </Text>
-              <Text style={styles.number}>543210 g</Text>
+              <Text style={styles.number}>{emissions.toString()} g</Text>
             </View>
+
             <View style={styles.whitebackground}>
 
-            <Text style={styles.title}>Emission reduction proportion</Text>
+              <Text style={styles.title}>Emission reduction proportion</Text>
+
               <View style={styles.prograssContainer}>
                 <View style={styles.progressBar}>
                   <Icon source="walk" size={30}></Icon>
                   <Progress.Bar
-                    progress={progress}
+                    progress={Math.min(animatedProgress, walkPoints / emissions)}
                     width={200}
                     color="green"
                     marginLeft={10}
                   />
                   <Text style={{ marginRight: 10, color: COLORS.black }}>
                     {'   '}
-                    {Math.round(progress * 100)}%
+                    {Math.round(walkPoints / emissions * 100)}%
                   </Text>
                 </View>
+
                 <View style={styles.progressBar}>
                   <Icon source="bus-marker" size={30}></Icon>
                   <Progress.Bar
-                    progress={progress}
+                    progress={Math.min(animatedProgress, trafficPoints / emissions)}
                     width={200}
                     color="green"
                     marginLeft={10}
                   />
                   <Text style={{ marginRight: 10, color: COLORS.black }}>
                     {'   '}
-                    {Math.round(progress * 100)}%
+                    {Math.round(trafficPoints / emissions * 100)}%
                   </Text>
                 </View>
+
                 <View style={styles.progressBar}>
                   <Icon source="food" size={30}></Icon>
                   <Progress.Bar
-                    progress={progress}
+                    progress={Math.min(animatedProgress, foodPoints / emissions)}
                     width={200}
                     color="green"
                     marginLeft={10}
                   />
                   <Text style={{ marginRight: 10, color: COLORS.black }}>
                     {'   '}
-                    {Math.round(progress * 100)}%
+                    {Math.round(foodPoints / emissions * 100)}%
                   </Text>
                 </View>
+
                 <View style={styles.progressBar}>
                   <Icon source="flash" size={30}></Icon>
                   <Progress.Bar
-                    progress={progress}
+                    progress={Math.min(animatedProgress, electricityPoints / emissions)}
                     width={200}
                     color="green"
                     marginLeft={10}
                   />
                   <Text style={{ marginRight: 10, color: COLORS.black }}>
                     {'   '}
-                    {Math.round(progress * 100)}%
+                    {Math.round(electricityPoints / emissions * 100)}%
                   </Text>
                 </View>
               </View>
@@ -137,7 +170,7 @@ const DataAnalysisScreen = () => {
                   style={{ data: { stroke: COLORS.green, strokeWidth: 4 } }}
                 />
               </VictoryChart>
-              
+
               <Text style={styles.title}>Emission reduction trends</Text>
               <Text style={styles.text}>
                 trends text. trends text. trends text. trends text. trends text.
