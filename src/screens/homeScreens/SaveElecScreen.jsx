@@ -60,12 +60,19 @@ const SaveElecScreen = () => {
     const lastElectricity = useSelector(state => state.carbonFootprint).electricityConsumption ?? 0;
     // console.log('last lastElectricity:', lastElectricity)
 
+    // fetch last total points
+    const lastPoints = useSelector(state => state.carbonFootprint).points ?? 0;
+
     const handleSubmitPress = async () => {
         const createdAt = firestore.Timestamp.now();
         const consumptionNumber = Number(electricityConsumption) * electricityWeight + lastElectricity;
+        const points = lastPoints + consumptionNumber;
         // console.log('consumptionNumber:', consumptionNumber)
+        // console.log('lastPoints:', lastPoints)
+        // console.log('points:', points)
+
         await handleUploadPhoto();
-        dispatch(postElectricity(uid, consumptionNumber, createdAt));
+        dispatch(postElectricity(uid, consumptionNumber, points, createdAt));
         navigation.navigate('Home')
     };
 

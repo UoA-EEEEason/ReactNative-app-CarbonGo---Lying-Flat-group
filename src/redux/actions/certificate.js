@@ -23,3 +23,27 @@ export const fetchCertificate = (uid) => {
       });
   };
 };
+
+// Buy a tree
+// Equivalent to post a certificate
+// Modify the total points at the same time
+export const postCertificate = (uid, tid, createdAt, cimage, desc, location) => {
+  return dispatch => {
+      firestore()
+          .collection('user')
+          .doc(uid)
+          .collection('certificate')
+          .add({
+              tid: tid,
+              createdAt: createdAt,
+              cimage: cimage,
+              desc: desc,
+              location: location,
+          })
+          .then(() => {
+              dispatch({
+                  type: actionTypes.POST_CERTIFICATE,
+              });
+          });
+  };
+};

@@ -5,6 +5,7 @@ const initialState = {
     foodConsumption: null,
     trafficConsumption: null,
     walkConsumption: null,
+    points: null,
 };
 
 export default (state = initialState, action) => {
@@ -25,6 +26,10 @@ export default (state = initialState, action) => {
             return { ...state, trafficConsumption: action.payload };
         case actionTypes.FETCH_WALK:
             return { ...state, walkConsumption: action.payload };
+        case actionTypes.POST_POINTS:
+            return { ...state, points: action.payload };
+        case actionTypes.FETCH_POINTS:
+            return { ...state, points: action.payload };
         default:
             return state;
     }
