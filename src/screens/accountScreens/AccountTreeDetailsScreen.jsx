@@ -15,13 +15,21 @@ import { hp, wp } from './../../utils/dimensions';
 import { useDispatch, useSelector } from 'react-redux';
 import { postCertificate } from '../../redux/actions/certificate';
 import firestore from '@react-native-firebase/firestore';
+import { postPoints } from '../../redux/actions/carbonFootprint';
+import { useNavigation } from '@react-navigation/native';
 
 const AccountTreeDetailsScreen = ({ route }) => {
   const { item } = route.params;
   // console.log('item:',item)
 
+  const navigation = useNavigation();
+
   // get auth state from redux
   const uid = useSelector(state => state.auth.uid);
+
+  // fetch last total points
+  const currentPoints = useSelector(state => state.carbonFootprint).points;
+  const newPoints = currentPoints - item.price;
 
   const dispatch = useDispatch();
 
@@ -31,11 +39,13 @@ const AccountTreeDetailsScreen = ({ route }) => {
     const certifacateCover = 'https://s2.loli.net/2023/12/19/Be8nwbsxvWVZAgl.jpg';
     cimage.push(certifacateCover);
     cimage.push(item.image);
-    console.log(cimage)
-    const location = 'Auckland Park'
-    dispatch(postCertificate(uid, item.id, createdAt, cimage, item.desc, location));
+    // console.log(cimage);
+    // get a certifacte
+    dispatch(postCertificate(uid, item.id, createdAt, cimage, item.desc));
+    // Deduct corresponding points
+    dispatch(postPoints(uid, newPoints, createdAt));
     // console.log('get it')
-    // navigation.navigate('Home')
+    navigation.navigate('Home')
   };
   
   return (
