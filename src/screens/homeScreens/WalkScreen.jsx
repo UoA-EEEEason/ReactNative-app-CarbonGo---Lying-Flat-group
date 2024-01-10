@@ -37,11 +37,18 @@ const WalkScreen = () => {
     const lastWalk = useSelector(state => state.carbonFootprint).walkConsumption ?? 0;
     // console.log('last lastWalk:', lastWalk)
 
+    // fetch last total points
+    const lastPoints = useSelector(state => state.carbonFootprint).points ?? 0;
+
     const handleSubmitPress = async () => {
         const createdAt = firestore.Timestamp.now();
         const consumptionNumber = steps * walkWeight + lastWalk;
+        const points = lastPoints + consumptionNumber;
         console.log('consumptionNumber:', consumptionNumber)
-        dispatch(postWalk(uid, consumptionNumber, createdAt));
+        console.log('lastPoints:', lastPoints)
+        console.log('points:', points)
+
+        dispatch(postWalk(uid, consumptionNumber, points, createdAt));
         navigation.navigate('Home')
     };
 

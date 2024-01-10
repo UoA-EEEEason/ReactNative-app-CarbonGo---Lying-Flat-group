@@ -54,6 +54,9 @@ const BusScreen = () => {
   const trafficWeight = useSelector(state => state.weight).weight.traffic ?? 0;
   // console.log('trafficWeight:',trafficWeight)
 
+  // fetch last total points
+  const lastPoints = useSelector(state => state.carbonFootprint).points ?? 0;
+
   // fetch traffic
   useEffect(() => {
     dispatch(fetchTraffic(uid));
@@ -64,9 +67,13 @@ const BusScreen = () => {
   const handleSubmitPress = async () => {
     const createdAt = firestore.Timestamp.now();
     const consumptionNumber = Number(trafficConsumption) * trafficWeight + lastTraffic;
+    const points = lastPoints + consumptionNumber;
     // console.log('consumptionNumber:', consumptionNumber)
+    // console.log('lastPoints:', lastPoints)
+    // console.log('points:', points)
+
     await handleUploadPhoto();
-    dispatch(postTraffic(uid, consumptionNumber, createdAt));
+    dispatch(postTraffic(uid, consumptionNumber, points, createdAt));
     navigation.navigate('Home')
   };
 

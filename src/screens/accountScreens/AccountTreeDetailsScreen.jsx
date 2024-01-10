@@ -12,10 +12,31 @@ import React from 'react';
 import { COLORS } from './../../constants/color/color';
 import { StatusComponent } from './../../components';
 import { hp, wp } from './../../utils/dimensions';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { postCertificate } from '../../redux/actions/certificate';
+import firestore from '@react-native-firebase/firestore';
 
 const AccountTreeDetailsScreen = ({ route }) => {
   const { item } = route.params;
+  // console.log('item:',item)
+
+  // get auth state from redux
+  const uid = useSelector(state => state.auth.uid);
+
+  const dispatch = useDispatch();
+
+  const handleSubmitPress = async () => {
+    const createdAt = firestore.Timestamp.now();
+    const cimage = [];
+    const certifacateCover = 'https://s2.loli.net/2023/12/19/Be8nwbsxvWVZAgl.jpg';
+    cimage.push(certifacateCover);
+    cimage.push(item.image);
+    console.log(cimage)
+    const location = 'Auckland Park'
+    dispatch(postCertificate(uid, item.id, createdAt, cimage, item.desc, location));
+    // console.log('get it')
+    // navigation.navigate('Home')
+  };
   
   return (
     <ImageBackground
@@ -40,7 +61,9 @@ const AccountTreeDetailsScreen = ({ route }) => {
                   </Text>
                 </View>
                 <TouchableOpacity
-                  style={styles.loginButton}>
+                  style={styles.loginButton}
+                  onPress={handleSubmitPress}
+                  >
                   <Text style={styles.buttonText}>{item.price} Points Get It!</Text>
                 </TouchableOpacity>
               </View>

@@ -15,6 +15,7 @@ import LottieView from "lottie-react-native";
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchWeight } from '../../redux/actions/weight';
+import { fetchPoints } from '../../redux/actions/carbonFootprint';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -37,6 +38,18 @@ const HomeScreen = () => {
   useEffect(() => {
     dispatch(fetchWeight());
   }, [dispatch]);
+
+  // get auth state from redux
+  const uid = useSelector(state => state.auth.uid);
+
+  // sync total points state
+  useEffect(() => {
+    dispatch(fetchPoints(uid));
+  }, [dispatch]);
+
+  //
+  // const lastPoints = useSelector(state => state.carbonFootprint).points
+  // console.log('lastPoints:', lastPoints)
 
   return (
     <ImageBackground

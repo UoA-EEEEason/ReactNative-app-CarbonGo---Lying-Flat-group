@@ -60,12 +60,19 @@ const SaveFoodScreen = () => {
     const lastFood = useSelector(state => state.carbonFootprint).foodConsumption ?? 0;
     // console.log('last foodConsumption:', lastFood)
 
+    // fetch last total points
+    const lastPoints = useSelector(state => state.carbonFootprint).points ?? 0;
+
     const handleSubmitPress = async () => {
         const createdAt = firestore.Timestamp.now();
         const consumptionNumber = Number(foodConsumption) * foodWeight + lastFood;
+        const points = lastPoints + consumptionNumber;
         // console.log('consumptionNumber:', consumptionNumber)
+        // console.log('lastPoints:', lastPoints)
+        // console.log('points:', points)
+
         await handleUploadPhoto();
-        dispatch(postFood(uid, consumptionNumber, createdAt));
+        dispatch(postFood(uid, consumptionNumber, points, createdAt));
         navigation.navigate('Home')
     };
 
