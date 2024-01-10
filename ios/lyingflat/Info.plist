@@ -35,6 +35,12 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>This app requires camera access to take photos</string>
+	<key>NSHealthShareUsageDescription</key>
+	<string>Read and understand health data</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>Share workout data with other apps</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>UIAppFonts</key>
