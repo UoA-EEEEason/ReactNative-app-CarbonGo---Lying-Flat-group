@@ -71,7 +71,7 @@ const AccountRedeemHistoryScreen = () => {
   useEffect(() => {
     dispatch(fetchHistory(uid));
   }, [dispatch]);
-  const history = useSelector(state => state.carbonFootprint).history;
+  const history = useSelector(state => state.carbonFootprint).history ?? [];
 
   return (
     <ImageBackground

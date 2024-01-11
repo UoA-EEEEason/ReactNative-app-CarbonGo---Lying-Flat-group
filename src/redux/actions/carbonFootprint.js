@@ -428,6 +428,7 @@ export const fetchHistory = (uid) => {
             .doc(uid)
             .collection('points')
             .orderBy('createdAt', 'desc')
+            .limit(10)
             .get()
             .then(querySnapshot => {
                 const documents = querySnapshot.docs.map(doc => {
