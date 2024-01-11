@@ -53,9 +53,9 @@ const StatusComponent = ({ title }) => {
 const CardComponent = ({ action, diff, points }) => (
   <Card style={styles.card}>
     <View style={styles.cardLayout}>
-        <Text style={styles.text}>Name: {action}</Text>
-        <Text style={styles.text}>Amount: {diff}</Text>
-        <Text style={styles.text}>Points Left: {points}</Text>
+      <Text style={styles.text}>Name: {action}</Text>
+      <Text style={styles.text}>Amount: {diff}</Text>
+      <Text style={styles.text}>Points Left: {points}</Text>
     </View>
   </Card>
 );
@@ -82,12 +82,12 @@ const AccountRedeemHistoryScreen = () => {
         <StatusComponent title={'Redeem History'} />
         <ScrollView>
           <View>
-            {history.map(item => (
+            {history.map((item, index) => (
               <CardComponent
-                key={item.createdAt}
-                action={item.action??'null'}
-                diff={item.diff??'null'}
-                points={item.points??'null'}
+                key={index}
+                action={item.action ?? 'null'}
+                diff={item.diff ?? 'null'}
+                points={item.points ?? 'null'}
               />
             ))}
           </View>
