@@ -14,7 +14,7 @@ import { COLORS } from '../../constants/color/color';
 import StatusComponent from './../../components/StatusComponent';
 import { TextInput } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
-import { postFood, fetchFood } from '../../redux/actions/carbonFootprint';
+import { postFood, postPoints, fetchFood } from '../../redux/actions/carbonFootprint';
 import firestore from '@react-native-firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
@@ -66,13 +66,15 @@ const SaveFoodScreen = () => {
     const handleSubmitPress = async () => {
         const createdAt = firestore.Timestamp.now();
         const consumptionNumber = Number(foodConsumption) * foodWeight + lastFood;
-        const points = lastPoints + consumptionNumber;
+        const diffPoints = Number(foodConsumption) * foodWeight;
+        const points = lastPoints + diffPoints;
         // console.log('consumptionNumber:', consumptionNumber)
         // console.log('lastPoints:', lastPoints)
         // console.log('points:', points)
 
         await handleUploadPhoto();
-        dispatch(postFood(uid, consumptionNumber, points, createdAt));
+        dispatch(postFood(uid, consumptionNumber, createdAt));
+        dispatch(postPoints(uid, points, createdAt, 'food', diffPoints));
         navigation.navigate('Home')
     };
 

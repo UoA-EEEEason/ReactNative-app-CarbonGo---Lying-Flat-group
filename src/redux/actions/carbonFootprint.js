@@ -1,7 +1,186 @@
 import { actionTypes } from '../actionTypes';
 import firestore from '@react-native-firebase/firestore';
 
-export const postElectricity = (uid, consumption, points, createdAt) => {
+// export const postElectricity = (uid, consumption, points, createdAt) => {
+//     return dispatch => {
+//         firestore()
+//             .collection('user')
+//             .doc(uid)
+//             .collection('UserCFP-Electricity')
+//             .add({
+//                 electricityConsumption: consumption,
+//                 createdAt: createdAt,
+//             })
+//             .then(() => {
+//                 dispatch({
+//                     type: actionTypes.POST_ELECTRICITY,
+//                     payload: consumption,
+//                 });
+                
+//                 // modify points
+//                 return firestore()
+//                 .collection('user')
+//                 .doc(uid)
+//                 .collection('points')
+//                 .add({
+//                     points: points,
+//                     createdAt: createdAt,
+//                 });
+//             })
+//             .then(() => {
+//                 // Processing after the second operation is successful
+//                 dispatch({
+//                     type: actionTypes.POST_POINTS,
+//                     payload: points,
+//                 });
+//             })
+//             .catch(error => {
+//                 // Handle errors in any operation
+//                 console.error("Error in Firestore operations:", error);
+//             });
+//     };
+// };
+
+// export const postFood = (uid, consumption, points, createdAt) => {
+//     return dispatch => {
+//         firestore()
+//             .collection('user')
+//             .doc(uid)
+//             .collection('UserCFP-Food')
+//             .add({
+//                 foodConsumption: consumption,
+//                 createdAt: createdAt,
+//             })
+//             .then(() => {
+//                 dispatch({
+//                     type: actionTypes.POST_FOOD,
+//                     payload: consumption,
+//                 });
+
+//                 // modify points
+//                 return firestore()
+//                 .collection('user')
+//                 .doc(uid)
+//                 .collection('points')
+//                 .add({
+//                     points: points,
+//                     createdAt: createdAt,
+//                 });
+//             })
+//             .then(() => {
+//                 // Processing after the second operation is successful
+//                 dispatch({
+//                     type: actionTypes.POST_POINTS,
+//                     payload: points,
+//                 });
+//             })
+//             .catch(error => {
+//                 // Handle errors in any operation
+//                 console.error("Error in Firestore operations:", error);
+//             });
+//     };
+// };
+
+// export const postTraffic = (uid, consumption, points, createdAt) => {
+//     return dispatch => {
+//         firestore()
+//             .collection('user')
+//             .doc(uid)
+//             .collection('UserCFP-Traffic')
+//             .add({
+//                 trafficConsumption: consumption,
+//                 createdAt: createdAt,
+//             })
+//             .then(() => {
+//                 dispatch({
+//                     type: actionTypes.POST_TRAFFIC,
+//                     payload: consumption,
+//                 });
+
+//                 // modify points
+//                 return firestore()
+//                 .collection('user')
+//                 .doc(uid)
+//                 .collection('points')
+//                 .add({
+//                     points: points,
+//                     createdAt: createdAt,
+//                 });
+//             })
+//             .then(() => {
+//                 // Processing after the second operation is successful
+//                 dispatch({
+//                     type: actionTypes.POST_POINTS,
+//                     payload: points,
+//                 });
+//             })
+//             .catch(error => {
+//                 // Handle errors in any operation
+//                 console.error("Error in Firestore operations:", error);
+//             });
+//     };
+// };
+
+// export const postWalk = (uid, consumption, points, createdAt) => {
+//     return dispatch => {
+//         firestore()
+//             .collection('user')
+//             .doc(uid)
+//             .collection('UserCFP-Walk')
+//             .add({
+//                 walkConsumption: consumption,
+//                 createdAt: createdAt,
+//             })
+//             .then(() => {
+//                 dispatch({
+//                     type: actionTypes.POST_WALK,
+//                     payload: consumption,
+//                 });
+
+//                 // modify points
+//                 return firestore()
+//                 .collection('user')
+//                 .doc(uid)
+//                 .collection('points')
+//                 .add({
+//                     points: points,
+//                     createdAt: createdAt,
+//                 });
+//             })
+//             .then(() => {
+//                 // Processing after the second operation is successful
+//                 dispatch({
+//                     type: actionTypes.POST_POINTS,
+//                     payload: points,
+//                 });
+//             })
+//             .catch(error => {
+//                 // Handle errors in any operation
+//                 console.error("Error in Firestore operations:", error);
+//             });
+//     };
+// };
+
+// export const postPoints = (uid, points, createdAt) => {
+//     return dispatch => {
+//         firestore()
+//             .collection('user')
+//             .doc(uid)
+//             .collection('points')
+//             .add({
+//                 points: points,
+//                 createdAt: createdAt,
+//             })
+//             .then(() => {
+//                 dispatch({
+//                     type: actionTypes.POST_POINTS,
+//                     payload: points,
+//                 });
+//             })
+//     };
+// };
+
+export const postElectricity = (uid, consumption, createdAt) => {
     return dispatch => {
         firestore()
             .collection('user')
@@ -16,23 +195,6 @@ export const postElectricity = (uid, consumption, points, createdAt) => {
                     type: actionTypes.POST_ELECTRICITY,
                     payload: consumption,
                 });
-                
-                // modify points
-                return firestore()
-                .collection('user')
-                .doc(uid)
-                .collection('points')
-                .add({
-                    points: points,
-                    createdAt: createdAt,
-                });
-            })
-            .then(() => {
-                // Processing after the second operation is successful
-                dispatch({
-                    type: actionTypes.POST_POINTS,
-                    payload: points,
-                });
             })
             .catch(error => {
                 // Handle errors in any operation
@@ -41,7 +203,7 @@ export const postElectricity = (uid, consumption, points, createdAt) => {
     };
 };
 
-export const postFood = (uid, consumption, points, createdAt) => {
+export const postFood = (uid, consumption, createdAt) => {
     return dispatch => {
         firestore()
             .collection('user')
@@ -56,23 +218,6 @@ export const postFood = (uid, consumption, points, createdAt) => {
                     type: actionTypes.POST_FOOD,
                     payload: consumption,
                 });
-
-                // modify points
-                return firestore()
-                .collection('user')
-                .doc(uid)
-                .collection('points')
-                .add({
-                    points: points,
-                    createdAt: createdAt,
-                });
-            })
-            .then(() => {
-                // Processing after the second operation is successful
-                dispatch({
-                    type: actionTypes.POST_POINTS,
-                    payload: points,
-                });
             })
             .catch(error => {
                 // Handle errors in any operation
@@ -81,7 +226,7 @@ export const postFood = (uid, consumption, points, createdAt) => {
     };
 };
 
-export const postTraffic = (uid, consumption, points, createdAt) => {
+export const postTraffic = (uid, consumption, createdAt) => {
     return dispatch => {
         firestore()
             .collection('user')
@@ -96,23 +241,6 @@ export const postTraffic = (uid, consumption, points, createdAt) => {
                     type: actionTypes.POST_TRAFFIC,
                     payload: consumption,
                 });
-
-                // modify points
-                return firestore()
-                .collection('user')
-                .doc(uid)
-                .collection('points')
-                .add({
-                    points: points,
-                    createdAt: createdAt,
-                });
-            })
-            .then(() => {
-                // Processing after the second operation is successful
-                dispatch({
-                    type: actionTypes.POST_POINTS,
-                    payload: points,
-                });
             })
             .catch(error => {
                 // Handle errors in any operation
@@ -121,7 +249,7 @@ export const postTraffic = (uid, consumption, points, createdAt) => {
     };
 };
 
-export const postWalk = (uid, consumption, points, createdAt) => {
+export const postWalk = (uid, consumption, createdAt) => {
     return dispatch => {
         firestore()
             .collection('user')
@@ -136,23 +264,6 @@ export const postWalk = (uid, consumption, points, createdAt) => {
                     type: actionTypes.POST_WALK,
                     payload: consumption,
                 });
-
-                // modify points
-                return firestore()
-                .collection('user')
-                .doc(uid)
-                .collection('points')
-                .add({
-                    points: points,
-                    createdAt: createdAt,
-                });
-            })
-            .then(() => {
-                // Processing after the second operation is successful
-                dispatch({
-                    type: actionTypes.POST_POINTS,
-                    payload: points,
-                });
             })
             .catch(error => {
                 // Handle errors in any operation
@@ -161,7 +272,7 @@ export const postWalk = (uid, consumption, points, createdAt) => {
     };
 };
 
-export const postPoints = (uid, points, createdAt) => {
+export const postPoints = (uid, points, createdAt, action, diff) => {
     return dispatch => {
         firestore()
             .collection('user')
@@ -170,6 +281,8 @@ export const postPoints = (uid, points, createdAt) => {
             .add({
                 points: points,
                 createdAt: createdAt,
+                action: action,
+                diff: diff,
             })
             .then(() => {
                 dispatch({
@@ -303,6 +416,28 @@ export const fetchPoints = (uid) => {
                 dispatch({
                     type: actionTypes.FETCH_POINTS,
                     payload: documents[0].points,
+                });
+            });
+    };
+};
+
+export const fetchHistory = (uid) => {
+    return dispatch => {
+        firestore()
+            .collection('user')
+            .doc(uid)
+            .collection('points')
+            .orderBy('createdAt', 'desc')
+            .get()
+            .then(querySnapshot => {
+                const documents = querySnapshot.docs.map(doc => {
+                    return {
+                        ...doc.data(),
+                    };
+                });
+                dispatch({
+                    type: actionTypes.FETCH_HISTORY,
+                    payload: documents,
                 });
             });
     };
