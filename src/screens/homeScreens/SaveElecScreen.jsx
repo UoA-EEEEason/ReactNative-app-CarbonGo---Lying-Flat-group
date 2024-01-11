@@ -14,7 +14,7 @@ import { COLORS } from '../../constants/color/color';
 import StatusComponent from './../../components/StatusComponent';
 import { TextInput } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchElectricity, postElectricity } from '../../redux/actions/carbonFootprint';
+import { fetchElectricity, postElectricity, postPoints } from '../../redux/actions/carbonFootprint';
 import firestore from '@react-native-firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
@@ -66,13 +66,15 @@ const SaveElecScreen = () => {
     const handleSubmitPress = async () => {
         const createdAt = firestore.Timestamp.now();
         const consumptionNumber = Number(electricityConsumption) * electricityWeight + lastElectricity;
-        const points = lastPoints + consumptionNumber;
+        const diffPoints = Number(electricityConsumption) * electricityWeight;
+        const points = lastPoints + diffPoints;
         // console.log('consumptionNumber:', consumptionNumber)
         // console.log('lastPoints:', lastPoints)
         // console.log('points:', points)
 
         await handleUploadPhoto();
-        dispatch(postElectricity(uid, consumptionNumber, points, createdAt));
+        dispatch(postElectricity(uid, consumptionNumber, createdAt));
+        dispatch(postPoints(uid, points, createdAt, 'electricity', diffPoints));
         navigation.navigate('Home')
     };
 

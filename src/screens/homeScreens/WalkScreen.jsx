@@ -11,7 +11,7 @@ import {
 import { COLORS } from '../../constants/color/color';
 import StatusComponent from './../../components/StatusComponent';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchWalk, postWalk } from '../../redux/actions/carbonFootprint';
+import { fetchWalk, postWalk, postPoints } from '../../redux/actions/carbonFootprint';
 import firestore from '@react-native-firebase/firestore';
 import useHealthData from './../../hooks/useHealthData';
 import { useNavigation } from '@react-navigation/native';
@@ -43,12 +43,14 @@ const WalkScreen = () => {
     const handleSubmitPress = async () => {
         const createdAt = firestore.Timestamp.now();
         const consumptionNumber = steps * walkWeight + lastWalk;
-        const points = lastPoints + consumptionNumber;
-        console.log('consumptionNumber:', consumptionNumber)
-        console.log('lastPoints:', lastPoints)
-        console.log('points:', points)
+        const diffPoints = Number(steps) * walkWeight;
+        const points = lastPoints + diffPoints;
+        // console.log('consumptionNumber:', consumptionNumber)
+        // console.log('lastPoints:', lastPoints)
+        // console.log('points:', points)
 
-        dispatch(postWalk(uid, consumptionNumber, points, createdAt));
+        dispatch(postWalk(uid, consumptionNumber, createdAt));
+        dispatch(postPoints(uid, points, createdAt, 'walk', diffPoints));
         navigation.navigate('Home')
     };
 

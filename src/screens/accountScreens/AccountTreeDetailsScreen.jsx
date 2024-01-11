@@ -34,6 +34,7 @@ const AccountTreeDetailsScreen = ({ route }) => {
   // fetch last total points
   const currentPoints = useSelector(state => state.carbonFootprint).points;
   const newPoints = currentPoints - item.price;
+  const diffPoints = -item.price;
 
   const dispatch = useDispatch();
 
@@ -47,7 +48,7 @@ const AccountTreeDetailsScreen = ({ route }) => {
     // get a certifacte
     dispatch(postCertificate(uid, item.id, createdAt, cimage, item.desc));
     // Deduct corresponding points
-    dispatch(postPoints(uid, newPoints, createdAt));
+    dispatch(postPoints(uid, newPoints, createdAt, 'get a tree', diffPoints));
     // console.log('get it')
     // navigation.navigate('Home')
     setIsModalVisible(true);

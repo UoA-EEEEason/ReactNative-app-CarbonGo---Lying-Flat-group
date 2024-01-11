@@ -14,7 +14,7 @@ import { COLORS } from '../../constants/color/color';
 import StatusComponent from './../../components/StatusComponent';
 import { TextInput } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
-import { postTraffic, fetchTraffic } from '../../redux/actions/carbonFootprint';
+import { postTraffic, postPoints, fetchTraffic } from '../../redux/actions/carbonFootprint';
 import firestore from '@react-native-firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
@@ -67,13 +67,15 @@ const BusScreen = () => {
   const handleSubmitPress = async () => {
     const createdAt = firestore.Timestamp.now();
     const consumptionNumber = Number(trafficConsumption) * trafficWeight + lastTraffic;
-    const points = lastPoints + consumptionNumber;
+    const diffPoints = Number(trafficConsumption) * trafficWeight;
+    const points = lastPoints + diffPoints;
     // console.log('consumptionNumber:', consumptionNumber)
     // console.log('lastPoints:', lastPoints)
     // console.log('points:', points)
 
     await handleUploadPhoto();
-    dispatch(postTraffic(uid, consumptionNumber, points, createdAt));
+    dispatch(postTraffic(uid, consumptionNumber, createdAt));
+    dispatch(postPoints(uid, points, createdAt, 'traffic', diffPoints));
     navigation.navigate('Home')
   };
 
