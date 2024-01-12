@@ -7,6 +7,7 @@ const initialState = {
     walkConsumption: null,
     points: null,
     history: [],
+    month: [],
 };
 
 export default (state = initialState, action) => {
