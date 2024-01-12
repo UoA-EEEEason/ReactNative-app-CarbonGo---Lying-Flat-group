@@ -1,8 +1,9 @@
-import {actionTypes} from '../actionTypes';
+import { actionTypes } from '../actionTypes';
 
 const initialState = {
   isAuthenticated: false,
   uid: null,
+  username: '',
 };
 
 export default (state = initialState, action) => {
@@ -17,11 +18,13 @@ export default (state = initialState, action) => {
         ...state,
         ...action.payload
       };
-      case actionTypes.REGISTER:
-        return {
-          ...state,
-          ...action.payload
-        };
+    case actionTypes.REGISTER:
+      return {
+        ...state,
+        ...action.payload
+      };
+    case actionTypes.FETCH_USERNAME:
+      return { ...state, username: action.payload };
     default:
       return state;
   }

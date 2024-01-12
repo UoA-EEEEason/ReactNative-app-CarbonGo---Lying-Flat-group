@@ -17,6 +17,8 @@ import { useNavigation } from '@react-navigation/native';
 import { hp, wp } from './../../utils/dimensions';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTree } from '../../redux/actions/tree';
+import { fetchPoints } from '../../redux/actions/carbonFootprint';
+import { fetchUsername } from '../../redux/actions/auth';
 
 const CustomCard = ({ name, image, onPress }) => (
   <View style={{ margin: 10 }}>
@@ -47,6 +49,9 @@ const CustomCard = ({ name, image, onPress }) => (
 
 const AccountScreen = () => {
   const navigation = useNavigation();
+
+  const uid = useSelector(state => state.auth.uid);
+
   const navigateToProfile = () => {
     navigation.navigate('Profile');
   };
@@ -60,10 +65,14 @@ const AccountScreen = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchTree());
+    dispatch(fetchPoints(uid));
+    dispatch(fetchUsername(uid));
   }, [dispatch]);
+
+  const allPoints = useSelector(state => state.carbonFootprint).points ?? 0;
+  const username = useSelector(state => state.auth.username) ?? 'User';
   const tree = useSelector(state => state.tree).tree;
   const limitedTree = tree.slice(0, 4);
-  //   console.log('news:', message);
 
   // calculate whether the number of cards is odd
   const isOdd = tree.length % 2 !== 0;
@@ -86,14 +95,14 @@ const AccountScreen = () => {
                       style={styles.userAvatar}
                     />
                   </View>
-                  <Text style={styles.userText}>User</Text>
+                  <Text style={styles.userText}>{username}</Text>
                 </TouchableOpacity>
                 <Text style={{ fontSize: 14, color: COLORS.textGreen, fontWeight: 'bold', marginLeft: wp(20) }}>My carbon foot</Text>
               </View>
 
               <View style={styles.PointsText}>
-                <Text style={{ fontSize: hp(7), color: COLORS.textGreen, fontWeight: 'bold', marginRight: 10 }}>30</Text>
-                <Text style={{ fontSize: 13, color: COLORS.textGreen, lineHeight: hp(7) }}>points</Text>
+                <Text style={{ fontSize: hp(5), color: COLORS.textGreen, fontWeight: 'bold', marginRight: 10 }}>{allPoints}</Text>
+                <Text style={{ fontSize: 13, color: COLORS.textGreen, lineHeight: hp(5) }}>points</Text>
               </View>
 
               <Button
@@ -102,13 +111,6 @@ const AccountScreen = () => {
               >
                 <Text style={styles.buttonText}>Remeed History &gt;</Text>
               </Button>
-            </View>
-
-            {/* The Tab */}
-            <View style={styles.CardTab}>
-              <Text style={styles.CardTabText}>15 points redeemed</Text>
-              <View style={{ width: 1, backgroundColor: COLORS.green }} />
-              <Text style={styles.CardTabText}>15 points convertible</Text>
             </View>
 
             {/* My Certificates button */}
@@ -173,11 +175,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignSelf: 'center',
     width: wp(90),
-    height: wp(45),
+    height: wp(55),
     marginTop: 20,
     backgroundColor: COLORS.cardBackground,
-    borderTopLeftRadius: 18,
-    borderTopRightRadius: 18,
+    borderRadius: 18,
   },
   CardTab: {
     flex: 1,
