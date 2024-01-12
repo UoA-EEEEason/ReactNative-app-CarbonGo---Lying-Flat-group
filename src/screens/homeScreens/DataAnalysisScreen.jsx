@@ -18,7 +18,7 @@ import {
   fetchTraffic,
   fetchElectricity,
   fetchFood,
-  fetchMonth,
+  fetchMonthData
 } from '../../redux/actions/carbonFootprint';
 import { Icon } from 'react-native-paper';
 import {
@@ -28,9 +28,50 @@ import {
 } from 'victory-native';
 import * as Progress from 'react-native-progress';
 
+function getMonthAbbreviation(timestampObj) {
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+  if (timestampObj && typeof timestampObj.seconds === 'number') {
+    // Convert Firestore timestamp to JavaScript Date object
+    const date = new Date(timestampObj.seconds * 1000);
+    return months[date.getMonth()];
+  } else {
+    // If timestampObj is not in the expected format, you can return a default value or throw an error
+    return 'N/A';
+  }
+}
+
 const DataAnalysisScreen = () => {
 
   const uid = useSelector(state => state.auth.uid);
+
+  // get emission detail
+  const [results, setResults] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await fetchMonthData(uid);
+        setResults(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, [uid]);
+  // console.log('result:', results)
+
+  // Convert results array
+  const transformedData = results.map(item => {
+    // If createdAt is null, returns the default month
+    const month = item.createdAt ? getMonthAbbreviation(item.createdAt) : 'N/A';
+
+    // If points is null, set it to 0
+    const points = item.points != null ? item.points : 0;
+
+    return { x: month, y: points };
+  });
+  // console.log('transformedData:', transformedData)
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -152,20 +193,15 @@ const DataAnalysisScreen = () => {
                 />
                 <VictoryAxis
                   dependentAxis
+                  tickFormat={(tick) => `${Math.round(tick / 1000)}k`}
+                  tickValues={[0,5000,10000,15000,20000,25000]}
                   style={{
                     axis: { stroke: COLORS.buttonGreen, strokeWidth: 2 },
                     tickLabels: { fill: COLORS.buttonGreen },
                   }}
                 />
                 <VictoryLine
-                  data={[
-                    { x: 'Jan', y: 2 },
-                    { x: 'Feb', y: 3 },
-                    { x: 'Mar', y: 5 },
-                    { x: 'Apr', y: 4 },
-                    { x: 'May', y: 6 },
-                    { x: 'Jun', y: 7 },
-                  ]}
+                  data={transformedData}
                   animate={{ duration: 2000, onLoad: { duration: 5000 } }}
                   style={{ data: { stroke: COLORS.green, strokeWidth: 4 } }}
                 />

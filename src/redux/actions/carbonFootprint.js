@@ -16,7 +16,7 @@ import firestore from '@react-native-firebase/firestore';
 //                     type: actionTypes.POST_ELECTRICITY,
 //                     payload: consumption,
 //                 });
-                
+
 //                 // modify points
 //                 return firestore()
 //                 .collection('user')
@@ -388,7 +388,7 @@ export const fetchWalk = (uid) => {
                             ...doc.data(),
                         };
                     });
-                    console.log('yestoday: ', documents)
+                    // console.log('yestoday: ', documents)
                     dispatch({
                         type: actionTypes.FETCH_WALK,
                         payload: documents[0].walkConsumption,
@@ -442,4 +442,41 @@ export const fetchHistory = (uid) => {
                 });
             });
     };
+};
+
+export async function fetchMonthData(uid) {
+    const now = new Date();
+    const results = [];
+
+    for (let i = 5; i >= 0; i--) {
+
+        let year = now.getFullYear();
+        let month = now.getMonth() - i;
+        let days = new Date(year, month + 1, 0).getDate();
+
+        if (month < 0) {
+            year -= Math.ceil(Math.abs(month) / 12);
+            month += 12;
+        }
+
+        const firstDayOfMonth = new Date(year, month, 1, 0, 0, 0);
+        const lastDayOfMonth = new Date(year, month, days, 23, 59, 59);
+
+        const querySnapshot = await firestore()
+            .collection('user')
+            .doc(uid)
+            .collection('points')
+            .where('createdAt', '>=', firstDayOfMonth)
+            .where('createdAt', '<=', lastDayOfMonth)
+            .orderBy('createdAt', 'desc')
+            .limit(1)
+            .get()
+
+        if (!querySnapshot.empty) {
+            results.push(querySnapshot.docs[0].data());
+        } else {
+            results.push({ "createdAt": null, "points": null })
+        }
+    }
+    return results;
 };

@@ -14,7 +14,7 @@ import { COLORS } from '../../constants/color/color';
 import StatusComponent from './../../components/StatusComponent';
 import { TextInput } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
-import { postTraffic, postPoints, fetchTraffic } from '../../redux/actions/carbonFootprint';
+import { postTraffic, postPoints, fetchTraffic,fetchMonthData } from '../../redux/actions/carbonFootprint';
 import firestore from '@react-native-firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
