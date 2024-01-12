@@ -16,6 +16,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchWeight } from '../../redux/actions/weight';
 import { fetchPoints } from '../../redux/actions/carbonFootprint';
+import { fetchUsername } from '../../redux/actions/auth';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -45,11 +46,10 @@ const HomeScreen = () => {
   // sync total points state
   useEffect(() => {
     dispatch(fetchPoints(uid));
+    dispatch(fetchUsername(uid));
   }, [dispatch]);
 
-  //
-  // const lastPoints = useSelector(state => state.carbonFootprint).points
-  // console.log('lastPoints:', lastPoints)
+  const username = useSelector(state => state.auth.username) ?? 'User';
 
   return (
     <ImageBackground
@@ -109,7 +109,7 @@ const HomeScreen = () => {
           style={styles.fabuser}
           onPress={() => navigation.navigate('CertificatesOutlines')}
           mode='elevated'
-          label='      user  '
+          label={`      ${username}  `} 
           color='#23531E'
           animated={false}
         />

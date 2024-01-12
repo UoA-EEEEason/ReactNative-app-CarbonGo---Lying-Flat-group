@@ -52,20 +52,20 @@ export const register = (email, password, username) => dispatch => {
     .then((userCredential) => {
       // add user name in fire store
       firestore()
-      .collection('user')
-      .doc(userCredential.user.uid)
-      .set({
-        username: username,
-      })
-      .then(() => {
-        dispatch({
-          type: actionTypes.REGISTER,
-          payload: {
-            isAuthenticated: true,
-            uid: userCredential.user.uid,
-          }
+        .collection('user')
+        .doc(userCredential.user.uid)
+        .set({
+          username: username,
+        })
+        .then(() => {
+          dispatch({
+            type: actionTypes.REGISTER,
+            payload: {
+              isAuthenticated: true,
+              uid: userCredential.user.uid,
+            }
+          });
         });
-      });
     })
     .catch((error) => {
       // fail
@@ -79,4 +79,26 @@ export const register = (email, password, username) => dispatch => {
 
       console.error(error);
     });
+};
+
+export const fetchUsername = (uid) => {
+  return dispatch => {
+    firestore()
+      .collection('user')
+      .doc(uid)
+      .get()
+      .then(docSnapshot => {
+        if (docSnapshot.exists) {
+          const userData = docSnapshot.data();
+          dispatch({
+            type: actionTypes.FETCH_USERNAME,
+            payload: userData.username, 
+          });
+        } else {
+          console.log('No user found with that id');
+        }
+      }).catch(error => {
+        console.error('Error fetching username:', error);
+      });
+  };
 };
