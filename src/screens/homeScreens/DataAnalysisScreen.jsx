@@ -87,6 +87,7 @@ const DataAnalysisScreen = () => {
   const electricityPoints = useSelector(state => state.carbonFootprint).electricityConsumption ?? 0;
   const foodPoints = useSelector(state => state.carbonFootprint).foodConsumption ?? 0;
   const emissions = walkPoints + trafficPoints + electricityPoints + foodPoints;
+  const denominator = emissions === 0 ? 1 : emissions;
 
   const [animatedProgress, setAnimatedProgress] = useState(0);
 
@@ -129,56 +130,56 @@ const DataAnalysisScreen = () => {
                 <View style={styles.progressBar}>
                   <Icon source="walk" size={30}></Icon>
                   <Progress.Bar
-                    progress={Math.min(animatedProgress, walkPoints / emissions)}
+                    progress={Math.min(animatedProgress, walkPoints / denominator)}
                     width={200}
                     color="green"
                     marginLeft={10}
                   />
                   <Text style={{ marginRight: 10, color: COLORS.black }}>
                     {'   '}
-                    {Math.round(walkPoints / emissions * 100)}%
+                    {Math.round(walkPoints / denominator * 100)}%
                   </Text>
                 </View>
 
                 <View style={styles.progressBar}>
                   <Icon source="bus-marker" size={30}></Icon>
                   <Progress.Bar
-                    progress={Math.min(animatedProgress, trafficPoints / emissions)}
+                    progress={Math.min(animatedProgress, trafficPoints / denominator)}
                     width={200}
                     color="green"
                     marginLeft={10}
                   />
                   <Text style={{ marginRight: 10, color: COLORS.black }}>
                     {'   '}
-                    {Math.round(trafficPoints / emissions * 100)}%
+                    {Math.round(trafficPoints / denominator * 100)}%
                   </Text>
                 </View>
 
                 <View style={styles.progressBar}>
                   <Icon source="food" size={30}></Icon>
                   <Progress.Bar
-                    progress={Math.min(animatedProgress, foodPoints / emissions)}
+                    progress={Math.min(animatedProgress, foodPoints / denominator)}
                     width={200}
                     color="green"
                     marginLeft={10}
                   />
                   <Text style={{ marginRight: 10, color: COLORS.black }}>
                     {'   '}
-                    {Math.round(foodPoints / emissions * 100)}%
+                    {Math.round(foodPoints / denominator * 100)}%
                   </Text>
                 </View>
 
                 <View style={styles.progressBar}>
                   <Icon source="flash" size={30}></Icon>
                   <Progress.Bar
-                    progress={Math.min(animatedProgress, electricityPoints / emissions)}
+                    progress={Math.min(animatedProgress, electricityPoints / denominator)}
                     width={200}
                     color="green"
                     marginLeft={10}
                   />
                   <Text style={{ marginRight: 10, color: COLORS.black }}>
                     {'   '}
-                    {Math.round(electricityPoints / emissions * 100)}%
+                    {Math.round(electricityPoints / denominator * 100)}%
                   </Text>
                 </View>
               </View>
@@ -194,7 +195,7 @@ const DataAnalysisScreen = () => {
                 <VictoryAxis
                   dependentAxis
                   tickFormat={(tick) => `${Math.round(tick / 1000)}k`}
-                  tickValues={[0,5000,10000,15000,20000,25000]}
+                  tickValues={[0, 5000, 10000, 15000, 20000, 25000]}
                   style={{
                     axis: { stroke: COLORS.buttonGreen, strokeWidth: 2 },
                     tickLabels: { fill: COLORS.buttonGreen },
