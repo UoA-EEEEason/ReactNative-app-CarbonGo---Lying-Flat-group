@@ -3,7 +3,7 @@ import {Dimensions, PixelRatio, Platform, StatusBar} from 'react-native';
 export const actualScreenHeight = Dimensions.get('window').height;
 export const actualScreenWidth: number = Dimensions.get('window').width;
 
-const IOSStatusBarHeight = 25;
+const IOSStatusBarHeight = 0;
 
 export const statusBarHeight =
   Platform.OS === 'android' ? StatusBar.currentHeight || 0 : IOSStatusBarHeight;
