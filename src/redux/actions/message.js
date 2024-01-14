@@ -6,6 +6,7 @@ export const fetchMessage = () => {
   return dispatch => {
     firestore()
       .collection('message')
+      .orderBy('createdAt', 'desc')
       .get()
       .then(querySnapshot => {
         const documents = querySnapshot.docs.map(doc => {

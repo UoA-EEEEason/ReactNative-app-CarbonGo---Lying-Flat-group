@@ -7,7 +7,7 @@ const initialState = {
     walkConsumption: null,
     points: null,
     history: [],
-    month: [],
+    monthData: [],
 };
 
 export default (state = initialState, action) => {
@@ -34,6 +34,8 @@ export default (state = initialState, action) => {
             return { ...state, points: action.payload };
         case actionTypes.FETCH_HISTORY:
             return { ...state, history: action.payload };
+        case actionTypes.FETCH_MONTH_DATA:
+            return { ...state, monthData: action.payload };
         default:
             return state;
     }

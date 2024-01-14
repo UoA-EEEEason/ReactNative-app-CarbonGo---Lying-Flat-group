@@ -25,6 +25,7 @@ export const fetchNews = () => {
   return dispatch => {
     firestore()
       .collection('news')
+      .orderBy('date', 'desc')
       .get()
       .then(querySnapshot => {
         const documents = querySnapshot.docs.map(doc => {

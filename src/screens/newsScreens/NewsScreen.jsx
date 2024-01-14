@@ -15,6 +15,7 @@ import {Card, Text} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchNews} from '../../redux/actions/news';
+import {truncateText} from './../../utils/helpser';
 
 const CardComponent = ({image, title, content, date, onPress}) => (
   <TouchableOpacity onPress={onPress}>
@@ -35,7 +36,7 @@ const CardComponent = ({image, title, content, date, onPress}) => (
       />
       <Card.Content>
         <Text variant="titleLarge">{title}</Text>
-        <Text variant="bodyMedium">{content}</Text>
+        <Text variant="bodyMedium">{truncateText(content, 35)}</Text>
         <Text variant="bodyMedium" style={{color: COLORS.grey}}>
           {date}
         </Text>

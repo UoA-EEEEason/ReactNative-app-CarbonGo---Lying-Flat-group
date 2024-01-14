@@ -18,7 +18,7 @@ import {
   fetchTraffic,
   fetchElectricity,
   fetchFood,
-  fetchMonthData
+  fetchAndStoreMonthData,
 } from '../../redux/actions/carbonFootprint';
 import { Icon } from 'react-native-paper';
 import {
@@ -46,20 +46,12 @@ const DataAnalysisScreen = () => {
   const uid = useSelector(state => state.auth.uid);
 
   // get emission detail
-  const [results, setResults] = useState([]);
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await fetchMonthData(uid);
-        setResults(data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    fetchData();
-  }, [uid]);
-  // console.log('result:', results)
+    if (uid) {
+      dispatch(fetchAndStoreMonthData(uid));
+    }
+  }, [uid, dispatch]);
+  const results = useSelector(state => state.carbonFootprint).monthData??[];
 
   // Convert results array
   const transformedData = results.map(item => {

@@ -16,6 +16,7 @@ import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchMessage} from '../../redux/actions/message';
 import {Ionicons} from './../../constants/icons/icons';
+import {truncateText} from './../../utils/helpser';
 
 const StatusComponent = ({title}) => {
   const navigation = useNavigation();
@@ -59,7 +60,7 @@ const CardComponent = ({title, content}) => (
       />
       <View style={styles.cardText}>
         <Text style={styles.title}>{title}</Text>
-        <Text style={styles.content}>{content}</Text>
+        <Text style={styles.content}>{truncateText(content, 25)}</Text>
       </View>
     </View>
   </Card>
