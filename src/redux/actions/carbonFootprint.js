@@ -229,7 +229,7 @@ export const fetchPoints = (uid) => {
             .orderBy('createdAt', 'desc')
             .get()
             .then(querySnapshot => {
-                if (querySnapshot.exists) {
+                if (!querySnapshot.empty) {
                     const documents = querySnapshot.docs.map(doc => {
                         return {
                             ...doc.data(),
