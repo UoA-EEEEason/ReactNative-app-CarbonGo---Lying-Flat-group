@@ -86,8 +86,16 @@ const DataAnalysisScreen = () => {
   const trafficPoints = useSelector(state => state.carbonFootprint).trafficConsumption ?? 0;
   const electricityPoints = useSelector(state => state.carbonFootprint).electricityConsumption ?? 0;
   const foodPoints = useSelector(state => state.carbonFootprint).foodConsumption ?? 0;
-  const emissions = walkPoints + trafficPoints + electricityPoints + foodPoints;
+  const weight = useSelector(state => state.weight).weight ;
+  console.log('weight:',weight)
+  const walkEmissions = walkPoints*(weight.emissionWalk ?? 0);
+  const trafficEmissions = trafficPoints*(weight.emissionTraffic ?? 0);
+  const electricityEmissions = electricityPoints*(weight.emissionElec ?? 0);
+  const foodEmissions = foodPoints*(weight.emissionFood ?? 0);
+  const emissions = walkEmissions + trafficEmissions + electricityEmissions + foodEmissions;
   const denominator = emissions === 0 ? 1 : emissions;
+  console.log('denominator:',denominator)
+  console.log('emissions:',emissions)
 
   const [animatedProgress, setAnimatedProgress] = useState(0);
 
@@ -105,6 +113,23 @@ const DataAnalysisScreen = () => {
     return () => clearInterval(interval);
   }, []);
 
+  const getEmissionMaxText = () => {
+    const maxPoints = Math.max(walkEmissions, trafficEmissions, electricityEmissions, foodEmissions);
+
+    switch (maxPoints) {
+      case walkEmissions:
+        return "Walking has the highest reduction impact.";
+      case trafficEmissions:
+        return "Traffic reduction leads in impact.";
+      case electricityEmissions:
+        return "Electricity savings are the most impactful.";
+      case foodEmissions:
+        return "Food consumption reduction is key.";
+      default:
+        return "Balanced reduction across all sectors.";
+    }
+  };
+
   return (
     <ImageBackground
       source={require('./../../assets/images/background.png')}
@@ -119,7 +144,9 @@ const DataAnalysisScreen = () => {
               <Text style={styles.counterText}>
                 Cumulative emission reductions
               </Text>
-              <Text style={styles.number}>{emissions.toString()} g</Text>
+              <Text style={styles.number}>
+                {denominator > 1000 ? `${(denominator / 1000).toFixed(2)} kg` : `${denominator} g`}
+              </Text>
             </View>
 
             <View style={styles.whitebackground}>
@@ -130,56 +157,56 @@ const DataAnalysisScreen = () => {
                 <View style={styles.progressBar}>
                   <Icon source="walk" size={30}></Icon>
                   <Progress.Bar
-                    progress={Math.min(animatedProgress, walkPoints / denominator)}
+                    progress={Math.min(animatedProgress, walkEmissions / denominator)}
                     width={200}
                     color="green"
                     marginLeft={10}
                   />
                   <Text style={{ marginRight: 10, color: COLORS.black }}>
                     {'   '}
-                    {Math.round(walkPoints / denominator * 100)}%
+                    {Math.round(walkEmissions / denominator * 100)}%
                   </Text>
                 </View>
 
                 <View style={styles.progressBar}>
                   <Icon source="bus-marker" size={30}></Icon>
                   <Progress.Bar
-                    progress={Math.min(animatedProgress, trafficPoints / denominator)}
+                    progress={Math.min(animatedProgress, trafficEmissions / denominator)}
                     width={200}
                     color="green"
                     marginLeft={10}
                   />
                   <Text style={{ marginRight: 10, color: COLORS.black }}>
                     {'   '}
-                    {Math.round(trafficPoints / denominator * 100)}%
+                    {Math.round(trafficEmissions / denominator * 100)}%
                   </Text>
                 </View>
 
                 <View style={styles.progressBar}>
                   <Icon source="food" size={30}></Icon>
                   <Progress.Bar
-                    progress={Math.min(animatedProgress, foodPoints / denominator)}
+                    progress={Math.min(animatedProgress, foodEmissions / denominator)}
                     width={200}
                     color="green"
                     marginLeft={10}
                   />
                   <Text style={{ marginRight: 10, color: COLORS.black }}>
                     {'   '}
-                    {Math.round(foodPoints / denominator * 100)}%
+                    {Math.round(foodEmissions / denominator * 100)}%
                   </Text>
                 </View>
 
                 <View style={styles.progressBar}>
                   <Icon source="flash" size={30}></Icon>
                   <Progress.Bar
-                    progress={Math.min(animatedProgress, electricityPoints / denominator)}
+                    progress={Math.min(animatedProgress, electricityEmissions / denominator)}
                     width={200}
                     color="green"
                     marginLeft={10}
                   />
                   <Text style={{ marginRight: 10, color: COLORS.black }}>
                     {'   '}
-                    {Math.round(electricityPoints / denominator * 100)}%
+                    {Math.round(electricityEmissions / denominator * 100)}%
                   </Text>
                 </View>
               </View>
@@ -210,9 +237,7 @@ const DataAnalysisScreen = () => {
 
               <Text style={styles.title}>Emission reduction trends</Text>
               <Text style={styles.text}>
-                trends text. trends text. trends text. trends text. trends text.
-                trends text. trends text. trends text. trends text. trends text.
-                trends text.
+                {getEmissionMaxText()}
               </Text>
             </View>
           </View>
@@ -244,11 +269,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   title: {
-    fontSize: 16,
+    fontSize: 18,
     color: COLORS.black,
     paddingTop: 10,
     marginLeft: 15,
     textAlign: 'left',
+    fontWeight: 'bold',
   },
   text: {
     fontSize: 16,
