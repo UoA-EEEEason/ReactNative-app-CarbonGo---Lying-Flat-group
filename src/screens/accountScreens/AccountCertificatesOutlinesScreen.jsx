@@ -67,7 +67,7 @@ const AccountCertificatesOutlinesScreen = () => {
       style={styles.backgroundImage}
       resizeMode="cover">
       <SafeAreaView style={{ flex: 1 }}>
-        <StatusComponent title={'Certificates'} />
+        <StatusComponent title={'My Certificates'} />
         <ScrollView>
           {/* cards components */}
           <View style={styles.CardsDisplay}>
