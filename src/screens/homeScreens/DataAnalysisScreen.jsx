@@ -51,7 +51,7 @@ const DataAnalysisScreen = () => {
       dispatch(fetchAndStoreMonthData(uid));
     }
   }, [uid, dispatch]);
-  const results = useSelector(state => state.carbonFootprint).monthData??[];
+  const results = useSelector(state => state.carbonFootprint).monthData ?? [];
 
   // Convert results array
   const transformedData = results.map(item => {
@@ -78,16 +78,13 @@ const DataAnalysisScreen = () => {
   const trafficPoints = useSelector(state => state.carbonFootprint).trafficConsumption ?? 0;
   const electricityPoints = useSelector(state => state.carbonFootprint).electricityConsumption ?? 0;
   const foodPoints = useSelector(state => state.carbonFootprint).foodConsumption ?? 0;
-  const weight = useSelector(state => state.weight).weight ;
-  console.log('weight:',weight)
-  const walkEmissions = walkPoints*(weight.emissionWalk ?? 0);
-  const trafficEmissions = trafficPoints*(weight.emissionTraffic ?? 0);
-  const electricityEmissions = electricityPoints*(weight.emissionElec ?? 0);
-  const foodEmissions = foodPoints*(weight.emissionFood ?? 0);
+  const weight = useSelector(state => state.weight).weight;
+  const walkEmissions = walkPoints * (weight.emissionWalk ?? 0);
+  const trafficEmissions = trafficPoints * (weight.emissionTraffic ?? 0);
+  const electricityEmissions = electricityPoints * (weight.emissionElec ?? 0);
+  const foodEmissions = foodPoints * (weight.emissionFood ?? 0);
   const emissions = walkEmissions + trafficEmissions + electricityEmissions + foodEmissions;
   const denominator = emissions === 0 ? 1 : emissions;
-  console.log('denominator:',denominator)
-  console.log('emissions:',emissions)
 
   const [animatedProgress, setAnimatedProgress] = useState(0);
 
@@ -110,13 +107,13 @@ const DataAnalysisScreen = () => {
 
     switch (maxPoints) {
       case walkEmissions:
-        return "Walking has the highest reduction impact.";
+        return "Well done! \nYou've done a remarkable job in significantly reducing carbon emissions through frequent walking. Your commitment and actions towards environmental conservation are truly commendable. Thank you for your valuable contribution to preserving the world's natural resources and environment.";
       case trafficEmissions:
-        return "Traffic reduction leads in impact.";
+        return "It's important to consider that your current transportation consumption may be contributing to a rise in carbon emissions.\n\nTo address this, you might want to:\n\n1. Explore alternatives, such as embracing a more plant-based diet or choosing locally sourced foods.\n2. small lifestyle changes like opting for public transportation or walking instead of driving.\n3. Reducing electricity usage in your home can collectively have a significant impact on your carbon footprint. \n\nThese mindful practices, when adopted widely, can greatly aid in our global effort to combat climate change and preserve the environment.";
       case electricityEmissions:
-        return "Electricity savings are the most impactful.";
+        return "It appears that the electricity usage you are making may be contributing to higher carbon emissions. \n\nTo further reduce your carbon footprint, you could improve your actions by:\n\n1. Consider alternative transportation methods like walking or using public buses instead of driving. \n2. Being mindful of your electricity usage can have a significant impact. \n3. Along with thoughtful food choices. Taking more vegetables and fruits could be a good choice.\n\nRemember, every small change contributes to a larger impact in our fight against climate change.";
       case foodEmissions:
-        return "Food consumption reduction is key.";
+        return "It appears that the food choices you are making may be contributing to higher carbon emissions. \n\nTo further reduce your carbon footprint, you could improve your actions by:\n\n1. Consider alternative transportation methods like walking or using public buses instead of driving. \n2. Being mindful of your electricity usage can have a significant impact. \n3. Along with thoughtful food choices, we can collectively make a substantial difference in reducing carbon emissions and aiding environmental conservation efforts. \n\nRemember, every small change contributes to a larger impact in our fight against climate change.";
       default:
         return "Balanced reduction across all sectors.";
     }
@@ -274,6 +271,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 30,
     marginLeft: 15,
+    width: '90%',
     textAlign: 'left',
   },
   numberFrame: {

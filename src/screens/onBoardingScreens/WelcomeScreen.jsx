@@ -29,7 +29,7 @@ const WelcomeScreen = () => {
       resizeMode="cover">
       
       <SafeAreaView style={styles.safeArea}>
-      <StatusComponent title={'Welcome'} />
+      <StatusBar translucent backgroundColor="transparent" barStyle={'light-content'} />
         <ScrollView contentContainerStyle={styles.scrollView}>
           <Image
             source={require('./../../assets/images/logo.png')}
@@ -64,10 +64,10 @@ const WelcomeScreen = () => {
             <Text style={styles.buttonEmailText}>Continue with Email</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Login')}>
             <Text style={styles.noAccountText}>
               Already have an account?{' '}
-              <Text onPress={() => navigation.navigate('Login')} style={styles.registerLink}>
+              <Text style={styles.registerLink}>
                 Login
               </Text>
             </Text>

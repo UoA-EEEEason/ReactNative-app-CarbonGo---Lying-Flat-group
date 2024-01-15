@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchTree } from '../../redux/actions/tree';
 import { fetchPoints } from '../../redux/actions/carbonFootprint';
 import { fetchUsername } from '../../redux/actions/auth';
+import {truncateText} from './../../utils/helpser';
 
 const CustomCard = ({ name, image, onPress }) => (
   <View style={{ margin: 10 }}>
@@ -95,9 +96,9 @@ const AccountScreen = () => {
                       style={styles.userAvatar}
                     />
                   </View>
-                  <Text style={styles.userText}>{username}</Text>
+                  <Text style={styles.userText}>{truncateText(username, 6)}</Text>
                 </TouchableOpacity>
-                <Text style={{ fontSize: 14, color: COLORS.textGreen, fontWeight: 'bold', marginLeft: wp(20) }}>My carbon foot</Text>
+                <Text style={{ fontSize: 14, color: COLORS.textGreen, fontWeight: 'bold', marginLeft: wp(10) }}>My carbon foot</Text>
               </View>
 
               <View style={styles.PointsText}>
@@ -228,7 +229,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 0,
     borderBottomLeftRadius: 0,
     overflow: 'hidden',
-    width: 132,
+    width: 170,
     height: 52,
   },
   userIcon: {

@@ -15,7 +15,7 @@ const LoadingScreen = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
-    setTimeout(() => navigation.replace('Tests'), 2500);
+    setTimeout(() => navigation.replace('Welcome'), 3000);
   }, []);
 
   return (

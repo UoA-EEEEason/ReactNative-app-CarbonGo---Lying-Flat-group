@@ -229,15 +229,23 @@ export const fetchPoints = (uid) => {
             .orderBy('createdAt', 'desc')
             .get()
             .then(querySnapshot => {
-                const documents = querySnapshot.docs.map(doc => {
-                    return {
-                        ...doc.data(),
-                    };
-                });
-                dispatch({
-                    type: actionTypes.FETCH_POINTS,
-                    payload: documents[0].points,
-                });
+                if (querySnapshot.exists) {
+                    const documents = querySnapshot.docs.map(doc => {
+                        return {
+                            ...doc.data(),
+                        };
+                    });
+                    dispatch({
+                        type: actionTypes.FETCH_POINTS,
+                        payload: documents[0].points,
+                    });
+                } else {
+                    // console.error('Can not fetch points');
+                }
+
+            })
+            .catch((error) => {
+                console.error('Error fetch points ', error);
             });
     };
 };
@@ -304,9 +312,9 @@ async function fetchMonthData(uid) {
 
 export const fetchAndStoreMonthData = (uid) => async (dispatch) => {
     try {
-      const monthData = await fetchMonthData(uid);
-      dispatch({ type: 'FETCH_MONTH_DATA', payload: monthData });
+        const monthData = await fetchMonthData(uid);
+        dispatch({ type: 'FETCH_MONTH_DATA', payload: monthData });
     } catch (error) {
-      console.error('Error fetching month data:', error);
+        console.error('Error fetching month data:', error);
     }
-  };
+};

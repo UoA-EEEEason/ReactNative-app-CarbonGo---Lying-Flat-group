@@ -95,7 +95,7 @@ export const fetchUsername = (uid) => {
             payload: userData.username, 
           });
         } else {
-          console.log('No user found with that id');
+          // console.log('No user found with that id');
         }
       }).catch(error => {
         console.error('Error fetching username:', error);

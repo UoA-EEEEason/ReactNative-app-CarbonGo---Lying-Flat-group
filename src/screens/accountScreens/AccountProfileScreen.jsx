@@ -10,15 +10,16 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import React, {useState} from 'react';
-import {COLORS} from './../../constants/color/color';
-import {StatusComponent} from './../../components';
-import {TextInput,Button} from 'react-native-paper';
-import {hp, wp} from './../../utils/dimensions';
-import {useDispatch, useSelector} from 'react-redux';
-import {postProfile} from '../../redux/actions/profile';
+import React, { useState } from 'react';
+import { COLORS } from './../../constants/color/color';
+import { StatusComponent } from './../../components';
+import { TextInput, Button } from 'react-native-paper';
+import { hp, wp } from './../../utils/dimensions';
+import { useDispatch, useSelector } from 'react-redux';
+import { postProfile } from '../../redux/actions/profile';
+import { logout } from '../../redux/actions/auth';
 
-const TextInputComponent = ({label, value, onChangeText, style}) => {
+const TextInputComponent = ({ label, value, onChangeText, style }) => {
   const customTheme = {
     colors: {
       primary: 'black',
@@ -39,25 +40,25 @@ const TextInputComponent = ({label, value, onChangeText, style}) => {
 
 const ButtonComponent = (props) => (
   <Button
-      mode="contained-tonal"
-      onPress={props.onPress}
-      buttonColor={COLORS.buttonGreen}
-      textColor={COLORS.white}
-      rippleColor={COLORS.buttonGreen}
-      // uppercase
-      style={{
-          width: '80%',
-          alignSelf: 'center',
-          marginTop: 20,
-          borderRadius: 5,
-          shadowColor: 'grew', 
-          shadowOffset: { width: 0, height: 2 },
-          shadowOpacity: 0.25,
-          shadowRadius: 3.84,
-          elevation: 5,
-      }}
+    mode="contained-tonal"
+    onPress={props.onPress}
+    buttonColor={COLORS.buttonGreen}
+    textColor={COLORS.white}
+    rippleColor={COLORS.buttonGreen}
+    // uppercase
+    style={{
+      width: '80%',
+      alignSelf: 'center',
+      marginTop: 20,
+      borderRadius: 5,
+      shadowColor: 'grew',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+      elevation: 5,
+    }}
   >
-      {props.name}
+    {props.name}
   </Button>
 );
 
@@ -72,12 +73,16 @@ const AccountProfileScreen = () => {
     dispatch(postProfile(id, username, email));
   };
 
+  const handleLogout = async () => {
+    dispatch(logout());
+  };
+
   return (
     <ImageBackground
       source={require('./../../assets/images/background.png')}
       style={styles.backgroundImage}
       resizeMode="cover">
-      <SafeAreaView style={{flex: 1}}>
+      <SafeAreaView style={{ flex: 1 }}>
         <StatusComponent title={'Profile'} />
         <ScrollView>
           <View style={styles.userAvatar}>
@@ -108,7 +113,7 @@ const AccountProfileScreen = () => {
             <ButtonComponent name={'Submit'} onPress={handleSubmitPress} />
             <ButtonComponent
               name={'Logout'}
-              onPress={() => console.log('Logout')}
+              onPress={handleLogout}
             />
           </View>
         </ScrollView>

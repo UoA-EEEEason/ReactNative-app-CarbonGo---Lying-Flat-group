@@ -14,6 +14,9 @@ export const fetchWeight = () => {
             payload: documentSnapshot.data(),
           });
         }
+      })
+      .catch(error => {
+        console.error('Error fetching weight:', error);
       });
   };
 };

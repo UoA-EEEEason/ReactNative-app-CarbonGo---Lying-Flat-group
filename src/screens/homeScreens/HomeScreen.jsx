@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchWeight } from '../../redux/actions/weight';
 import { fetchPoints } from '../../redux/actions/carbonFootprint';
 import { fetchUsername } from '../../redux/actions/auth';
+import {truncateText} from './../../utils/helpser';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -36,15 +37,13 @@ const HomeScreen = () => {
 
   // fetch weight
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchWeight());
-  }, [dispatch]);
 
   // get auth state from redux
-  const uid = useSelector(state => state.auth.uid);
+  const uid = useSelector(state => state.auth.uid) ?? '';
 
   // sync total points state
   useEffect(() => {
+    dispatch(fetchWeight());
     dispatch(fetchPoints(uid));
     dispatch(fetchUsername(uid));
   }, [dispatch]);
@@ -58,7 +57,6 @@ const HomeScreen = () => {
       resizeMode="cover"
     >
       <SafeAreaView style={{ flex: 1 }}>
-        <StatusComponent title={''} />
 
         <View style={{
           flex: 1,
