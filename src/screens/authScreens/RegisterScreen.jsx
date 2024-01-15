@@ -53,21 +53,21 @@ const RegisterScreen = () => {
     }
   }, [isAuthenticated]);
 
-    // initial input text
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [username, setUsername] = useState('');
+  // initial input text
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
 
   return (
     <ImageBackground
       source={require('./../../assets/images/background.png')}
       style={styles.backgroundImage}
       resizeMode="cover">
-      
+
       <SafeAreaView style={styles.safeArea}>
-      <StatusComponent title={'Register'} />
+        <StatusComponent title={'Register'} />
         <ScrollView contentContainerStyle={styles.scrollView}>
-        
+
           <Image
             source={require('./../../assets/images/logo.png')}
             style={styles.logo}
@@ -100,12 +100,14 @@ const RegisterScreen = () => {
             onPress={handleRegister}>
             <Text style={styles.buttonText}>Register</Text>
           </TouchableOpacity>
-          <Text style={styles.noAccountText}>
-            Already have an account?
-            <Text onPress={() => navigation.navigate('Login')} style={styles.registerLink}>
-              {' '}Login
+          <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+            <Text style={styles.noAccountText}>
+              Already have an account?
+              <Text style={styles.registerLink}>
+                {' '}Login
+              </Text>
             </Text>
-          </Text>
+          </TouchableOpacity>
         </ScrollView>
       </SafeAreaView>
     </ImageBackground>

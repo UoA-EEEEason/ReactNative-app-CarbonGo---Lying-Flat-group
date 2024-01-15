@@ -44,19 +44,17 @@ const LoginScreen = () => {
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
   const dispatch = useDispatch();
 
-  const handleLogin = async () => {
+  const handleLogin = () => {
     dispatch(login(email, password));
-    if (isAuthenticated) {
-      navigation.navigate('Home')
-    }
+    navigation.navigate('Home');
   };
 
   // solve login latency issue
   useEffect(() => {
     if (isAuthenticated) {
-      navigation.navigate('Home')
+      navigation.navigate('Home');
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, navigation]);
 
   // initial input text
   const [email, setEmail] = useState('');
@@ -107,10 +105,10 @@ const LoginScreen = () => {
             </View>
             <Text style={styles.buttonGoogleText}>Continue with Google</Text>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Register')}>
             <Text style={styles.noAccountText}>
               No account?{' '}
-              <Text onPress={() => navigation.navigate('Register')} style={styles.registerLink}>
+              <Text style={styles.registerLink}>
                 Register
               </Text>
             </Text>

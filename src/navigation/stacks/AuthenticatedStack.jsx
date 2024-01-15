@@ -7,13 +7,19 @@ import {
   Auth,
   OnboardingScreen,
   Home,
+  News,
 } from '../../screens';
 
 const Stack = createNativeStackNavigator();
 
 const AuthenticatedStack = () => {
   return (
-    <Stack.Navigator initialRouteName="Login">
+    <Stack.Navigator initialRouteName="Home">
+      <Stack.Screen
+        name="Home"
+        component={Home.HomeScreen}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name="Account"
         component={Account.AccountScreen}
@@ -107,6 +113,21 @@ const AuthenticatedStack = () => {
       <Stack.Screen
         name="CreditMall"
         component={Account.CreditMallScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="News"
+        component={News.NewsScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="NewsDetail"
+        component={News.NewsDetailScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Message"
+        component={News.MessageScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

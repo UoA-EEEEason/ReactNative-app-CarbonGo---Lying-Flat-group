@@ -26,7 +26,7 @@ const UnAuthenticatedStack = () => {
   }
 
   return (
-    <Stack.Navigator initialRouteName={isAppFirstLaunch ? 'Loading' : 'Login'}>
+    <Stack.Navigator initialRouteName="Loading">
       {isAppFirstLaunch && (
         <>
           <Stack.Screen
@@ -36,11 +36,6 @@ const UnAuthenticatedStack = () => {
           />
         </>
       )}
-      <Stack.Screen
-        name="Demo"
-        component={Tests.CommonDemo}
-        options={{ headerShown: false }}
-      />
       <Stack.Screen
         name="Login"
         component={Auth.LoginScreen}
@@ -62,93 +57,8 @@ const UnAuthenticatedStack = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Tests"
-        component={Tests.TestsScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
         name="Home"
         component={Home.HomeScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Account"
-        component={Account.AccountScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="CertificatesOutlines"
-        component={Account.AccountCertificatesOutlinesScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="CertificatesDetails"
-        component={Account.AccountCertificatesDetailsScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="TreeDetails"
-        component={Account.AccountTreeDetailsScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="RedeemHistory"
-        component={Account.AccountRedeemHistoryScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Profile"
-        component={Account.AccountProfileScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="News"
-        component={News.NewsScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="NewsDetail"
-        component={News.NewsDetailScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Message"
-        component={News.MessageScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Walk"
-        component={Home.WalkScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Bus"
-        component={Home.BusScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Elec"
-        component={Home.SaveElecScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Food"
-        component={Home.SaveFoodScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="About"
-        component={Home.AboutUsScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="DataAnalysis"
-        component={Home.DataAnalysisScreen}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="CreditMall"
-        component={Account.CreditMallScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
