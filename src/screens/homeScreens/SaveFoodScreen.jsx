@@ -15,6 +15,7 @@ import StatusComponent from './../../components/StatusComponent';
 import { TextInput } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { postFood, postPoints, fetchFood } from '../../redux/actions/carbonFootprint';
+import { postTotalFood, postTotalPoints, fetchTotalFood } from '../../redux/actions/total';
 import firestore from '@react-native-firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
@@ -63,6 +64,9 @@ const SaveFoodScreen = () => {
     // fetch last total points
     const lastPoints = useSelector(state => state.carbonFootprint).points ?? 0;
 
+    const lastTotal = useSelector(state => state.total).totalEmission ?? 0;
+    const lastTotalFood = useSelector(state => state.total).foodTotalConsumption ?? 0;
+
     const handleSubmitPress = async () => {
         const createdAt = firestore.Timestamp.now();
         const consumptionNumber = Number(foodConsumption) * foodWeight + lastFood;
@@ -72,9 +76,18 @@ const SaveFoodScreen = () => {
         // console.log('lastPoints:', lastPoints)
         // console.log('points:', points)
 
+        // caculation for total data
+        const totalNumber = Number(foodConsumption) * foodWeight + lastTotalFood;
+        const totalEmission = lastTotal + diffPoints;
+        // console.log('totalNumber:', totalNumber)
+        // console.log('totalEmission:', totalEmission)
+        // console.log('lastTotalElectricity:', lastTotalFood)
+
         await handleUploadPhoto();
         dispatch(postFood(uid, consumptionNumber, createdAt));
         dispatch(postPoints(uid, points, createdAt, 'food', diffPoints));
+        dispatch(postTotalFood(totalNumber, createdAt));
+        dispatch(postTotalPoints(totalEmission, createdAt));
         navigation.navigate('Home')
     };
 

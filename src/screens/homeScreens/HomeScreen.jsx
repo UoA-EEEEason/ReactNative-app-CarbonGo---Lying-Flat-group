@@ -16,6 +16,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchWeight } from '../../redux/actions/weight';
 import { fetchPoints } from '../../redux/actions/carbonFootprint';
+import { fetchTotalEmission, fetchTotalElectricity, fetchTotalFood, fetchTotalTraffic, fetchTotalWalk } from '../../redux/actions/total';
 import { fetchUsername } from '../../redux/actions/auth';
 import { truncateText } from './../../utils/helpser';
 
@@ -45,7 +46,12 @@ const HomeScreen = () => {
   useEffect(() => {
     dispatch(fetchWeight());
     dispatch(fetchPoints(uid));
+    dispatch(fetchTotalEmission());
     dispatch(fetchUsername(uid));
+    dispatch(fetchTotalElectricity());
+    dispatch(fetchTotalFood());
+    dispatch(fetchTotalTraffic());
+    dispatch(fetchTotalWalk());
   }, [dispatch]);
 
   const username = useSelector(state => state.auth.username) ?? 'User';

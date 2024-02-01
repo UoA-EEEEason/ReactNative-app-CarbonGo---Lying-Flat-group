@@ -12,6 +12,7 @@ import { COLORS } from '../../constants/color/color';
 import StatusComponent from './../../components/StatusComponent';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchWalk, postWalk, postPoints } from '../../redux/actions/carbonFootprint';
+import { postTotalWalk, postTotalPoints, fetchTotalWalk } from '../../redux/actions/total';
 import firestore from '@react-native-firebase/firestore';
 import useHealthData from './../../hooks/useHealthData';
 import { useNavigation } from '@react-navigation/native';
@@ -35,10 +36,13 @@ const WalkScreen = () => {
         dispatch(fetchWalk(uid));
     }, [dispatch]);
     const lastWalk = useSelector(state => state.carbonFootprint).walkConsumption ?? 0;
-    console.log('last lastWalk:', lastWalk)
+    // console.log('last lastWalk:', lastWalk)
 
     // fetch last total points
     const lastPoints = useSelector(state => state.carbonFootprint).points ?? 0;
+
+    const lastTotal = useSelector(state => state.total).totalEmission ?? 0;
+    const lastTotalWalk = useSelector(state => state.total).walkTotalConsumption ?? 0;
 
     const handleSubmitPress = async () => {
         const createdAt = firestore.Timestamp.now();
@@ -49,8 +53,17 @@ const WalkScreen = () => {
         // console.log('lastPoints:', lastPoints)
         // console.log('points:', points)
 
+        // caculation for total data
+        const totalNumber = Number(electricityConsumption) * walkWeight + lastTotalWalk;
+        const totalEmission = lastTotal + diffPoints;
+        // console.log('totalNumber:', totalNumber)
+        // console.log('totalEmission:', totalEmission)
+        // console.log('lastTotalElectricity:', lastTotalWalk)
+
         dispatch(postWalk(uid, consumptionNumber, createdAt));
         dispatch(postPoints(uid, points, createdAt, 'walk', diffPoints));
+        dispatch(postTotalWalk(totalNumber, createdAt));
+        dispatch(postTotalPoints(totalEmission, createdAt));
         navigation.navigate('Home')
     };
 

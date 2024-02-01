@@ -39,7 +39,8 @@
     "redux": "^4.2.1",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.4.2",
-    "victory-native": "^36.7.0"
+    "victory-native": "^36.7.0",
+    "date-fns": "^2.30.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
