@@ -1,11 +1,11 @@
 import { actionTypes } from '../actionTypes';
 
 const initialState = {
-    electricityTotalConsumption: [],
-    foodTotalConsumption: [],
-    trafficTotalConsumption: [],
-    walkTotalConsumption: [],
-    totalEmission: [],
+    electricityTotalConsumption: null,
+    foodTotalConsumption: null,
+    trafficTotalConsumption: null,
+    walkTotalConsumption: null,
+    totalEmission: null,
 };
 
 
