@@ -44,6 +44,7 @@ function getMonthAbbreviation(timestampObj) {
 const DataAnalysisScreen = () => {
 
   const uid = useSelector(state => state.auth.uid);
+  const [animateChart, setAnimateChart] = useState(false);
 
   // get emission detail
   useEffect(() => {
@@ -67,6 +68,7 @@ const DataAnalysisScreen = () => {
 
   const dispatch = useDispatch();
   useEffect(() => {
+    setAnimateChart(true);
     dispatch(fetchPoints(uid));
     dispatch(fetchWalk(uid));
     dispatch(fetchTraffic(uid));
@@ -91,14 +93,14 @@ const DataAnalysisScreen = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setAnimatedProgress(oldProgress => {
-        const newProgress = oldProgress + 0.01;
+        const newProgress = oldProgress + 0.05;
         if (newProgress >= 1) {
           clearInterval(interval);
           return 1;
         }
         return newProgress;
       });
-    }, 10);
+    }, 5);
     return () => clearInterval(interval);
   }, []);
 
@@ -140,6 +142,31 @@ const DataAnalysisScreen = () => {
 
             <View style={styles.whitebackground}>
 
+
+
+              <Text style={styles.title}>Emission reduction details</Text>
+              <VictoryChart width={wp(90)} height={wp(70)}>
+                <VictoryAxis
+                  style={{
+                    axis: { stroke: COLORS.buttonGreen, strokeWidth: 2 },
+                    tickLabels: { fill: COLORS.buttonGreen },
+                  }}
+                />
+                <VictoryAxis
+                  dependentAxis
+                  tickFormat={(tick) => `${Math.round(tick / 1000)}k`}
+                  tickValues={[0, 5000, 10000, 15000, 20000, 25000]}
+                  style={{
+                    axis: { stroke: COLORS.buttonGreen, strokeWidth: 2 },
+                    tickLabels: { fill: COLORS.buttonGreen },
+                  }}
+                />
+                <VictoryLine
+                  data={transformedData}
+                  animate={animateChart ? { duration: 2000, onLoad: { duration: 5000 } } : undefined}
+                  style={{ data: { stroke: COLORS.green, strokeWidth: 4 } }}
+                />
+              </VictoryChart>
               <Text style={styles.title}>Emission reduction proportion</Text>
 
               <View style={styles.prograssContainer}>
@@ -199,31 +226,6 @@ const DataAnalysisScreen = () => {
                   </Text>
                 </View>
               </View>
-
-              <Text style={styles.title}>Emission reduction details</Text>
-              <VictoryChart width={wp(90)} height={wp(70)}>
-                <VictoryAxis
-                  style={{
-                    axis: { stroke: COLORS.buttonGreen, strokeWidth: 2 },
-                    tickLabels: { fill: COLORS.buttonGreen },
-                  }}
-                />
-                <VictoryAxis
-                  dependentAxis
-                  tickFormat={(tick) => `${Math.round(tick / 1000)}k`}
-                  tickValues={[0, 5000, 10000, 15000, 20000, 25000]}
-                  style={{
-                    axis: { stroke: COLORS.buttonGreen, strokeWidth: 2 },
-                    tickLabels: { fill: COLORS.buttonGreen },
-                  }}
-                />
-                <VictoryLine
-                  data={transformedData}
-                  animate={{ duration: 2000, onLoad: { duration: 5000 } }}
-                  style={{ data: { stroke: COLORS.green, strokeWidth: 4 } }}
-                />
-              </VictoryChart>
-
               <Text style={styles.title}>Emission reduction trends</Text>
               <Text style={styles.text}>
                 {getEmissionMaxText()}

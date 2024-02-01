@@ -89,7 +89,7 @@ const WalkScreen = () => {
                         Submit your Electricity carbon footprint
                     </Text> */}
                     <Text style={styles.input}>
-                        Points you will earn: {steps.toString() ? steps.toString() * walkWeight : ''}
+                        Points you will earn: {steps ? (steps * walkWeight).toFixed(2) : '0'}
                     </Text>
                     <TouchableOpacity
                         style={styles.loginButton}
