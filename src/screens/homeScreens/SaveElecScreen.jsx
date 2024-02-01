@@ -15,6 +15,7 @@ import StatusComponent from './../../components/StatusComponent';
 import { TextInput } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchElectricity, postElectricity, postPoints } from '../../redux/actions/carbonFootprint';
+import { postTotalElectricity, postTotalPoints, fetchTotalElectricity } from '../../redux/actions/total';
 import firestore from '@react-native-firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
@@ -58,10 +59,14 @@ const SaveElecScreen = () => {
         dispatch(fetchElectricity(uid));
     }, [dispatch]);
     const lastElectricity = useSelector(state => state.carbonFootprint).electricityConsumption ?? 0;
-    // console.log('last lastElectricity:', lastElectricity)
 
     // fetch last total points
     const lastPoints = useSelector(state => state.carbonFootprint).points ?? 0;
+
+    const lastTotal = useSelector(state => state.total).totalEmission ?? 0;
+    const lastTotalElectricity = useSelector(state => state.total).electricityTotalConsumption ?? 0;
+    // console.log('lastTotal:', lastTotal)
+    // console.log('lastTotalElectricity:', lastTotalElectricity)
 
     const handleSubmitPress = async () => {
         const createdAt = firestore.Timestamp.now();
@@ -72,9 +77,18 @@ const SaveElecScreen = () => {
         // console.log('lastPoints:', lastPoints)
         // console.log('points:', points)
 
+        // caculation for total data
+        const totalNumber = Number(electricityConsumption) * electricityWeight + lastTotalElectricity;
+        const totalEmission = lastTotal + diffPoints;
+        // console.log('totalNumber:', totalNumber)
+        // console.log('totalEmission:', totalEmission)
+        // console.log('lastTotalElectricity:', lastTotalElectricity)
+
         await handleUploadPhoto();
         dispatch(postElectricity(uid, consumptionNumber, createdAt));
         dispatch(postPoints(uid, points, createdAt, 'electricity', diffPoints));
+        dispatch(postTotalElectricity(totalNumber, createdAt));
+        dispatch(postTotalPoints(totalEmission, createdAt));
         navigation.navigate('Home')
     };
 

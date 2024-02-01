@@ -14,7 +14,8 @@ import { COLORS } from '../../constants/color/color';
 import StatusComponent from './../../components/StatusComponent';
 import { TextInput } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
-import { postTraffic, postPoints, fetchTraffic,fetchMonthData } from '../../redux/actions/carbonFootprint';
+import { postTraffic, postPoints, fetchTraffic, fetchMonthData } from '../../redux/actions/carbonFootprint';
+import { postTotalTraffic, postTotalPoints, fetchTotalTraffic } from '../../redux/actions/total';
 import firestore from '@react-native-firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
@@ -44,8 +45,12 @@ const BusScreen = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const [photo, setPhoto] = useState(null);
-
   const [isLoading, setIsLoading] = useState(false);
+
+    // fetch traffic
+    useEffect(() => {
+      dispatch(fetchTraffic(uid));
+    }, [dispatch]);
 
   // get auth state from redux
   const uid = useSelector(state => state.auth.uid);
@@ -57,12 +62,12 @@ const BusScreen = () => {
   // fetch last total points
   const lastPoints = useSelector(state => state.carbonFootprint).points ?? 0;
 
-  // fetch traffic
-  useEffect(() => {
-    dispatch(fetchTraffic(uid));
-  }, [dispatch]);
+  const lastTotal = useSelector(state => state.total).totalEmission ?? 0;
+  const lastTotalTraffic = useSelector(state => state.total).trafficTotalConsumption ?? 0;
+  // console.log('lastTotal:', lastTotal)
+  // console.log('lastTotalTraffic:', lastTotalTraffic)
+
   const lastTraffic = useSelector(state => state.carbonFootprint).trafficConsumption ?? 0;
-  // console.log('last trafficConsumption:', lastTraffic)
 
   const handleSubmitPress = async () => {
     const createdAt = firestore.Timestamp.now();
@@ -73,9 +78,18 @@ const BusScreen = () => {
     // console.log('lastPoints:', lastPoints)
     // console.log('points:', points)
 
+    // caculation for total data
+    const totalNumber = Number(trafficConsumption) * trafficWeight + lastTotalTraffic;
+    const totalEmission = lastTotal + diffPoints;
+    console.log('totalNumber:', totalNumber)
+    console.log('totalEmission:', totalEmission)
+    console.log('lastTotalTraffic:', lastTotalTraffic)
+
     await handleUploadPhoto();
     dispatch(postTraffic(uid, consumptionNumber, createdAt));
     dispatch(postPoints(uid, points, createdAt, 'traffic', diffPoints));
+    dispatch(postTotalTraffic(totalNumber, createdAt));
+    dispatch(postTotalPoints(totalEmission, createdAt));
     navigation.navigate('Home')
   };
 

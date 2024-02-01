@@ -16,6 +16,7 @@ import {useNavigation} from '@react-navigation/native';
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchNews} from '../../redux/actions/news';
 import {truncateText} from './../../utils/helpser';
+import {fDateTime} from './../../utils/format-time';
 
 const CardComponent = ({image, title, content, date, onPress}) => (
   <TouchableOpacity onPress={onPress}>
@@ -38,7 +39,7 @@ const CardComponent = ({image, title, content, date, onPress}) => (
         <Text variant="titleLarge">{title}</Text>
         <Text variant="bodyMedium">{truncateText(content, 35)}</Text>
         <Text variant="bodyMedium" style={{color: COLORS.grey}}>
-          {date}
+        {fDateTime(date).toString()}
         </Text>
       </Card.Content>
     </Card>
@@ -58,7 +59,6 @@ const NewsScreen = () => {
     dispatch(fetchNews());
   }, [dispatch]);
   const news = useSelector(state => state.news).news;
-  // console.log('news:', news);
 
   return (
     <ImageBackground
@@ -90,7 +90,7 @@ const NewsScreen = () => {
                 key={item.id}
                 image={{uri: item.image}}
                 title={item.title}
-                date={item.date}
+                date={item.createdAt}
                 content={item.content}
                 onPress={() => handlePressCard(item)}
               />
