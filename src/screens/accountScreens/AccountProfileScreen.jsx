@@ -10,35 +10,17 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import React, { useState } from 'react';
-import { COLORS } from './../../constants/color/color';
-import { StatusComponent } from './../../components';
-import { TextInput, Button } from 'react-native-paper';
-import { hp, wp } from './../../utils/dimensions';
-import { useDispatch, useSelector } from 'react-redux';
-import { postProfile } from '../../redux/actions/profile';
-import { logout } from '../../redux/actions/auth';
+import React, {useState} from 'react';
+import {COLORS} from './../../constants/color/color';
+import {StatusComponent} from './../../components';
+import {TextInput, Button} from 'react-native-paper';
+import {hp, wp} from './../../utils/dimensions';
+import {useDispatch, useSelector} from 'react-redux';
+import {postProfile} from '../../redux/actions/profile';
+import {logout} from '../../redux/actions/auth';
+import {Avatar} from 'react-native-paper';
 
-const TextInputComponent = ({ label, value, onChangeText, style }) => {
-  const customTheme = {
-    colors: {
-      primary: 'black',
-    },
-  };
-
-  return (
-    <TextInput
-      label={label}
-      value={value}
-      mode="flat"
-      onChangeText={onChangeText}
-      style={style}
-      theme={customTheme}
-    />
-  );
-};
-
-const ButtonComponent = (props) => (
+const ButtonComponent = props => (
   <Button
     mode="contained-tonal"
     onPress={props.onPress}
@@ -52,27 +34,17 @@ const ButtonComponent = (props) => (
       marginTop: 20,
       borderRadius: 5,
       shadowColor: 'grew',
-      shadowOffset: { width: 0, height: 2 },
+      shadowOffset: {width: 0, height: 2},
       shadowOpacity: 0.25,
       shadowRadius: 3.84,
       elevation: 5,
-    }}
-  >
+    }}>
     {props.name}
   </Button>
 );
 
 const AccountProfileScreen = () => {
-  const [id, setId] = useState('');
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-
   const dispatch = useDispatch();
-
-  const handleSubmitPress = async () => {
-    dispatch(postProfile(id, username, email));
-  };
-
   const handleLogout = async () => {
     dispatch(logout());
   };
@@ -82,39 +54,16 @@ const AccountProfileScreen = () => {
       source={require('./../../assets/images/background.png')}
       style={styles.backgroundImage}
       resizeMode="cover">
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={{flex: 1}}>
         <StatusComponent title={'Profile'} />
         <ScrollView>
-          <View style={styles.userAvatar}>
-            <Image source={require('./../../assets/images/user.png')} />
-          </View>
 
-          <View style={styles.container}>
-            <TextInputComponent
-              style={styles.input}
-              label={'ID'}
-              value={id}
-              onChangeText={setId}
-            />
-            <TextInputComponent
-              style={styles.input}
-              label={'Username'}
-              value={username}
-              onChangeText={setUsername}
-            />
-            <TextInputComponent
-              style={styles.input}
-              label={'Email'}
-              value={email}
-              onChangeText={setEmail}
-            />
+          <View style={styles.userAvatar}>
+            <Avatar.Image size={100} source={require('./../../assets/images/avatar_1.jpg')} />
           </View>
-          <View>
-            <ButtonComponent name={'Submit'} onPress={handleSubmitPress} />
-            <ButtonComponent
-              name={'Logout'}
-              onPress={handleLogout}
-            />
+          
+          <View style={styles.buttonContainer}>
+            <ButtonComponent name={'Logout'} onPress={handleLogout} />
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -197,6 +146,11 @@ const styles = StyleSheet.create({
   userAvatar: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 30,
+    marginVertical: 30,
   },
+  buttonContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 400,
+  }
 });

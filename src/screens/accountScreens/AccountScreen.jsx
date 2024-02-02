@@ -20,6 +20,7 @@ import { fetchTree } from '../../redux/actions/tree';
 import { fetchPoints } from '../../redux/actions/carbonFootprint';
 import { fetchUsername } from '../../redux/actions/auth';
 import { truncateText } from './../../utils/helpser';
+import {Avatar} from 'react-native-paper';
 
 const CustomCard = ({ name, image, onPress }) => (
   <View style={{ margin: 10 }}>
@@ -88,10 +89,7 @@ const AccountScreen = () => {
               <View style={styles.UserLayout}>
                 <TouchableOpacity style={styles.userButton} onPress={navigateToProfile}>
                   <View style={styles.userIcon}>
-                    <Image
-                      source={require('./../../assets/images/user.png')}
-                      style={styles.userAvatar}
-                    />
+                    <Avatar.Image size={50} source={require('./../../assets/images/avatar_1.jpg')} />
                   </View>
                   <Text style={styles.userText}>{truncateText(username, 6)}</Text>
                 </TouchableOpacity>
