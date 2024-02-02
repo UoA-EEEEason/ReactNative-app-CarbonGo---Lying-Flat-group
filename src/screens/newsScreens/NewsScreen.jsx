@@ -18,7 +18,7 @@ import { fetchNews } from '../../redux/actions/news';
 import { truncateText } from './../../utils/helpser';
 import { fDateTime } from './../../utils/format-time';
 
-const CardComponent = ({ image, title, content, date, onPress }) => (
+const CardComponent = ({ image, title, content, createdAt, onPress }) => (
   <TouchableOpacity onPress={onPress}>
     <Card
       style={{
@@ -39,7 +39,7 @@ const CardComponent = ({ image, title, content, date, onPress }) => (
         <Text variant="titleLarge">{title}</Text>
         <Text variant="bodyMedium">{truncateText(content, 35)}</Text>
         <Text variant="bodyMedium" style={{ color: COLORS.grey }}>
-          {fDateTime(date).toString()}
+          {fDateTime(createdAt)}
         </Text>
       </Card.Content>
     </Card>
@@ -90,7 +90,7 @@ const NewsScreen = () => {
                 key={item.id}
                 image={{ uri: item.image }}
                 title={item.title}
-                date={fDateTime(item.date).toString()}
+                createdAt={item.createdAt}
                 content={item.content}
                 onPress={() => handlePressCard(item)}
               />

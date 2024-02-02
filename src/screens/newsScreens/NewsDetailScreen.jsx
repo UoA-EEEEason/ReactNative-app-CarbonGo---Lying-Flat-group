@@ -12,6 +12,7 @@ import {COLORS} from './../../constants/color/color';
 import {StatusComponent} from './../../components';
 import {hp, wp} from './../../utils/dimensions';
 import {Text} from 'react-native-paper';
+import { fDateTime } from './../../utils/format-time';
 
 const NewsDetailScreen = ({route}) => {
   const {item} = route.params;
@@ -31,7 +32,7 @@ const NewsDetailScreen = ({route}) => {
                 {item.title}
               </Text>
               <Text variant="bodyMedium" style={styles.date}>
-                {item.date}
+                {fDateTime(item.createdAt)}
               </Text>
               <Text variant="bodyMedium" style={styles.content}>
                 {item.content}

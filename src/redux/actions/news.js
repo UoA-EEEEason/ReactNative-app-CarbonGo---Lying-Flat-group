@@ -13,7 +13,7 @@ export const fetchNews = () => {
           return {
             id: doc.id,
             ...doc.data(),
-            createdAt: doc.data().createdAt.toDate(),
+            createdAt: doc.data().createdAt.toDate().toString(),
           };
         });
         dispatch({
