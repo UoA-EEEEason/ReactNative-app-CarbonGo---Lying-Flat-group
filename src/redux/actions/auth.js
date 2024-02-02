@@ -3,29 +3,22 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
 export const login = (email, password) => dispatch => {
-  auth().signInWithEmailAndPassword(email, password)
-    .then((userCredential) => {
-      // login successful
-      dispatch({
-        type: actionTypes.LOGIN,
-        payload: {
-          isAuthenticated: true,
-          uid: userCredential.user.uid,
-        }
+  return new Promise((resolve, reject) => {
+    auth().signInWithEmailAndPassword(email, password)
+      .then((userCredential) => {
+        dispatch({
+          type: actionTypes.LOGIN,
+          payload: {
+            isAuthenticated: true,
+            uid: userCredential.user.uid,
+          }
+        });
+        resolve(userCredential);
+      })
+      .catch((error) => {
+        reject(error);
       });
-    })
-    .catch((error) => {
-      // login failed
-      if (error.code === 'auth/invalid-email') {
-        console.log('That email address is invalid!');
-      } else if (error.code === 'auth/user-disabled') {
-        console.log('User has been disabled.');
-      } else if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
-        console.log('Invalid username or password.');
-      } else {
-        console.log('Login failed with an unexpected error: ', error);
-      }
-    });
+  });
 };
 
 export const logout = () => dispatch => {

@@ -15,7 +15,7 @@ import { COLORS } from '../../constants/color/color';
 import StatusComponent from './../../components/StatusComponent';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../redux/actions/auth';
-import { TextInput } from 'react-native-paper';
+import { TextInput, Dialog, Portal, Button } from 'react-native-paper';
 
 const TextInputComponent = ({ label, value, onChangeText, style, secureTextEntry }) => {
   const customTheme = {
@@ -40,13 +40,26 @@ const TextInputComponent = ({ label, value, onChangeText, style, secureTextEntry
 const LoginScreen = () => {
   const navigation = useNavigation();
 
+  const [showDialog, setShowDialog] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
   // get auth state from redux
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
   const dispatch = useDispatch();
 
   const handleLogin = () => {
-    dispatch(login(email, password));
-    navigation.navigate('Home');
+    dispatch(login(email, password))
+      .then(() => {
+        navigation.navigate('Home');
+      })
+      .catch((error) => {
+        let message = 'Login failed. Please try again.';
+        if (error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') {
+          message = 'Invalid email or password.';
+        }
+        setErrorMessage(message);
+        setShowDialog(true);
+      });
   };
 
   // solve login latency issue
@@ -113,6 +126,19 @@ const LoginScreen = () => {
               </Text>
             </Text>
           </TouchableOpacity>
+
+          <Portal>
+            <Dialog visible={showDialog} onDismiss={() => setShowDialog(false)}>
+              <Dialog.Title>Error</Dialog.Title>
+              <Dialog.Content>
+                <Text>{errorMessage}</Text>
+              </Dialog.Content>
+              <Dialog.Actions>
+                <Button onPress={() => setShowDialog(false)}>Ok</Button>
+              </Dialog.Actions>
+            </Dialog>
+          </Portal>
+          
         </ScrollView>
       </SafeAreaView>
     </ImageBackground>
