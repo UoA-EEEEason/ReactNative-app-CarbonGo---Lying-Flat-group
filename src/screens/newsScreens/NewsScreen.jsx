@@ -7,18 +7,18 @@ import {
   ImageBackground,
   StyleSheet,
 } from 'react-native';
-import React, {useEffect} from 'react';
-import {COLORS} from './../../constants/color/color';
-import {StatusComponent} from './../../components';
-import {hp, wp} from './../../utils/dimensions';
-import {Card, Text} from 'react-native-paper';
-import {useNavigation} from '@react-navigation/native';
-import {useDispatch, useSelector} from 'react-redux';
-import {fetchNews} from '../../redux/actions/news';
-import {truncateText} from './../../utils/helpser';
-import {fDateTime} from './../../utils/format-time';
+import React, { useEffect } from 'react';
+import { COLORS } from './../../constants/color/color';
+import { StatusComponent } from './../../components';
+import { hp, wp } from './../../utils/dimensions';
+import { Card, Text } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchNews } from '../../redux/actions/news';
+import { truncateText } from './../../utils/helpser';
+import { fDateTime } from './../../utils/format-time';
 
-const CardComponent = ({image, title, content, date, onPress}) => (
+const CardComponent = ({ image, title, content, date, onPress }) => (
   <TouchableOpacity onPress={onPress}>
     <Card
       style={{
@@ -38,8 +38,8 @@ const CardComponent = ({image, title, content, date, onPress}) => (
       <Card.Content>
         <Text variant="titleLarge">{title}</Text>
         <Text variant="bodyMedium">{truncateText(content, 35)}</Text>
-        <Text variant="bodyMedium" style={{color: COLORS.grey}}>
-        {fDateTime(date).toString()}
+        <Text variant="bodyMedium" style={{ color: COLORS.grey }}>
+          {fDateTime(date).toString()}
         </Text>
       </Card.Content>
     </Card>
@@ -50,7 +50,7 @@ const NewsScreen = () => {
   const navigation = useNavigation();
   // Navigate to the NewsDetail screen with parameters
   const handlePressCard = item => {
-    navigation.navigate('NewsDetail', {item});
+    navigation.navigate('NewsDetail', { item });
   };
 
   // Get news data from redux state
@@ -65,7 +65,7 @@ const NewsScreen = () => {
       source={require('./../../assets/images/background.png')}
       style={styles.backgroundImage}
       resizeMode="cover">
-      <SafeAreaView style={{flex: 1}}>
+      <SafeAreaView style={{ flex: 1 }}>
         <StatusComponent title={'News'} />
         <ScrollView>
           <View style={styles.tab}>
@@ -88,9 +88,9 @@ const NewsScreen = () => {
             {news.map(item => (
               <CardComponent
                 key={item.id}
-                image={{uri: item.image}}
+                image={{ uri: item.image }}
                 title={item.title}
-                date={item.createdAt}
+                date={fDateTime(item.date).toString()}
                 content={item.content}
                 onPress={() => handlePressCard(item)}
               />
