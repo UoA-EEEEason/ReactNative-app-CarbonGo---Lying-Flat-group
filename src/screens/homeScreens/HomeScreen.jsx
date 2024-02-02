@@ -19,6 +19,7 @@ import { fetchPoints } from '../../redux/actions/carbonFootprint';
 import { fetchTotalEmission, fetchTotalElectricity, fetchTotalFood, fetchTotalTraffic, fetchTotalWalk } from '../../redux/actions/total';
 import { fetchUsername } from '../../redux/actions/auth';
 import { truncateText } from './../../utils/helpser';
+import {Avatar} from 'react-native-paper';
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -97,17 +98,7 @@ const HomeScreen = () => {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-              <Image
-                source={require('./../../assets/images/user.png')}
-                style={{
-                  width: 40,
-                  height: 40,
-                  borderWidth: 2,
-                  borderColor: 'white',
-                  borderRadius: 60,
-                  resizeMode: 'contain'
-                }}
-              />
+              <Avatar.Image size={45} source={require('./../../assets/images/avatar_1.jpg')} />
             </View>
           )}
           style={styles.fabuser}
