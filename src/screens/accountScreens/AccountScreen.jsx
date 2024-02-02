@@ -19,7 +19,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchTree } from '../../redux/actions/tree';
 import { fetchPoints } from '../../redux/actions/carbonFootprint';
 import { fetchUsername } from '../../redux/actions/auth';
-import {truncateText} from './../../utils/helpser';
+import { truncateText } from './../../utils/helpser';
 
 const CustomCard = ({ name, image, onPress }) => (
   <View style={{ margin: 10 }}>
@@ -41,7 +41,7 @@ const CustomCard = ({ name, image, onPress }) => (
           }}
         />
         <Card.Content style={{ padding: 10, alignSelf: 'center' }}>
-          <Text variant="titleLarge" style={{ color: COLORS.black }}>{name}</Text>
+          <Text variant="titleLarge" style={{ color: COLORS.black }}>{truncateText(name, 11)}</Text>
         </Card.Content>
       </Card>
     </TouchableOpacity>
@@ -74,9 +74,6 @@ const AccountScreen = () => {
   const username = useSelector(state => state.auth.username) ?? 'User';
   const tree = useSelector(state => state.tree).tree;
   const limitedTree = tree.slice(0, 4);
-
-  // calculate whether the number of cards is odd
-  const isOdd = tree.length % 2 !== 0;
 
   return (
     <ImageBackground
@@ -143,12 +140,6 @@ const AccountScreen = () => {
                   name={item.name}
                   onPress={() => handlePressCard(item)} />
               ))}
-              {isOdd && <View
-                style={{
-                  margin: 10,
-                  width: wp(40),
-                  height: wp(40),
-                }} />}
             </View>
 
           </View>

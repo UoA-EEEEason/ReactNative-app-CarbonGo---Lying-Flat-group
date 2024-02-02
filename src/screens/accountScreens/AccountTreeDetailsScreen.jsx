@@ -69,7 +69,7 @@ const AccountTreeDetailsScreen = ({ route }) => {
           <View>
             <View>
               <Image
-                source={require('./../../assets/images/KauriTreePhoto.jpg')}
+                source={{ uri: item.image }}
                 style={styles.pictureStyle}></Image>
             </View>
             <View>

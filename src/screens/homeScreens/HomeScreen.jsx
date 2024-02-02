@@ -113,7 +113,7 @@ const HomeScreen = () => {
           style={styles.fabuser}
           onPress={() => navigation.navigate('CertificatesOutlines')}
           mode='elevated'
-          label={`      ${username}  `}
+          label={`      ${truncateText(username, 6)}  `}
           color='#23531E'
           animated={false}
         />
