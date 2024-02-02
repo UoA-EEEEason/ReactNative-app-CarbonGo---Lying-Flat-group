@@ -20,6 +20,7 @@ import firestore from '@react-native-firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
+import PointsComponent from './../../components/PointsComponent';
 
 const TextInputComponent = ({ label, onChangeText, style, value }) => {
     const customTheme = {
@@ -167,22 +168,13 @@ const SaveElecScreen = () => {
                         style={styles.logo}
                         resizeMode="contain"
                     />
-                    {/* <Text style={styles.createText}>
-                        {steps.toString()}
-                    </Text> */}
-                    <Text style={styles.createText}>
-                        Submit your Electricity carbon footprint
-                    </Text>
-                    <Text style={styles.input}>
-                        Points you will earn: {electricityConsumption ? electricityConsumption * electricityWeight : ''}
-                    </Text>
+                    <PointsComponent points={electricityConsumption ? electricityConsumption * electricityWeight : ''}/>
                     <TextInputComponent
                         style={styles.input}
                         label={'The amount of electricity you use'}
                         onChangeText={handleElectricityConsumptionChange}
                         value={electricityConsumption}
                     />
-                    <Text style={styles.uploadPhotoText}>Please upload your photo</Text>
                     {photo && (
                         <Image
                             source={{ uri: photo.uri }}
@@ -224,7 +216,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     logo: {
-        width: '60%',
+        width: '45%',
         height: undefined,
         aspectRatio: 1,
     },

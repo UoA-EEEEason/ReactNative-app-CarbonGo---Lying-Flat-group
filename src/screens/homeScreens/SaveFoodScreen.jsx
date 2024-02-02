@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
     SafeAreaView,
     ScrollView,
+    View,
     Text,
     TouchableOpacity,
     ImageBackground,
@@ -20,39 +21,64 @@ import firestore from '@react-native-firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
-
-const TextInputComponent = ({ label, onChangeText, style, value }) => {
-    const customTheme = {
-        colors: {
-            primary: 'black',
-        },
-    };
-
-    return (
-        <TextInput
-            label={label}
-            value={value}
-            mode="flat"
-            onChangeText={onChangeText}
-            style={style}
-            theme={customTheme}
-        />
-    );
-};
+import FoodComponent from './../../components/FoodComponent';
 
 const SaveFoodScreen = () => {
-    const [foodConsumption, setFoodConsumption] = useState('');
+    const [foodConsumption, setFoodConsumption] = useState(0);
     const dispatch = useDispatch();
     const navigation = useNavigation();
     const [photo, setPhoto] = useState(null);
 
     const [isLoading, setIsLoading] = useState(false);
 
+    // handle FoodComponents value
+    const [prevValues, setPrevValues] = useState({});
+    const updateTotalValue = (id, newValue) => {
+        setPrevValues(prev => ({ ...prev, [id]: newValue }));
+    };
+    useEffect(() => {
+        const newTotal = Object.values(prevValues).reduce((acc, curr) => acc + curr, 0);
+        setFoodConsumption(newTotal);
+    }, [prevValues]); 
+
     // get auth state from redux
     const uid = useSelector(state => state.auth.uid);
 
     // get weight value from redux
     const foodWeight = useSelector(state => state.weight).weight.food ?? 0;
+    const meatWeight = useSelector(state => state.weight).weight.meat ?? 0;
+    const breadWeight = useSelector(state => state.weight).weight.bread ?? 0;
+    const fruitWeight = useSelector(state => state.weight).weight.fruit ?? 0;
+    const milkWeight = useSelector(state => state.weight).weight.milk ?? 0;
+
+    // console.log('meatWeight:',meatWeight)
+    // console.log('breadWeight:',breadWeight)
+    // console.log('fruitWeight:',fruitWeight)
+    // console.log('milkWeight:',milkWeight)
+
+    const foodItems = [
+        {
+            id: 1,
+            weight: meatWeight,
+            image: require('./../../assets/images/meat.png'),
+        },
+        {
+            id: 2,
+            weight: breadWeight,
+            image: require('./../../assets/images/bread.png'),
+        },
+        {
+            id: 3,
+            weight: fruitWeight,
+            image: require('./../../assets/images/fruit.png'),
+        },
+        {
+            id: 4,
+            weight: milkWeight,
+            image: require('./../../assets/images/milk.png'),
+        },
+        // ... more items
+    ];
 
     // fetch food
     useEffect(() => {
@@ -69,15 +95,15 @@ const SaveFoodScreen = () => {
 
     const handleSubmitPress = async () => {
         const createdAt = firestore.Timestamp.now();
-        const consumptionNumber = Number(foodConsumption) * foodWeight + lastFood;
-        const diffPoints = Number(foodConsumption) * foodWeight;
+        const consumptionNumber = Number(foodConsumption) + lastFood;
+        const diffPoints = Number(foodConsumption);
         const points = lastPoints + diffPoints;
-        // console.log('consumptionNumber:', consumptionNumber)
-        // console.log('lastPoints:', lastPoints)
-        // console.log('points:', points)
+        // console.log('consumptionNumber:', typeof(consumptionNumber))
+        // console.log('lastPoints:', typeof(lastPoints))
+        // console.log('points:', typeof(points))
 
         // caculation for total data
-        const totalNumber = Number(foodConsumption) * foodWeight + lastTotalFood;
+        const totalNumber = Number(foodConsumption) + lastTotalFood;
         const totalEmission = lastTotal + diffPoints;
         // console.log('totalNumber:', totalNumber)
         // console.log('totalEmission:', totalEmission)
@@ -89,10 +115,6 @@ const SaveFoodScreen = () => {
         dispatch(postTotalFood(totalNumber, createdAt));
         dispatch(postTotalPoints(totalEmission, createdAt));
         navigation.navigate('Home')
-    };
-
-    const handleFoodConsumptionChange = value => {
-        setFoodConsumption(value);
     };
 
     const handleChoosePhoto = () => {
@@ -166,15 +188,18 @@ const SaveFoodScreen = () => {
                         style={styles.logo}
                         resizeMode="contain"
                     />
-                    <Text style={styles.createText}>
-                        Submit your Food carbon footprint
-                    </Text>
-                    {/* here should be a drop down bar to select food type */}
-                    {/* <TextInputComponent
-                        style={styles.input}
-                        label={'The kind of food you buy'}
-                    /> */}
-                    <Text style={styles.input}>
+
+                    {foodItems.map(item => (
+                        <FoodComponent
+                            key={item.id}
+                            id={item.id}
+                            weight={item.weight}
+                            image={item.image}
+                            onUpdateTotalValue={updateTotalValue}
+                        />
+                    ))}
+
+                    {/* <Text style={styles.points}>
                         Points you will earn: {foodConsumption ? foodConsumption * foodWeight : ''}
                     </Text>
                     <TextInputComponent
@@ -182,10 +207,8 @@ const SaveFoodScreen = () => {
                         label={'The weight of the food you buy'}
                         onChangeText={handleFoodConsumptionChange}
                         value={foodConsumption}
-                    />
-                    <Text style={styles.uploadPhotoText}>
-                        Please upload your photo
-                    </Text>
+                    /> */}
+
                     {photo && (
                         <Image
                             source={{ uri: photo.uri }}
@@ -226,7 +249,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     logo: {
-        width: '60%',
+        width: '40%',
         height: undefined,
         aspectRatio: 1,
     },
@@ -236,6 +259,13 @@ const styles = StyleSheet.create({
         color: COLORS.black,
         textAlign: 'center',
         marginBottom: 20,
+    },
+    points: {
+        backgroundColor: 'transparent',
+        color: COLORS.black,
+        width: '80%',
+        marginBottom: 20,
+        borderRadius: 5,
     },
     input: {
         backgroundColor: 'transparent',
@@ -278,5 +308,10 @@ const styles = StyleSheet.create({
         width: 300,
         height: 300,
         marginBottom: 20,
+    },
+    foodComponentContainer: {
+        alignSelf: 'stretch',
+        alignItems: 'flex-start',
+        paddingLeft: 20,
     },
 });
