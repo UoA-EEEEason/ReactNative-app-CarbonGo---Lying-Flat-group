@@ -4,6 +4,8 @@ import ButtonComponent from './ButtonComponent';
 import IconButtonComponent from './IconButtonComponent';
 import TextInputCompnent from './TextInputCompnent';
 import CardComponent from './CardComponent';
+import FoodComponent from './FoodComponent';
+import PointsComponent from './PointsComponent';
 
 export {
     StatusComponent,
@@ -12,4 +14,6 @@ export {
     TextInputCompnent,
     IconButtonComponent,
     CardComponent,
+    FoodComponent,
+    PointsComponent,
 };

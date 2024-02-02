@@ -20,6 +20,7 @@ import firestore from '@react-native-firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import storage from '@react-native-firebase/storage';
+import PointsComponent from './../../components/PointsComponent';
 
 const TextInputComponent = ({ label, onChangeText, style, value }) => {
   const customTheme = {
@@ -168,19 +169,13 @@ const BusScreen = () => {
             style={styles.logo}
             resizeMode="contain"
           />
-          <Text style={styles.createText}>
-            Submit your Bus carbon footprint
-          </Text>
-          <Text style={styles.input}>
-            Points you will earn: {trafficConsumption ? trafficConsumption * trafficWeight : ''}
-          </Text>
+          <PointsComponent points={trafficConsumption ? trafficConsumption * trafficWeight : ''}/>
           <TextInputComponent
             style={styles.input}
             label={'Travel distance'}
             onChangeText={handleFoodConsumptionChange}
             value={trafficConsumption}
           />
-          <Text style={styles.uploadPhotoText}>Please upload your photo</Text>
           {photo && (
             <Image
               source={{ uri: photo.uri }}

@@ -16,6 +16,7 @@ import { postTotalWalk, postTotalPoints, fetchTotalWalk } from '../../redux/acti
 import firestore from '@react-native-firebase/firestore';
 import useHealthData from './../../hooks/useHealthData';
 import { useNavigation } from '@react-navigation/native';
+import PointsComponent from './../../components/PointsComponent';
 
 const WalkScreen = () => {
     const dispatch = useDispatch();
@@ -88,9 +89,10 @@ const WalkScreen = () => {
                     {/* <Text style={styles.createText}>
                         Submit your Electricity carbon footprint
                     </Text> */}
-                    <Text style={styles.input}>
+                    <PointsComponent points={steps ? (steps * walkWeight).toFixed(2) : '0'}/>
+                    {/* <Text style={styles.input}>
                         Points you will earn: {steps ? (steps * walkWeight).toFixed(2) : '0'}
-                    </Text>
+                    </Text> */}
                     <TouchableOpacity
                         style={styles.loginButton}
                         onPress={handleSubmitPress}>
