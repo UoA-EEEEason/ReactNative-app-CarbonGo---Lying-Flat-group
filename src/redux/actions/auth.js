@@ -95,3 +95,17 @@ export const fetchUsername = (uid) => {
       });
   };
 };
+
+export const resetPassword = (email) => dispatch => {
+  return new Promise((resolve, reject) => {
+    auth().sendPasswordResetEmail(email)
+      .then(() => {
+        // Password reset email sent.
+        resolve('Password reset email sent successfully.');
+      })
+      .catch((error) => {
+        // Error occurred
+        reject(error);
+      });
+  });
+};

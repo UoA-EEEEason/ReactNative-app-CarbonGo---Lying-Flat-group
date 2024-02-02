@@ -1,30 +1,88 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
-  View,
   SafeAreaView,
   ScrollView,
   Text,
   TouchableOpacity,
   ImageBackground,
   Image,
-  StyleSheet
+  StyleSheet,
+  Alert,
+  TextInput,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { COLORS } from '../../constants/color/color';
 import StatusComponent from './../../components/StatusComponent';
-import TextInputComponent from './../../components/TextInputCompnent';
+import { useDispatch } from 'react-redux';
+import { resetPassword } from '../../redux/actions/auth';
+import { Dialog, Portal, Button } from 'react-native-paper';
+
+const TextInputComponent = ({ label, onChangeText, style, value }) => {
+  const customTheme = {
+    colors: {
+      primary: 'black',
+    },
+  };
+
+  return (
+    <TextInput
+      label={label}
+      value={value}
+      mode="flat"
+      onChangeText={onChangeText}
+      style={style}
+      theme={customTheme}
+    />
+  );
+};
 
 const ResetScreen = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState('');
+  const [visible, setVisible] = useState(false);
+  const [dialogMessage, setDialogMessage] = useState('');
+
+  const handleResetPassword = () => {
+    console.log(email)
+    if (!email.trim()) {
+      Alert.alert("Error", "Please enter your email address.");
+      return;
+    }
+
+    dispatch(resetPassword(email))
+      .then(() => {
+        setDialogMessage('A password reset email has been sent. Please check your inbox.');
+        setVisible(true);
+        setTimeout(() => {
+          setVisible(false);
+          navigation.navigate('Login');
+        }, 3000);
+      })
+      .catch((error) => {
+        let errorMessage = 'Failed to send reset email. Please try again.';
+        if (error.code === 'auth/invalid-email') {
+          errorMessage = 'The email address is not valid.';
+        } else if (error.code === 'auth/user-not-found') {
+          errorMessage = 'There is no user corresponding to the email address.';
+        }
+        setDialogMessage(errorMessage);
+        setVisible(true);
+      });
+  };
+
+  const handleEmailChange = value => {
+    setEmail(value);
+  };
 
   return (
     <ImageBackground
       source={require('./../../assets/images/background.png')}
       style={styles.backgroundImage}
       resizeMode="cover">
-      
+
       <SafeAreaView style={styles.safeArea}>
-      <StatusComponent title={'Reset Password'} />
+        <StatusComponent title={'Reset Password'} />
         <ScrollView contentContainerStyle={styles.scrollView}>
           <Image
             source={require('./../../assets/images/logo.png')}
@@ -32,22 +90,31 @@ const ResetScreen = () => {
             resizeMode="contain"
           />
           <Text style={styles.createText}>
-            We have sent an email to your email account with a verification code!
+            Enter your email to receive the password reset instructions.
           </Text>
           <TextInputComponent
             style={styles.input}
             label={'Email'}
-          />
-          <TextInputComponent
-            style={styles.input}
-            label={'New Password'}
+            value={email}
+            onChangeText={handleEmailChange}
           />
           <TouchableOpacity
             style={styles.loginButton}
-            onPress={() => navigation.navigate('Login')}>
-            <Text style={styles.buttonText}>Reset</Text>
+            onPress={handleResetPassword}>
+            <Text style={styles.buttonText}>Send Reset Email</Text>
           </TouchableOpacity>
         </ScrollView>
+        <Portal>
+          <Dialog visible={visible} onDismiss={() => setVisible(false)}>
+            <Dialog.Title>{dialogMessage.includes('sent') ? 'Success' : 'Error'}</Dialog.Title>
+            <Dialog.Content>
+              <Text>{dialogMessage}</Text>
+            </Dialog.Content>
+            <Dialog.Actions>
+              <Button onPress={() => setVisible(false)}>Ok</Button>
+            </Dialog.Actions>
+          </Dialog>
+        </Portal>
       </SafeAreaView>
     </ImageBackground>
   );
