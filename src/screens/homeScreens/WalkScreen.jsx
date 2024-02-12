@@ -19,6 +19,7 @@ import { useNavigation } from '@react-navigation/native';
 import PointsComponent from './../../components/PointsComponent';
 
 const WalkScreen = () => {
+    const [walkConsumption, setFoodConsumption] = useState('');
     const dispatch = useDispatch();
     const navigation = useNavigation();
 
@@ -55,7 +56,7 @@ const WalkScreen = () => {
         // console.log('points:', points)
 
         // caculation for total data
-        const totalNumber = Number(electricityConsumption) * walkWeight + lastTotalWalk;
+        const totalNumber = Number(walkConsumption) * walkWeight + lastTotalWalk;
         const totalEmission = lastTotal + diffPoints;
         // console.log('totalNumber:', totalNumber)
         // console.log('totalEmission:', totalEmission)
